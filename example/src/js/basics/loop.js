@@ -39,3 +39,7 @@ for (var key in myArray) {
   console.log(myArray[key]);
 }
 
+// For/of loop
+for (var value of myArray) {
+  console.log(myArray);
+}
