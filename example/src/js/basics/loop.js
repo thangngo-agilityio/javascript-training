@@ -43,3 +43,12 @@ for (var key in myArray) {
 for (var value of myArray) {
   console.log(myArray);
 }
+
+// while loop
+
+let i = 0
+
+while (i < myArray.length) {
+  console.log(myArray[i]);
+  i++
+}
