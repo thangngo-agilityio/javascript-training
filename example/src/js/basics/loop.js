@@ -29,7 +29,13 @@ let myArray = [
   'Java',
   'React'
 ]
+// for (let i = 0; i < myArray.length; i++) {
+//   console.log(myArray[i]);
+// }
 
-for (let i = 0; i < myArray.length; i++) {
-  console.log(myArray[i]);
+
+// For/in loop
+for (var key in myArray) {
+  console.log(myArray[key]);
 }
+
