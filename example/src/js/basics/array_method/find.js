@@ -1,4 +1,4 @@
-// filter method
+// find method
 
 var courses = [{
     id: 1,
@@ -27,8 +27,8 @@ var courses = [{
   }
 ]
 
-const getCoinCourse = (arr) => {
-  return arr.filter(item => item.coin > 300)
+function getNameCourse(arr) {
+  return arr.find(item => item.name === 'Python')
 }
 
-console.log(getCoinCourse(courses));
+console.log(getNameCourse(courses));
