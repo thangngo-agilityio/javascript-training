@@ -26,20 +26,20 @@ var courses = [{
     coin: 500,
   }
 ]
-// Thay đổi element của array
+// change element of array
 // let newCourse = courses.map((course, index) => {
 //   return {
 //     id: course.id,
-//     name: `Khoa hoc: ${course.name}`,
+//     name: `course: ${course.name}`,
 //     coin: course.coin,
-//     coinText: `Gia: ${course.coin}`,
+//     coinText: `price: ${course.coin}`,
 //     index: index
 //   }
 // })
 
 // console.log(newCourse);
 
-// Tách mảng
+// Split array
 let newCourse = courses.map((course) => {
   return `<h2>${course.name}</h2>`;
 })
