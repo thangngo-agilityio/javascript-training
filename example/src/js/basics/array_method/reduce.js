@@ -34,7 +34,7 @@ var totalCoin = courses.reduce((total, course) => {
 
 console.log(totalCoin);
 
-// Flat "làm phẳng" mảng từ Depth array
+// Flat "flatten" array from Depth array
 let depthArray = [1, 2, [3, 4], 5, 6, [7, 8, 9]];
 
 var flatArray = depthArray.reduce((flatOutput, depthItem) => {
