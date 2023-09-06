@@ -5,6 +5,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: sans-serif;
+    }
+
+    .active {
+      border: 2px solid blue;
+    }
+
+    .warning {
+      border: 2px solid red;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    div {
+      border: 2px dashed lightgray;
+      padding: 15px;
+      margin: 5px;
+    }
+  </style>
 </head>
 
 <body>
@@ -28,11 +53,22 @@
     <!-- Event handler properties -->
     <button>click me</button>
     <p>I will change</p>
+
+    <!-- Modifying DOM -->
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlu-5sicFuHii8BAVf-lwWzS0D4bOJ00mHAQ&usqp=CAU">
+
+    <hr>
+    <!-- Modifying classes -->
+
+    <!-- <div>Div 1</div>
+    <div class="active">Div 2</div> -->
+
+    <div>Div</div>
   </main>
 
 
 
-  <script type="modules" src="./js/dom/events.js"></script>
+  <script type="modules" src="./js/dom/modify.js"></script>
 </body>
 
 </html>
