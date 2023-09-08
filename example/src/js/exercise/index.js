@@ -1,0 +1,1 @@
+export { default } from './exercise-1.js';
