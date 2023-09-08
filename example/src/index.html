@@ -78,13 +78,24 @@
     <hr>
     <div class="book-list">
       <h1>My Book List</h1>
-      
+
     </div>
 
     <!-- JS DOM paragraph style -->
-    <p id="text">JavaScript Exercises - w3resource</p>
     <div>
-      <button id="jsstyle" onclick="js_style()">Style</button>
+      <p id="text">JavaScript Exercises - w3resource</p>
+      <div>
+        <button id="jsstyle" onclick="js_style()">Style</button>
+      </div>
+    </div>
+    <hr>
+    <!-- Return first and last name form a form - w3resource -->
+    <div>
+      <form id="form1" onsubmit="getFormvalue()">
+        First name: <input type="text" name="fname" value="David"><br>
+        Last name: <input type="text" name="lname" value="Beckham">
+        <input type="submit" value="Submit">
+      </form>
     </div>
   </main>
 
