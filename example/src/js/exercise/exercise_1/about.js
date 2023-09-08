@@ -1,3 +1,4 @@
+// Exercise About me
 const myBody = document.querySelector('body')
 
 // Change body style so it has a font family "Arial, sans-serif"
