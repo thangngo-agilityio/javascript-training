@@ -23,6 +23,7 @@ function book() {
   //   document.body.appendChild(bookP)
   // }
 
+  let bookDiv = document.querySelector('.book-list')
   let bookList = document.createElement('ul')
   for(let i = 0; i < bookLength; i++) {
     let bookItem = document.createElement('li')
@@ -39,7 +40,7 @@ function book() {
     }
     bookList.appendChild(bookItem)
   }
-  document.body.appendChild(bookList)
+  bookDiv.appendChild(bookList)
 }
 
 export default book;
