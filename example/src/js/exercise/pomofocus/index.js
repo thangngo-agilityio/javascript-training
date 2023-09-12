@@ -123,8 +123,6 @@ function stopTimer() {
 function nextTimer() {
   clearInterval(interval);
 
-  if (timer.mode === "pomodoro") timer.sessions++;
-
   switch (timer.mode) {
     case "pomodoro":
       if (timer.sessions % timer.LongBreakInterval === 0) {
@@ -151,6 +149,7 @@ mainBtn.addEventListener("click", () => {
 const nextBtn = document.getElementById("next-btn");
 nextBtn.addEventListener("click", () => {
   nextTimer();
+  stopTimer();
 });
 
 // Function update clock
