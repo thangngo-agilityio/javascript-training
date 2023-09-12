@@ -16,6 +16,12 @@ main {
   height: 100%;
 }
 
+button {
+  background: initial;
+  border: 0;
+  cursor: pointer;
+}
+
 .wrapper {
   padding: 0 0.2rem;
   margin: 0 auto;
