@@ -19,6 +19,7 @@ function handleMode(event) {
 
   switchMode(mode);
   stopTimer();
+  nextTimer();
 }
 
 // Function Switch mode
@@ -34,12 +35,15 @@ function switchMode(mode) {
     .querySelectorAll("button[data-mode]")
     .forEach((e) => e.classList.remove("active"));
   document.querySelector(`[data-mode="${mode}"]`).classList.add("active");
+
   // Style for background body
   document.body.style.backgroundColor = `var(--${mode})`;
   document.body.style.transition = ".4s";
 
   // Set attribute for progress bar
-  document.getElementById('js-progress').setAttribute('max', timer.remainingTime.total)
+  document
+    .getElementById("js-progress")
+    .setAttribute("max", timer.remainingTime.total);
 
   // set color for button main
   const btnMain = document.querySelector(".main-button");
@@ -78,6 +82,8 @@ function startTimer() {
   mainBtn.style.boxShadow = "none";
   mainBtn.style.transition = ".4s";
 
+  document.querySelector(".btn-next").style.opacity = "1";
+
   interval = setInterval(() => {
     timer.remainingTime = getRemainingTime(endTime);
     updateClock();
@@ -111,6 +117,25 @@ function stopTimer() {
   mainBtn.style.boxShadow = "rgb(235, 235, 235) 0px 6px 0px";
   mainBtn.style.transform = "translateY(0)";
   mainBtn.style.transition = ".4s";
+  document.querySelector(".btn-next").style.opacity = "0";
+}
+
+function nextTimer() {
+  clearInterval(interval);
+
+  if (timer.mode === "pomodoro") timer.sessions++;
+
+  switch (timer.mode) {
+    case "pomodoro":
+      if (timer.sessions % timer.LongBreakInterval === 0) {
+        switchMode("longBreak");
+      } else {
+        switchMode("shortBreak");
+      }
+      break;
+    default:
+      switchMode("pomodoro");
+  }
 }
 
 const mainBtn = document.getElementById("js-btn");
@@ -121,6 +146,11 @@ mainBtn.addEventListener("click", () => {
   } else {
     stopTimer();
   }
+});
+
+const nextBtn = document.getElementById("next-btn");
+nextBtn.addEventListener("click", () => {
+  nextTimer();
 });
 
 // Function update clock
@@ -134,8 +164,8 @@ function updateClock() {
   min.textContent = minutes;
   sec.textContent = seconds;
 
-  const progress = document.getElementById('js-progress');
-  progress.value = timer[timer.mode] * 60 - timer.remainingTime.total
+  const progress = document.getElementById("js-progress");
+  progress.value = timer[timer.mode] * 60 - timer.remainingTime.total;
 }
 
 // Set default mode
