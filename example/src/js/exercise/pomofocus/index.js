@@ -19,7 +19,6 @@ function handleMode(event) {
 
   switchMode(mode);
   stopTimer();
-  nextTimer();
 }
 
 // Function Switch mode
@@ -82,7 +81,7 @@ function startTimer() {
   mainBtn.style.boxShadow = "none";
   mainBtn.style.transition = ".4s";
 
-  document.querySelector(".btn-next").style.opacity = "1";
+  document.querySelector(".btn-next").style.display = "block";
 
   interval = setInterval(() => {
     timer.remainingTime = getRemainingTime(endTime);
@@ -117,7 +116,7 @@ function stopTimer() {
   mainBtn.style.boxShadow = "rgb(235, 235, 235) 0px 6px 0px";
   mainBtn.style.transform = "translateY(0)";
   mainBtn.style.transition = ".4s";
-  document.querySelector(".btn-next").style.opacity = "0";
+  document.querySelector(".btn-next").style.display = "none";
 }
 
 function nextTimer() {
