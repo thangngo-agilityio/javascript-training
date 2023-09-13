@@ -1,4 +1,4 @@
-.promofocus {
+.section-promofocus {
   margin-bottom: 50px;
 }
 .progress {
@@ -98,7 +98,7 @@ button:active {
   padding: 0;
   background-color: initial;
   transition: .4s;
-  opacity: 0;
+  display: none;
 }
 
 .btn-next:hover {
