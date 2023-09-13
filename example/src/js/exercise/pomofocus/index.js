@@ -1,5 +1,5 @@
-import pomodoro from "./pomodoro";
-import todoList from "./todolist";
+import pomodoro from "./pomodoro.js";
+import todoList from "./todolist.js";
 
 pomodoro();
 todoList();
