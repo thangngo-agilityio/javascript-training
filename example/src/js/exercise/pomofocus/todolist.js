@@ -66,21 +66,12 @@ function todoList() {
 
   function editTodo(key) {
     const index = todoItems.findIndex((item) => item.id === Number(key));
+
     const input = document.querySelector(".js-todo-input");
-    // const btnSave = document.querySelector(".btn-save"); 
 
-    form.style.display = 'flex';
-    input.value = todoItems[index].text;
-    // btnSave.setAttribute('id', key)
-
-    // let taskId = btnSave.getAttribute('id')
-    // if (taskId == 0 || taskId) {
-    //   todoItems[index] = {text: todoItems[index].text}
-    //   btnSave.setAttribute('id', '')
-    // }else {
-    //   todoItems.push({text: todoItems[index].text}) 
-    // }
-
+    input.value = todoItems[index].text
+    form.style.display = 'flex'
+    form.setAttribute('id', key)
   }
 
   const addBtn = document.getElementById("btn-add");
@@ -93,6 +84,16 @@ function todoList() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const input = document.querySelector(".js-todo-input");
+
+    let taskId = form.getAttribute('id')
+    let task = localStorage.getItem("todoItems");
+
+    if (taskId) {
+      task[taskId] = {text: input.value}
+    }
+    else {
+      todoItems.push({text: input.value})
+    }
 
     const text = input.value.trim();
     if (text !== "") {
