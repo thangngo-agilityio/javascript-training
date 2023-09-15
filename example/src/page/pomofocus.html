@@ -45,7 +45,7 @@
         </div>
       </header>
       <main>
-        <section class="promofocus">
+        <section class="section-promofocus">
           <div class="wrapper">
             <progress class="progress" id="js-progress" value="0"></progress>
             <div class="progress-bar"></div>
@@ -92,7 +92,7 @@
             </div>
           </div>
         </section>
-        <section class="todo-list">
+        <section class="section-todo">
           <div class="wrapper">
             <div class="list-heading">
               <h2 class="heading-title">Tasks</h2>
@@ -102,21 +102,21 @@
                 </button>
               </div>
             </div>
+            <ul class="todo-list js-todo-list" id="js-todo-list"></ul>
             <div class="list-content">
-              <button class="content-btn">
+              <button class="content-btn" id="btn-add">
                 <p class="btn-text">Add Task</p>
               </button>
-              <form class="content-form">
+              <form class="content-form js-form">
                 <div class="form-input">
-                  <input class="inp-item" type="text" placeholder="What are you working on?" />
+                  <input class="inp-item js-todo-input" id="js-todo-input" type="text" placeholder="What are you working on?" />
                 </div>
                 <div class="form-button">
                   <div class="button-left">
-                    <button class="btn btn-del">Delete</button>
                   </div>
                   <div class="button-right">
-                    <button class="btn btn-cancel">Cancel</button>
-                    <button class="btn btn-save">Save</button>
+                    <button class="btn btn-cancel" id="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-save">Save</button>
                   </div>
                 </div>
               </form>
