@@ -1,5 +1,3 @@
-import render from "dom-serializer";
-
 function todoList() {
   let todoItems = [];
 
