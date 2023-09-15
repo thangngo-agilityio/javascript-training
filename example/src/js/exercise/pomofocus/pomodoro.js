@@ -7,12 +7,12 @@ function pomodoro() {
     LongBreakInterval: 4,
     sessions: 0,
   };
+  const mainBtn = document.getElementById("js-btn");
+  const modeButtons = document.querySelector("#js-mode-buttons");
+  const nextBtn = document.getElementById("next-btn");
 
   let interval;
-
-  const modeButtons = document.querySelector("#js-mode-buttons");
-  modeButtons.addEventListener("click", handleMode);
-
+  
   function handleMode(event) {
     const {
       mode
@@ -140,24 +140,6 @@ function pomodoro() {
     }
   }
 
-  const mainBtn = document.getElementById("js-btn");
-  mainBtn.addEventListener("click", () => {
-    const {
-      action
-    } = mainBtn.dataset;
-    if (action === "start") {
-      startTimer();
-    } else {
-      stopTimer();
-    }
-  });
-
-  const nextBtn = document.getElementById("next-btn");
-  nextBtn.addEventListener("click", () => {
-    nextTimer();
-    stopTimer();
-  });
-
   // Function update clock
   function updateClock() {
     const {
@@ -174,6 +156,24 @@ function pomodoro() {
     const progress = document.getElementById("js-progress");
     progress.value = timer[timer.mode] * 60 - timer.remainingTime.total;
   }
+
+  mainBtn.addEventListener("click", () => {
+    const {
+      action
+    } = mainBtn.dataset;
+    if (action === "start") {
+      startTimer();
+    } else {
+      stopTimer();
+    }
+  });
+
+  modeButtons.addEventListener("click", handleMode);
+
+  nextBtn.addEventListener("click", () => {
+    nextTimer();
+    stopTimer();
+  });
 
   // Set default mode
   document.addEventListener("DOMContentLoaded", () => {
