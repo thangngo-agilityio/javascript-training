@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <title>Pomofocus</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="wrapper">
+          <h1 class="header-title">Pomofocus</h1>
+          <nav class="header-navigation">
+            <ul class="navigation-list">
+              <li class="list-item">
+                <a href="#">
+                  <img
+                    src="../assets/icon/icon_header_01.png"
+                    class="item-img"
+                  />
+                  <span class="item-title">Report</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#">
+                  <img
+                    src="../assets/icon/icon_header_02.png"
+                    class="item-img"
+                  />
+                  <span class="item-title">Setting</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#">
+                  <img
+                    src="../assets/icon/icon_header_03.png"
+                    class="item-img"
+                  />
+                  <span class="item-title">Login</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <main>
+        <section class="section-promofocus">
+          <div class="wrapper">
+            <progress class="progress" id="js-progress" value="0"></progress>
+            <div class="progress-bar"></div>
+            <div class="timer">
+              <div class="button-group mode-buttons" id="js-mode-buttons">
+                <button
+                  data-mode="pomodoro"
+                  class="button active mode-button"
+                  id="js-pomodoro"
+                >
+                  Pomodoro
+                </button>
+                <button
+                  data-mode="shortBreak"
+                  class="button mode-button"
+                  id="js-short-break"
+                >
+                  Short break
+                </button>
+                <button
+                  data-mode="longBreak"
+                  class="button mode-button"
+                  id="js-long-break"
+                >
+                  Long break
+                </button>
+              </div>
+              <div class="clock" id="js-clock">
+                <span id="js-minutes">25</span>
+                <span class="separator">:</span>
+                <span id="js-seconds">00</span>
+              </div>
+              <div class="timer-button">
+                <button class="main-button" data-action="start" id="js-btn">
+                  Start
+                </button>
+                <button class="btn-next" id="next-btn">
+                  <img
+                    class="btn-next_item"
+                    src="../assets/icon/icon_btn_next.png"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section-todo">
+          <div class="wrapper">
+            <div class="list-heading">
+              <h2 class="heading-title">Tasks</h2>
+              <div class="heading-btn">
+                <button class="btn-item">
+                  <img class="btn-img" src="../assets/icon/icon_btn_more.png" />
+                </button>
+              </div>
+            </div>
+            <ul class="todo-list js-todo-list" id="js-todo-list"></ul>
+            <div class="list-content">
+              <button class="content-btn" id="btn-add">
+                <p class="btn-text">Add Task</p>
+              </button>
+              <form class="content-form js-form">
+                <div class="form-input">
+                  <input class="inp-item js-todo-input" id="js-todo-input" type="text" placeholder="What are you working on?" />
+                </div>
+                <div class="form-button">
+                  <div class="button-left">
+                  </div>
+                  <div class="button-right">
+                    <button class="btn btn-cancel" id="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-save">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="../js/exercise/pomofocus/index.js"></script>
+  </body>
+</html>
+
