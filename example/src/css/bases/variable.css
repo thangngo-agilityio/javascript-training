@@ -1,0 +1,14 @@
+:root {
+  /* Color */
+  --pomodoro: rgb(186, 73, 73);
+  --shortBreak: rgb(56, 133, 138);
+  --longBreak: rgb(57, 112, 151);
+  --white: #fff;
+
+  /* width responsive */
+  --width-tablet: 768px;
+  --width-desktop: 1024px;
+
+  /* wrapper */
+  --width-wrapper-desktop: 620px;
+}
