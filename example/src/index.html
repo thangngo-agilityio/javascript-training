@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: sans-serif;
+    }
+
+    .active {
+      border: 2px solid blue;
+    }
+
+    .warning {
+      border: 2px solid red;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    div {
+      border: 2px dashed lightgray;
+      padding: 15px;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="mvc-page">
+    <a href="./page/mvc.html">Example model MVC</a>
+  </div>
+  <div class="pomofocus-page">
+    <a href="./page/pomofocus.html">Pomofocus</a>
+  </div>
+
+  <ul id="comment_block"></ul>
+
+  <main id="main">
+    <!-- <p class="intro" id="intro">learn DOM Elements</p> -->
+
+    <form name="myForm" action="" onsubmit="return validateForm()" method="post">
+      Name: <input type="text" name="fname">
+      <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+    <!-- add button -->
+    <!-- Inline Event Handler Attribute -->
+    <!-- <button onclick="changeText()">Click me</button>
+
+    <p>Try to change me.</p> -->
+
+    <!-- Event handler properties -->
+    <button>click me</button>
+    <p>I will change</p>
+
+    <!-- Modifying DOM -->
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlu-5sicFuHii8BAVf-lwWzS0D4bOJ00mHAQ&usqp=CAU">
+
+    <hr>
+    <!-- Modifying classes -->
+
+    <!-- <div>Div 1</div>
+    <div class="active">Div 2</div> -->
+
+    <div>Div</div>
+
+    <hr>
+    <!-- Exercise 1 -->
+    <div class="exercise">
+      <ul>
+        <li>Nickname: <span id="nickname"></span></li>
+        <li>Favorites: <span id="favorites"></span></li>
+        <li>Hometown: <span id="hometown"></span></li>
+      </ul>
+    </div>
+
+    <hr>
+    <div class="book-list">
+      <h1>My Book List</h1>
+
+    </div>
+
+    <!-- JS DOM paragraph style -->
+    <div>
+      <p id="text">JavaScript Exercises - w3resource</p>
+      <div>
+        <button id="jsstyle" onclick="js_style()">Style</button>
+      </div>
+    </div>
+    <hr>
+    <!-- Return first and last name form a form - w3resource -->
+    <div>
+      <form id="form1" onsubmit="getFormvalue()">
+        First name: <input type="text" name="fname" value="David"><br>
+        Last name: <input type="text" name="lname" value="Beckham">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </main>
+
+  <script type="module" src="./js/exercise/index.js"></script>
+</body>
+
+</html>

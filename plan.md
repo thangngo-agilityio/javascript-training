@@ -31,13 +31,13 @@ JavaScript is a high-level, often just-in-time compiled language that conforms t
 - **Practice:**
   - Design: update later
   - Target:
-  - [ ] Selecting Elements
-  - [ ] Getting Values
-  - [ ] Setting Values
-  - [ ] Attributes
-  - [ ] Classes
-  - [ ] CSS Manipulation
-  - [ ] DOM manipulation with simple table, form
+    - [ ] Selecting Elements
+    - [ ] Getting Values
+    - [ ] Setting Values
+    - [ ] Attributes
+    - [ ] Classes
+    - [ ] CSS Manipulation
+    - [ ] DOM manipulation with simple table, form
 ## FURTHER READING
 - [Code style](https://github.com/airbnb/javascript)
 - The good JavaScript tutorial page focus on necessary JavaScript material things [https://javascript.info/](https://javascript.info/)
