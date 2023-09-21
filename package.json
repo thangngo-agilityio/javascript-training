@@ -1,11 +1,10 @@
 {
   "name": "javascript-training",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "source": "src/pages/index.html",
   "scripts": {
     "start": "parcel src/pages/index.html",
-    "build": "parcel build src/pages/index.html",
+    "build": "rm -rf build && rm -rf .parcel-cache && parcel build ./src/pages/index.html --no-cache --no-source-maps --dist-dir dist",
     "prepare": "husky install",
     "commitlint": "commitlint --edit"
   },
