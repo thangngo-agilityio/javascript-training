@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "start": "parcel src/pages/index.html",
+    "build": "parcel build src/pages/index.html",
     "prepare": "husky install",
     "commitlint": "commitlint --edit"
   },
