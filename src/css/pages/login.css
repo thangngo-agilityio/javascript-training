@@ -30,6 +30,10 @@
   font-size: 32px;
 }
 
+.form-text:last-child {
+  margin-top: 16px;
+}
+
 .form-message {
   text-align: center;
   margin-bottom: 16px;
