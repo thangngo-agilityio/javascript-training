@@ -13,7 +13,7 @@
     <main>
       <section class="section-login">
         <div class="wrapper">
-          <form class="form-login" id="login">
+          <form class="form-login form-hidden" id="login">
             <h1 class="form-title">login</h1>
             <div class="form-message form-message_error">Incorrect username/password combination.</div>
             <div class="form-input_group">
@@ -30,6 +30,30 @@
             </p>
             <p class="form-text">
               <a class="form-link" href="./" id="linkCreateAccount">Don't have an account? Create account</a>
+            </p>
+          </form>
+          <form class="form-login" id="createAccount">
+            <h1 class="form-title">Create Account</h1>
+            <div class="form-message form-message_error"></div>
+            <div class="form-input_group">
+              <input type="text" class="form-input" autofocus placeholder="Username">
+              <div class="input-error_message"></div>
+            </div>
+            <div class="form-input_group">
+              <input type="text" class="form-input" autofocus placeholder="Email Address">
+              <div class="input-error_message"></div>
+            </div>
+            <div class="form-input_group">
+              <input type="password" class="form-input form-input_error" autofocus placeholder="Password">
+              <div class="input-error_message"></div>
+            </div>
+            <div class="form-input_group">
+              <input type="password" class="form-input form-input_error" autofocus placeholder="Confirm Password">
+              <div class="input-error_message"></div>
+            </div>
+            <button class="form-button" type="submit">Continue</button>
+            <p class="form-text">
+              <a class="form-link" href="./" id="linkLogin">Already have an account? sing in</a>
             </p>
           </form>
         </div>
