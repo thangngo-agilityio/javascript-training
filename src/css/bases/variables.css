@@ -1,0 +1,11 @@
+:root {
+  /* color variable */
+  --color-default: #1F1D2B;
+  --color-primary: #EA7C69;
+  --color-secondary: #fff;
+  --color-error: #cc3333;
+  --color-success: #4bb544;
+
+  /* font size */
+  --font-size-default: 18px
+}
