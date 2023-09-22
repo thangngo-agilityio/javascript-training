@@ -13,9 +13,9 @@
     <main>
       <section class="section-login">
         <div class="wrapper">
-          <form class="form-login form-hidden" id="login">
+          <form class="form-login" id="login">
             <h1 class="form-title">login</h1>
-            <div class="form-message form-message_error">Incorrect username/password combination.</div>
+            <div class="form-message form-message_error"></div>
             <div class="form-input_group">
               <input type="text" class="form-input" autofocus placeholder="Username or email">
               <div class="input-error_message"></div>
@@ -32,11 +32,11 @@
               <a class="form-link" href="./" id="linkCreateAccount">Don't have an account? Create account</a>
             </p>
           </form>
-          <form class="form-login" id="createAccount">
+          <form class="form-login form-hidden" id="createAccount">
             <h1 class="form-title">Create Account</h1>
-            <div class="form-message form-message_error"></div>
+            <div class="form-message"></div>
             <div class="form-input_group">
-              <input type="text" class="form-input" autofocus placeholder="Username">
+              <input type="text" id="signupUsername" class="form-input" autofocus placeholder="Username">
               <div class="input-error_message"></div>
             </div>
             <div class="form-input_group">
@@ -60,7 +60,7 @@
       </section>
     </main>
   </div>
-  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/main/loginMain.js"></script>
 </body>
 
 </html>
