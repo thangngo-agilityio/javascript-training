@@ -1,6 +1,7 @@
 import {
   querySelector,
-  querySelectorAll
+  querySelectorAll,
+  getElementById
 } from "../helpers/doms";
 
 /**
@@ -11,63 +12,94 @@ import {
 export default class LoginView {
   constructor() {
     this.loginForm = querySelector('.form-login');
-    this.createAccountForm = querySelector('#createAccount');
+    this.emailElement = getElementById('email');
+    this.passwordElement = getElementById('password');
+    this.confirmPasswordElement = getElementById('confirmPassword');
+    this.inputGroupElement = querySelector('.input-group.hidden');
+    this.btnLoginElement = querySelector('.header-action-signIn');
+    this.btnRegisterElement = querySelector('.header-action-register');
+    this.btnSubmitElement = querySelector("[type='submit']");
+    this.signInEvent = null;
+    this.signUpEvent = null;
   }
 
-  displayLogin() {
+  /**
+   * @description get value form sign in
+   */
+  formSignInEventHandler = async (e) => {
+    e.preventDefault();
 
+    const user = {
+      email: this.emailElement.value.trim() || '',
+      password: this.passwordElement.value.trim() || '',
+    };
+
+    if (this.signInEvent) {
+      await this.signInEvent(user)
+    }
+  }
+
+  /**
+   * @description get value form sign up
+   */
+  formSignUpEventHandler = async (e) => {
+    e.preventDefault();
+    const user = {
+      email: this.emailElement.value.trim() || '',
+      password: this.passwordElement.value.trim() || '',
+      confirmPassword: this.confirmPasswordElement.value.trim() || '',
+    }
+  };
+
+  bindUserSignIn() {
+    this.loginForm.removeEventListener('submit', this.formSignUpEventHandler);
+    this.loginForm.addEventListener('submit', this.formSignInEventHandler);
+  };
+
+  bindUserSignUp() {
+    this.loginForm.removeEventListener('submit', this.formSignInEventHandler);
+    this.loginForm.addEventListener('submit', this.formSignUpEventHandler);
+  };
+
+  displayLogin(userSingIn, userSignUp) {
+    this.signInEvent = userSingIn;
+    this.signUpEvent = userSignUp;
     this.bindFormEvent();
-  }
+  };
 
-  setFormMessage(formElement, type, message) {
-    const messageElement = formElement.querySelector('.form-message');
-
-    messageElement.textContent = message;
-    messageElement.classList.remove("form-message_success", "form-message_error");
-    messageElement.classList.add(`form-message_${type}`);
-  }
-
-  setInputError(inputElement, message) {
-    inputElement.classList.add("form-input_error")
-    inputElement.parentElement.querySelector(".input-error_message").textContent = message;
-  }
-
-  clearInputError(inputElement) {
-    inputElement.classList.remove("form-input_error");
-    inputElement.parentElement.querySelector(".input-error_message").textContent = "";
-  }
 
   bindFormEvent() {
-    document.addEventListener("DOMContentLoaded", () => {
-      querySelector("#linkCreateAccount").addEventListener('click', (e) => {
-        e.preventDefault()
-        this.loginForm.classList.add("form-hidden");
-        this.createAccountForm.classList.remove("form-hidden");
-      })
+    const toggleAction = () => {
+      this.btnRegisterElement.classList.toggle('active');
+      this.btnLoginElement.classList.toggle('active');
+    }
+    this.bindUserSignIn();
 
-      querySelector("#linkLogin").addEventListener('click', (e) => {
-        e.preventDefault()
-        this.loginForm.classList.remove("form-hidden");
-        this.createAccountForm.classList.add("form-hidden");
-      })
+    this.btnLoginElement.addEventListener('click', e => {
+      e.preventDefault();
+      toggleAction();
+      this.loginForm.reset();
+      this.inputGroupElement.classList.toggle('hidden')
+
+      // If submit button has element
+      if(this.btnSubmitElement) {
+        this.btnSubmitElement.innerHTML = 'Sign In';
+      }
+
+      this.bindUserSignIn();
     })
+    this.btnRegisterElement.addEventListener('click', e => {
+      e.preventDefault();
+      toggleAction();
+      this.loginForm.reset();
+      this.inputGroupElement.classList.toggle('hidden')
 
-    this.loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+      // If submit button has element
+      if(this.btnSubmitElement) {
+        this.btnSubmitElement.innerHTML = 'Sign Up';
+      }
 
-        // Perform your Fetch login
-        this.setFormMessage(this.loginForm, "error", "Invalid username/password combination");
-      })
-
-    document.querySelectorAll('.form-input').forEach(inputElement => {
-      inputElement.addEventListener('blur', e => {
-        if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length < 10) {
-          this.setInputError(inputElement, "Username must be at least 10 characters in length");
-        }
-      })
-      inputElement.addEventListener('click', e => {
-        this.clearInputError(inputElement)
-      })
+      this.bindUserSignUp();
     })
-  }
+  };
 }
