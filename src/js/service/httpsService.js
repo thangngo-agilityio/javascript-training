@@ -1,10 +1,11 @@
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import {
   HTTP_METHOD,
   API_HEADERS
 } from '../constants/common';
+import { MOCK_API } from '../constants';
 
-dotenv.config();
+// dotenv.config();
 
 /**
  * @class HttpsService
@@ -12,7 +13,10 @@ dotenv.config();
  */
 export default class HttpsService {
   constructor(path) {
-    this.fullPath = process.env.MOCK_API + path;
+    // this.fullPath = process.env.Mo + path;
+    // console.log(process.env.MOCK_API);
+
+    this.fullPath = MOCK_API + path
   }
 
   /**
@@ -25,10 +29,11 @@ export default class HttpsService {
     try {
       const response = await fetch(this.fullPath, {
         method: HTTP_METHOD.POST,
+        mode: "cors",
+        cache: "no-cache",
         headers: API_HEADERS,
         body: JSON.stringify(data),
       });
-
       return response.json()
     } catch (error) {
       throw new Error(error);
@@ -45,7 +50,7 @@ export default class HttpsService {
     try {
       const url = `${this.fullPath}?${query}`;
       const response = await fetch(url);
-
+      console.log(response);
       return response.json();
     } catch (error) {
       throw new Error(error);

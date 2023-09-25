@@ -1,3 +1,14 @@
+import {
+  AUTHEN_MESSAGE
+} from "../constants/message";
+import {
+  redirect
+} from "../helpers/redirect";
+import {
+  Popup
+} from "../helpers/renderPopup";
+
+
 /**
  * @class UserController
  * Link the user input and the view output for add edit delete data
@@ -5,10 +16,10 @@
  * @param userView
  */
 export default class LoginController {
-  constructor(loginModel, loginView) {
-    this.model = loginModel;
-    this.view = loginView;
-
+  constructor(model, view) {
+    this.model = model;
+    this.view = view;
+    this.popup = new Popup();
     this.init();
   }
 
@@ -22,20 +33,26 @@ export default class LoginController {
 
     if (foundUser) {
       localStorage.setItem('LOGIN', foundUser.id.toString());
+      redirect('/');
+    } else {
+      this.popup.error({ message: AUTHEN_MESSAGE.loginError })
     }
   }
 
   signUp = async (user) => {
-    const dataUser = await this.model.getAllUser();
+    console.log(user);
+    console.log(this.model.getAllUser());
+    const dataUser = await this.model.getAllUser()
+
     const foundUser = this.findEmail(dataUser, user.email);
 
     if (foundUser) {
-      alert(foundUser,'Account already!!!')
+      this.popup.error({ message: AUTHEN_MESSAGE.registerError })
     } else {
       const dataUserSignup = await this.model.handleSignUp(user);
 
       localStorage.setItem('LOGIN', dataUserSignup.id)
-      alert('Register success!!')
+      redirect('/')
     }
   }
 

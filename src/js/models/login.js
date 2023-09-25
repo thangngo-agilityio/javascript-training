@@ -19,7 +19,6 @@ export default class LoginModel {
       email: user.email,
       password: user.password
     }
-
     return await this.userService.post(newUser)
   }
 
@@ -29,6 +28,6 @@ export default class LoginModel {
    * @param user User[]
    */
   async getAllUser() {
-    return await this.userService.get()
+    return await this.userService.get();
   }
 }
