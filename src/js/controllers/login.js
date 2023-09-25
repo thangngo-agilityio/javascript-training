@@ -34,6 +34,7 @@ export default class LoginController {
     if (foundUser) {
       localStorage.setItem('LOGIN', foundUser.id.toString());
       redirect('/');
+      this.popup.success({ message: AUTHEN_MESSAGE.loginSuccess})
     } else {
       this.popup.error({ message: AUTHEN_MESSAGE.loginError })
     }
@@ -51,8 +52,11 @@ export default class LoginController {
     } else {
       const dataUserSignup = await this.model.handleSignUp(user);
 
+      this.popup.success({ message: AUTHEN_MESSAGE.registerSuccess })
       localStorage.setItem('LOGIN', dataUserSignup.id)
-      redirect('/')
+      setTimeout(() => {
+        redirect('/')
+      }, 3000);
     }
   }
 

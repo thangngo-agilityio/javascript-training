@@ -1,7 +1,7 @@
-// Max message toast
+// Max message popup
 export const MAX_POPUP = 5;
 
-// vertical off set toast
+// vertical off set popup
 export const VERTICAL_OFFSET = 10;
 
 // Mock api
