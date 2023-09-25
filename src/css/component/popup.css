@@ -2,24 +2,25 @@
   display: flex;
   justify-content: space-between;
   width: 300px;
-  background-color: var(--white-color);
+  background-color: var(--color-secondary);
   padding: 12px;
   position: fixed;
-  top: 40px;
-  right: 12px;
+  top: 100px !important;
+  right: 30px;
   backdrop-filter: blur(5px);
   box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.2);
   z-index: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 8px;
 }
 
 .popup-success {
-  border-left: 5px solid var(--green-color);
+  border-left: 5px solid var(--color-success);
 }
 
 .popup-error {
-  border-left: 5px solid var(--error-color);
+  border-left: 5px solid var(--color-error);
 }
 
 .popup-title {
@@ -27,11 +28,11 @@
 }
 
 .popup-success .popup-title {
-  color: var(--green-color);
+  color: var(--color-success);
 }
 
 .popup-error .popup-title {
-  color: var(--error-color);
+  color: var(--color-error);
 }
 
 .popup-close {
@@ -45,8 +46,8 @@
 }
 
 .popup-message {
-  font-size: var(--xs-font-size);
-  color: var(--text-black-color);
-  font-weight: var(--text-font-weight);
+  font-size: var(--font-size-default);
+  color: var(--color-default);
+  font-weight: 500;
   margin-top: 8px;
 }
