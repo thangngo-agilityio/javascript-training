@@ -1,3 +1,7 @@
+import {
+  redirect
+} from "../helpers/redirect";
+
 /**
  * @class UserController
  * Link the user input and the view output for add edit delete data
@@ -30,11 +34,12 @@ export default class LoginController {
     const foundUser = this.findEmail(dataUser, user.email);
 
     if (foundUser) {
-      alert(foundUser,'Account already!!!')
+      alert(foundUser, 'Account already!!!')
     } else {
       const dataUserSignup = await this.model.handleSignUp(user);
 
       localStorage.setItem('LOGIN', dataUserSignup.id)
+      redirect('/src/pages/index.html')
       alert('Register success!!')
     }
   }
