@@ -1,5 +1,6 @@
 import {
-  MAX_POPUP, VERTICAL_OFFSET
+  MAX_POPUP,
+  VERTICAL_OFFSET
 } from "../constants";
 import {
   createElement,
@@ -7,17 +8,18 @@ import {
 } from "./doms";
 
 export class Popup {
+  currentPopupCount = 0;
+  maxPopupCount = MAX_POPUP;
+  verticalOffset = VERTICAL_OFFSET
 
   createPopup(type, title, message) {
     const mainElement = querySelector('.main-content');
     const popup = createElement('div');
-    const currentPopupCount = 0;
-    const maxPopupCount = MAX_POPUP;
-    const verticalOffset = VERTICAL_OFFSET
+
 
     popup.classList.add('popup', `popup-${type}`, 'open');
 
-    if (currentPopupCount >= maxPopupCount) {
+    if (this.currentPopupCount >= this.maxPopupCount) {
       return;
     }
 
@@ -30,7 +32,7 @@ export class Popup {
                       <button class="popup-close">&times;</button>`;
 
     requestAnimationFrame(() => {
-      const topPosition = currentPopupCount * (popup.offsetHeight + verticalOffset);
+      const topPosition = this.currentPopupCount * (popup.offsetHeight + this.verticalOffset);
 
       popup.style.top = `${topPosition}px`;
     });
@@ -38,15 +40,15 @@ export class Popup {
     // Auto remove popup after 5 seconds
     setTimeout(() => {
       popup.remove();
-      currentPopupCount--;
+      this.currentPopupCount--;
     }, 5000);
 
     popup.onclick = (e) => {
       const target = e.target;
 
-      if(target.closest('.popup-close')) {
+      if (target.closest('.popup-close')) {
         popup.remove();
-        currentPopupCount--;
+        this.currentPopupCount--;
       }
     };
 
@@ -54,11 +56,17 @@ export class Popup {
     mainElement.appendChild(popup);
   }
 
-  success({message, title = 'success'}) {
+  success({
+    message,
+    title = 'success'
+  }) {
     this.createPopup('success', title, message);
   }
 
-  error({message, title = 'error'}) {
+  error({
+    message,
+    title = 'error'
+  }) {
     this.createPopup('error', title, message);
   }
 }
