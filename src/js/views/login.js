@@ -50,7 +50,10 @@ export default class LoginView {
       confirmPassword: this.confirmPasswordElement.value.trim() || '',
     }
 
-    await this.signUpEvent(user)
+    if (this.signUpEvent) {
+      await this.signUpEvent(user)
+    }
+
   };
 
   bindUserSignIn() {
