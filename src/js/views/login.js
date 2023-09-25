@@ -1,8 +1,9 @@
 import {
   querySelector,
-  querySelectorAll,
   getElementById
 } from "../helpers/doms";
+import { clearError, showError } from "../utils/validators/formError";
+import { loginValidator } from "../utils/validators/validateLogin";
 
 /**
  * @class UserView
@@ -33,6 +34,19 @@ export default class LoginView {
       email: this.emailElement.value.trim() || '',
       password: this.passwordElement.value.trim() || '',
     };
+    const isError = loginValidator(user, 'SIGNUP');
+    const isEmpty = (object) => {
+      return Object.keys(object).length === 0;
+    }
+
+    if(!isEmpty(isError)) {
+      showError(isError);
+    } else {
+      if (this.signInEvent) {
+        clearError()
+        await this.signInEvent(user)
+      }
+    }
 
     if (this.signInEvent) {
       await this.signInEvent(user)
@@ -49,10 +63,21 @@ export default class LoginView {
       password: this.passwordElement.value.trim() || '',
       confirmPassword: this.confirmPasswordElement.value.trim() || '',
     }
-
-    if (this.signUpEvent) {
-      await this.signUpEvent(user)
+    const isError = loginValidator(user, 'SIGNUP');
+    const isEmpty = (object) => {
+      return Object.keys(object).length === 0;
     }
+
+    if(!isEmpty(isError)) {
+      showError(isError);
+    } else {
+      if (this.signUpEvent) {
+        clearError();
+        await this.signUpEvent(user)
+      }
+    }
+
+
 
   };
 
@@ -82,6 +107,7 @@ export default class LoginView {
 
     this.btnLoginElement.addEventListener('click', e => {
       e.preventDefault();
+      clearError();
       toggleAction();
       this.loginForm.reset();
       this.inputGroupElement.classList.toggle('hidden')
@@ -95,6 +121,7 @@ export default class LoginView {
     })
     this.btnRegisterElement.addEventListener('click', e => {
       e.preventDefault();
+      clearError();
       toggleAction();
       this.loginForm.reset();
       this.inputGroupElement.classList.toggle('hidden')

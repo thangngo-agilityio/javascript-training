@@ -36,9 +36,9 @@ export const validateFormSignUp = (user) => {
 
 export const loginValidator = (user, type) => {
   switch(type) {
-    case SIGNUP:
+    case 'SIGNUP':
       return validateFormSignUp(user);
-    case SIGNIN:
+    case 'SIGNIN':
       return validateFormSignIn(user);
     default:
       return {}

@@ -50,7 +50,6 @@ export default class HttpsService {
     try {
       const url = `${this.fullPath}?${query}`;
       const response = await fetch(url);
-      console.log(response);
       return response.json();
     } catch (error) {
       throw new Error(error);
