@@ -4,3 +4,7 @@ export const HTTP_METHOD = {
   PUT: 'PUT',
   DELETE: 'DELETE',
 }
+
+export const API_HEADERS = {
+  'Content-Type': 'application/json',
+}

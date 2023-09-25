@@ -1,9 +1,7 @@
 import dotenv from 'dotenv';
 import {
-  commonHttpRequest
-} from '../utils/httpsRequest';
-import {
-  HTTP_METHOD
+  HTTP_METHOD,
+  API_HEADERS
 } from '../constants/common';
 
 dotenv.config();
@@ -18,13 +16,23 @@ export default class HttpsService {
   }
 
   /**
-   * Call api post data
+   * @description Call api post data
    * @body {object} data
-   *
+   * @returns data after request
    */
 
   post = async (data) => {
-    return await commonHttpRequest(HTTP_METHOD.POST, this.fullPath, data);
+    try {
+      const response = await fetch(this.fullPath, {
+        method: HTTP_METHOD.POST,
+        headers: API_HEADERS,
+        body: JSON.stringify(data),
+      });
+
+      return response.json()
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   /**
@@ -33,10 +41,15 @@ export default class HttpsService {
    * @query {filter, page, limit, sortBy, order}
    * @returns data after request
    */
-  get = async (path, query) => {
-    const url = `${this.fullPath}/${path}?${query}`;
+  get = async (query) => {
+    try {
+      const url = `${this.fullPath}?${query}`;
+      const response = await fetch(url);
 
-    return await commonHttpRequest(HTTP_METHOD.GET, url);
+      return response.json();
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   /**
@@ -44,10 +57,14 @@ export default class HttpsService {
    * @param {String} path
    * @returns data after request
    */
-  delete = async (path) => {
-    const url = `${this.fullPath}/${path}`;
-
-    return await commonHttpRequest(HTTP_METHOD.DELETE, url);
+  delete = async (id) => {
+    try {
+      await fetch(this.fullPath + `/${id}`, {
+        method: HTTP_METHOD.DELETE,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   /**
@@ -55,9 +72,16 @@ export default class HttpsService {
    * @param {String} path
    * @body {object} data
    */
-  put = async (path, data) => {
-    const url = `${this.fullPath}/${path}`;
-
-    return await commonHttpRequest(HTTP_METHOD.PUT, url, data)
+  put = async (data, id) => {
+    try {
+      const response = await fetch(`${this.fullPath}/${id}`, {
+        method: HTTP_METHOD.PUT,
+        headers: API_HEADERS,
+        body: JSON.stringify(data),
+      });
+      return response.json()
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }

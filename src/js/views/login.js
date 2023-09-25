@@ -49,6 +49,8 @@ export default class LoginView {
       password: this.passwordElement.value.trim() || '',
       confirmPassword: this.confirmPasswordElement.value.trim() || '',
     }
+
+    await this.signUpEvent(user)
   };
 
   bindUserSignIn() {
