@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: calc(55px - 20px);
+}
+
+.header-title {
+  color: var(--color-secondary);
+  font-size: var(--font-size-normal);
+}

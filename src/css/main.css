@@ -4,7 +4,10 @@
 @import url(./bases/variables.css);
 
 /* pages */
+@import url(./pages/top.css);
 @import url(./pages/login.css);
 
 /* components */
+@import url(./component/header.css);
+@import url(./component/search.css);
 @import url(./component/popup.css);
