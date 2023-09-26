@@ -5,46 +5,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/main.css">
-  <title>Sign In</title>
+  <title>Foods Management</title>
 </head>
 
 <body>
   <div class="container">
-    <main class="main-content">
-      <section class="section-login">
-        <div class="wrapper">
-          <div class="header-form">
-            <!-- Header  -->
-            <div class="header-title">
-              <h2 class="header-title-auth">My account</h2>
-            </div>
-            <div class="header-action-auth flex-center">
-              <button class="header-action-signIn active">Sign in</button>
-              <button class="header-action-register">Register</button>
-            </div>
+    <div class="wrapper">
+      <header class="header">
+        <a class="link-title" href="/">
+          <h1 class="header-title">Foods Management</h1>
+        </a>
+        <nav class="header-nav">
+          <div class="nav-heading">
+            <form class="form-search">
+              <img src="../assets/icon/icon_search.svg" class="icon-search" loading="eager" alt="search">
+              <input type="search" id="search" class="input-search" placeholder="Search for food, coffe, etc..">
+            </form>
+            <a class="nav-login" href="./login.html">
+              <img src="../assets/icon/icon_login.svg" class="icon-login" alt="login">
+            </a>
           </div>
-
-          <!-- Form  -->
-          <form class="form form-login" action="/">
-            <div class="input-group">
-              <input id="email" type="email" class="form-control" autocomplete placeholder="Email" />
-              <span id="email-error" class="error-message"></span>
-            </div>
-            <div class="input-group">
-              <input id="password" type="password" class="form-control" placeholder="Password" />
-              <span id="password-error" class="error-message"></span>
-            </div>
-            <div class="input-group hidden">
-              <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm password" />
-              <span id="confirmPassword-error" class="error-message"></span>
-            </div>
-            <button type="submit" class="btn-submit">Sign in</button>
-          </form>
-        </div>
-      </section>
-    </main>
+          <div class="nav-dropdown">
+            <img src="../assets/icon/icon_arrow.svg" class="icon-dropdown" loading="eager" alt="sort">
+            <p class="dropdown-title">Sort by</p>
+            <ul class="dropdown-content">
+              <li class="dropdown-item">
+                <a href="#">Sort by name</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="#">Sort by price</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="#">Sort by quantity</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+    <main class="main-content"></main>
   </div>
-  <script type="module" src="../js/main/loginMain.js"></script>
 </body>
 
 </html>
