@@ -12,26 +12,31 @@
   <div class="container">
     <div class="wrapper">
       <header class="header">
-        <h1 class="header-title">Foods Management</h1>
+        <a class="link-title" href="/">
+          <h1 class="header-title">Foods Management</h1>
+        </a>
         <nav class="header-nav">
           <div class="nav-heading">
             <form class="form-search">
-              <img src="../assets/icon/icon-search.svg" class="icon-search" loading="eager" alt="search">
+              <img src="../assets/icon/icon_search.svg" class="icon-search" loading="eager" alt="search">
               <input type="search" id="search" class="input-search" placeholder="Search for food, coffe, etc..">
             </form>
-            <a href="./login.html">login</a>
+            <a class="nav-login" href="./login.html">
+              <img src="../assets/icon/icon_login.svg" class="icon-login" alt="login">
+            </a>
           </div>
           <div class="nav-dropdown">
-            <button>Sort by</button>
+            <img src="../assets/icon/icon_arrow.svg" class="icon-dropdown" loading="eager" alt="sort">
+            <p class="dropdown-title">Sort by</p>
             <ul class="dropdown-content">
-              <li>
-                <a href="#"></a>
+              <li class="dropdown-item">
+                <a href="#">Sort by name</a>
               </li>
-              <li>
-                <a href="#"></a>
+              <li class="dropdown-item">
+                <a href="#">Sort by price</a>
               </li>
-              <li>
-                <a href="#"></a>
+              <li class="dropdown-item">
+                <a href="#">Sort by quantity</a>
               </li>
             </ul>
           </div>
