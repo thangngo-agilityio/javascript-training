@@ -34,7 +34,7 @@ export default class LoginView {
       email: this.emailElement.value.trim() || '',
       password: this.passwordElement.value.trim() || '',
     };
-    const isError = loginValidator(user, 'SIGNUP');
+    const isError = loginValidator(user, 'SIGNIN');
     const isEmpty = (object) => {
       return Object.keys(object).length === 0;
     }
@@ -46,10 +46,6 @@ export default class LoginView {
         clearError()
         await this.signInEvent(user)
       }
-    }
-
-    if (this.signInEvent) {
-      await this.signInEvent(user)
     }
   }
 
