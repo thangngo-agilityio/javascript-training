@@ -22,7 +22,7 @@ main {
 
 .wrapper {
   width: 1192px;
-  padding: 20px 42px;
+  padding: 20px 42px 25px;
   margin: 0 auto;
   background-color: var(--color-default);
   border-radius: var(--radius-primary);
