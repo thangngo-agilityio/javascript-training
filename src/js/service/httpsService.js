@@ -3,7 +3,9 @@ import {
   HTTP_METHOD,
   API_HEADERS
 } from '../constants/common';
-import { MOCK_API } from '../constants';
+import {
+  MOCK_API
+} from '../constants';
 
 // dotenv.config();
 
@@ -55,6 +57,23 @@ export default class HttpsService {
       throw new Error(error);
     }
   };
+
+  /**
+   * @description get data detail by id from server
+   * @param {String} path request path
+   * @param {String} id
+   * @returns data after request
+   */
+  getById = async (id, query) => {
+    try {
+      const url = `${this.fullPath}/${id}?${query}`;
+      const response = await fetch(url);
+
+      return response.json();
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 
   /**
    * @description delete data at server

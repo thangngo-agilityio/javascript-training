@@ -2,8 +2,8 @@ import LoginController from '../controllers/login';
 import LoginModel from '../models/login';
 import LoginView from '../views/login';
 
-const app = () => {
+export const appLogin = () => {
   new LoginController(new LoginModel(), new LoginView(LoginModel));
 };
 
-app();
+
