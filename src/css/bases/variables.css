@@ -1,12 +1,12 @@
 :root {
   /* color variable */
-  --color-default: #1F1D2B;
-  --color-primary: #EA7C69;
+  --color-default: #1f1d2b;
+  --color-primary: #EA7c69;
   --color-secondary: #fff;
   --color-error: #cc3333;
   --color-success: #4bb544;
   --color-light: #eaeaea;
-  --color-dark-grey: #505050;
+  --color-dark-grey: #393c49;
 
   /* font size */
   --font-size-default: 18px;

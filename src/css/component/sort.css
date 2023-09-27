@@ -5,7 +5,7 @@
   padding: 14px;
   align-items: center;
   border-radius: var(--radius-primary);
-  border: 1px solid #393c49;
+  border: 1px solid var(--color-dark-grey);
   gap: 10px;
   margin-left: auto;
   cursor: pointer;
@@ -22,7 +22,7 @@
   position: absolute;
   width: 162px;
   padding: 14px;
-  border: 1px solid #393c49;
+  border: 1px solid var(--color-dark-grey);
   border-radius: var(--radius-primary);
   box-shadow: var(--shadow-primary);
   top: 50px;
