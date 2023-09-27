@@ -72,9 +72,6 @@ export default class LoginView {
         await this.signUpEvent(user)
       }
     }
-
-
-
   };
 
   bindUserSignIn() {
