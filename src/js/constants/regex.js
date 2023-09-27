@@ -3,3 +3,7 @@ export const CHARACTERS_REGEX = /^(?=.*\d)[0-9a-zA-Z]{8,}$/;
 export const UPPERCASE_REGEX = /^(?=.*[A-Z]).*$/;
 export const LOWERCASE_REGEX = /^(?=.*[a-z]).*$/;
 export const A_CHARACTER_REGEX = /^(?=.*\d).*$/;
+export const NAME_CHARACTERS_REGEX = /[0-9a-zA-Z]{6,30}$/;
+export const PRICE_REGEX = /[0-9]{1,}$/;
+export const IMAGE_REGEX = /\.(jpe?g|png|gif|bmp)$/i;
+export const QUANTITY_REGEX = /[0-9]{1,}$/;

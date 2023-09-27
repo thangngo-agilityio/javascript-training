@@ -1,4 +1,4 @@
-import { validateConfirmPassword, validateEmail, validatePassword } from "./validataInput"
+import { validateConfirmPassword, validateEmail, validatePassword } from "./validateInput"
 
 /**
  * @description handle validate form sign in

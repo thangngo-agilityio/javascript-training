@@ -21,12 +21,9 @@ export default class ProductModel {
   /**
    * @description create new product item and save response to mock api return product item
    */
-  handleAddProduct = async (item) => {
+  handleAddProduct = async (data) => {
     const newProduct = {
-      name: item.name,
-      price: item.price,
-      images: item.images,
-      quantity: item.quantity,
+      ...data,
     };
 
     return await this.productService.post(newProduct)

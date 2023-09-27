@@ -8,3 +8,10 @@ export const HTTP_METHOD = {
 export const API_HEADERS = {
   'Content-Type': 'application/json',
 }
+
+export const PRODUCT_LIST = [
+  'Name',
+  'Price',
+  'Image',
+  'Quantity',
+]

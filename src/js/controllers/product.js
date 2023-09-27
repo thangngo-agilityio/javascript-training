@@ -6,7 +6,9 @@ export default class ProductController {
   }
 
   init = async () => {
-    this.view.displayProduct();
+    const getProduct = await this.model.getProduct()
+    await this.view.displayProduct(getProduct);
+
   }
 
 }

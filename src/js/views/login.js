@@ -12,7 +12,7 @@ import { loginValidator } from "../utils/validators/validateLogin";
  */
 export default class LoginView {
   constructor() {
-    this.loginForm = querySelector('.form-login');
+    this.loginForm = querySelector('#form-login');
     this.emailElement = getElementById('email');
     this.passwordElement = getElementById('password');
     this.confirmPasswordElement = getElementById('confirmPassword');
