@@ -23,7 +23,10 @@ export default class ProductModel {
    */
   handleAddProduct = async (data) => {
     const newProduct = {
-      ...data,
+      name: data.name,
+      price: Number(data.price),
+      image: data.image,
+      quantity: Number(data.quantity),
     };
 
     return await this.productService.post(newProduct)

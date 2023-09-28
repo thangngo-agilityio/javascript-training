@@ -59,20 +59,24 @@
         <h2 id="modal-title" class="modal-title">Edit</h2>
         <form id="modal-form" class="modal-form">
           <div class="form-item">
-            <label for="food" class="form-title">Name</label>
-            <input type="text" class="form-input" id="food" name="food">
+            <label for="name" class="form-title">Name</label>
+            <input type="text" class="form-input" id="name" name="name">
+            <p id="name-error" class="error-message"></p>
           </div>
           <div class="form-item">
             <label for="price" class="form-title">Price</label>
             <input type="number" class="form-input" id="price" name="price">
+            <p id="price-error" class="error-message"></p>
           </div>
           <div class="form-item">
             <label for="image" class="form-title">Image</label>
             <input type="text" class="form-input" id="image" name="image">
+            <p id="image-error" class="error-message"></p>
           </div>
-          <div class="form-item">
+          <div class="form-item is-special">
             <label for="quantity" class="form-title">Quantity</label>
             <input type="number" class="form-input is-size" id="quantity" name="quantity">
+            <p id="quantity-error" class="error-message"></p>
           </div>
           <div class="form-btn">
             <button id="close-btn" type="button" class="btn btn-cancel">Cancel</button>

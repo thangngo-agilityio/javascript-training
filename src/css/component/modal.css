@@ -13,7 +13,6 @@
 
 .manage-modal {
   width: 544px;
-  height: 625px;
   padding: 40px 50px;
   border-radius: 16px 16px 0px 16px;
   background: var(--color-default);
@@ -59,7 +58,10 @@
 
 .form-item .is-size {
   width: 50%;
-  margin-bottom: 70px;
+}
+
+.is-special {
+  margin-bottom: 60px;
 }
 
 .form-btn {

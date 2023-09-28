@@ -8,6 +8,7 @@ import {
   IMAGE_REGEX,
   NAME_CHARACTERS_REGEX,
   PRICE_REGEX,
+  QUANTITY_REGEX,
   UPPERCASE_REGEX
 } from "../../constants/regex";
 

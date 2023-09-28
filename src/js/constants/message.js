@@ -13,8 +13,16 @@ export const VALIDATE_MESSAGE = {
   lowercasePassWordError: 'Please enter at least 1 lowercase letter',
   ANumberCharacterPassWordError: 'Please enter at least 1 number character',
   confirmPasswordError: 'Password confirmation do not match password',
-  nameValid: 'Please enter at least 6 characters for name',
+  nameValid: 'Please enter at least 3 characters for name',
   priceValid: 'The food price cannot be empty and greater than 0',
   imageValid: 'The food image URL cannot be empty and must be in the right format',
-  quantityValid: 'The food quantity cannot be empty and must be an integer that greater than 0'
+  quantityValid: 'The food quantity cannot be empty and must be an integer that greater than 0',
+  getFailed: 'Get user failed',
 };
+
+export const PRODUCT_MESSAGE = {
+  addSuccess: 'Add product successfully!',
+  addFailed: 'Add product fail!',
+  removeSuccess: 'Remove successfully!',
+  removeFail: 'Remove fail!',
+}

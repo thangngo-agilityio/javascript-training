@@ -26,10 +26,8 @@ export class Popup {
     this.currentPopupCount++;
 
     popup.innerHTML = `<div class="popup-body">
-                        <h3 class="popup-title">${title}</h3>
                         <p class="popup-message">${message}</p>
-                      </div>
-                      <button class="popup-close">&times;</button>`;
+                      </div>`;
 
     requestAnimationFrame(() => {
       const topPosition = this.currentPopupCount * (popup.offsetHeight + this.verticalOffset);

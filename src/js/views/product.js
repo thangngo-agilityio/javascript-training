@@ -10,6 +10,7 @@ import {
   getFormValues
 } from "../utils/formValue";
 import {
+  clearError,
   showError
 } from "../utils/validators/formError";
 import {
@@ -32,8 +33,6 @@ export default class ProductView {
     this.priceElement = querySelector('#price');
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
-
-    this.products = null
   }
 
   handleAddProduct = async (e) => {
@@ -41,13 +40,15 @@ export default class ProductView {
     const formValues = getFormValues(this.modalForm)
 
     const errorMessage = validateForm(formValues);
+    console.log(errorMessage);
+
 
     if (Object.keys(errorMessage).length !== 0) {
-      showError(errorMessage, this.modalForm)
+      showError(errorMessage)
+      console.log(errorMessage);
     } else {
-
       this.btnSave.setAttribute('disabled', '');
-      await this.addProduct(formValues);
+      await this.addCard(formValues);
       this.modalForm.reset();
       this.modalMain.remove();
     }
@@ -55,7 +56,8 @@ export default class ProductView {
 
   bindAddProduct = (handler) => {
     this.btnSave.addEventListener('click', () => {
-      this.addProduct = handler;
+      this.addCard = handler;
+      clearError()
     })
 
     this.modalForm.addEventListener('submit', this.handleAddProduct)
@@ -63,12 +65,21 @@ export default class ProductView {
 
   displayProduct(data) {
     console.log(data);
+    if (this.listProduct.lastElementChild !== null) {
+      while (this.listProduct.lastElementChild.id !== 'add-card') {
+        this.listProduct.removeChild(this.listProduct.lastElementChild)
+      }
+    }
 
-    const divProduct = createElement('div');
-    divProduct.classList.add('product-card')
-    divProduct.innerHTML = productTemplate(delIcon, data)
-    this.listProduct.append(divProduct)
+    if (data) {
+      data.forEach(product => {
+        const divProduct = createElement('div')
+        divProduct.setAttribute('class', 'product-card')
+        divProduct.innerHTML = productTemplate(delIcon, product)
 
+        this.listProduct.append(divProduct);
+      })
+    }
 
     this.bindManageEvent();
   }
