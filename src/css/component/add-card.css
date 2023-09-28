@@ -46,6 +46,7 @@
 
 .manage-card:hover {
   background-color: var(--color-primary);
+  box-shadow: 0px 8px 24px 0px rgba(234, 124, 105, 0.40);
 }
 
 .manage-card:hover .manage-title {
