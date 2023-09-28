@@ -55,8 +55,8 @@ export default class LoginController {
       this.popup.success({ message: AUTHEN_MESSAGE.registerSuccess })
       localStorage.setItem('LOGIN', dataUserSignup.id)
       setTimeout(() => {
-        redirect('/')
-      }, 3000);
+        redirect('/login')
+      }, 1000);
     }
   }
 
