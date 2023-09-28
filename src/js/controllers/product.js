@@ -4,7 +4,6 @@ import {
 import {
   Popup
 } from "../helpers/renderPopup";
-import { buildQueryString } from "../utils/buildQueyry";
 
 export default class ProductController {
   popup = new Popup()
