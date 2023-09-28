@@ -17,7 +17,6 @@ import {
 } from "../utils/validators/validateForm";
 
 import delIcon from '../../assets/icon/icon_del.svg';
-import editIcon from '../../assets/icon/icon_edit.svg'
 
 
 export default class ProductView {
@@ -67,7 +66,7 @@ export default class ProductView {
 
     const divProduct = createElement('div');
     divProduct.classList.add('product-card')
-    divProduct.innerHTML = productTemplate(delIcon, editIcon, data)
+    divProduct.innerHTML = productTemplate(delIcon, data)
     this.listProduct.append(divProduct)
 
 
