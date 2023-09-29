@@ -31,4 +31,8 @@ export default class ProductModel {
 
     return await this.productService.post(newProduct)
   }
+
+  handleDelProduct = async (id) => {
+    return await this.productService.delete(id);
+  }
 }
