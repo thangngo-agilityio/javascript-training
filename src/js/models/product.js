@@ -35,4 +35,8 @@ export default class ProductModel {
   handleDelProduct = async (id) => {
     return await this.productService.delete(id);
   }
+
+  handleEditProduct = async (data, id) => {
+    return await this.productService.put(data, id)
+  }
 }

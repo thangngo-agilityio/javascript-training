@@ -63,9 +63,9 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      this.btnSave.setAttribute('disabled', '');
       await this.addCard(formValues);
       this.modalForm.reset();
+      this.modalMain.classList.add('hidden')
     }
   };
 
@@ -75,7 +75,8 @@ export default class ProductView {
       const target = e.target;
       const btnDel = target.closest('.btn-del');
       const productId = btnDel.dataset.id;
-      if (btnDel) {
+
+      if (productId) {
         const container = querySelector('.container');
 
         const modalOverlay = createElement('div');
@@ -123,8 +124,8 @@ export default class ProductView {
   bindAddProduct = (handler) => {
     this.btnSave.addEventListener('click', () => {
       this.addCard = handler;
+      console.log(this.addCard = handler);
       clearError();
-      this.modalMain.classList.add('hidden');
     });
 
     this.modalForm.addEventListener('submit', this.handleAddProduct);
@@ -133,6 +134,7 @@ export default class ProductView {
   bindDelProduct = (handler) => {
     this.handlerDelProduct(handler);
   };
+
 
   bindManageEvent() {
     this.addProduct.addEventListener('click', () => {

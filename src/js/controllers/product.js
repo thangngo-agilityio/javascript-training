@@ -33,10 +33,10 @@ export default class ProductController {
   addProduct = async (data) => {
     try {
       await this.model.handleAddProduct(data);
+      await this.showProduct(this.view.query);
       this.popup.success({
         message: PRODUCT_MESSAGE.addSuccess,
       });
-      await this.showProduct(this.view.query);
     } catch {
       this.popup.error({
         message: PRODUCT_MESSAGE.addFailed,
