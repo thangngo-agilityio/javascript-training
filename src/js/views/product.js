@@ -1,9 +1,21 @@
-import { createElement, querySelector } from '../helpers/doms';
-import { productTemplate } from '../templates/productCard';
+import {
+  createElement,
+  querySelector
+} from '../helpers/doms';
+import {
+  productTemplate
+} from '../templates/productCard';
 // utils
-import { getFormValues } from '../utils/formValue';
-import { clearError, showError } from '../utils/validators/formError';
-import { validateForm } from '../utils/validators/validateForm';
+import {
+  getFormValues
+} from '../utils/formValue';
+import {
+  clearError,
+  showError
+} from '../utils/validators/formError';
+import {
+  validateForm
+} from '../utils/validators/validateForm';
 
 import delIcon from '../../assets/icon/icon_del.svg';
 
@@ -39,7 +51,6 @@ export default class ProductView {
       });
     }
 
-    this.bindDelProduct(data);
     this.bindManageEvent();
   }
 
@@ -48,27 +59,27 @@ export default class ProductView {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
-    console.log(errorMessage);
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
-      console.log(errorMessage);
     } else {
       this.btnSave.setAttribute('disabled', '');
       await this.addCard(formValues);
       this.modalForm.reset();
-      this.modalMain.remove();
     }
   };
 
-  handlerDelProduct = (handler) => {
-    const modalContent = this.listProduct.querySelector('.product-card');
+  handlerDelProduct(handler) {
+    const modalContent = this.listProduct
     modalContent.addEventListener('click', (e) => {
       const target = e.target;
       const btnDel = target.closest('.btn-del');
       const productId = btnDel.dataset.id;
-      if (productId > 0) {
+      if (btnDel) {
         const container = querySelector('.container');
+
+        const modalOverlay = createElement('div');
+        modalOverlay.setAttribute('class', 'modal-overlay');
 
         const modalConfirm = createElement('div');
         modalConfirm.setAttribute('class', 'modal-confirm');
@@ -91,16 +102,19 @@ export default class ProductView {
 
         modalConfirm.append(titleConfirm, groupBtn);
 
-        container.appendChild(modalConfirm);
+        modalOverlay.appendChild(modalConfirm);
+
+        container.appendChild(modalOverlay);
 
         confirmCancel.addEventListener('click', () => {
-          modalConfirm.classList.add('hidden');
+          modalOverlay.classList.add('hidden');
         });
 
         confirmYes.addEventListener('click', () => {
-          handler(productId)
-          console.log(handler);
-          modalContent.remove()
+          if (confirmYes) {
+            handler(productId);
+            modalOverlay.remove()
+          }
         });
       }
     });
@@ -110,6 +124,7 @@ export default class ProductView {
     this.btnSave.addEventListener('click', () => {
       this.addCard = handler;
       clearError();
+      this.modalMain.classList.add('hidden');
     });
 
     this.modalForm.addEventListener('submit', this.handleAddProduct);

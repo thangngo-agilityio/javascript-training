@@ -33,6 +33,6 @@ export default class ProductModel {
   }
 
   handleDelProduct = async (id) => {
-    return await this.HttpsService.delete(id);
+    return await this.productService.delete(id);
   }
 }

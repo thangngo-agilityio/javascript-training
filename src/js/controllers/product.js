@@ -1,5 +1,10 @@
-import { PRODUCT_MESSAGE, VALIDATE_MESSAGE } from '../constants/message';
-import { Popup } from '../helpers/renderPopup';
+import {
+  PRODUCT_MESSAGE,
+  VALIDATE_MESSAGE
+} from '../constants/message';
+import {
+  Popup
+} from '../helpers/renderPopup';
 
 export default class ProductController {
   popup = new Popup();
@@ -20,7 +25,9 @@ export default class ProductController {
 
       this.view.displayProduct(data);
     } catch (error) {
-      this.popup.error({ message: VALIDATE_MESSAGE.getFailed });
+      this.popup.error({
+        message: VALIDATE_MESSAGE.getFailed
+      });
     }
   };
   addProduct = async (data) => {
@@ -41,9 +48,13 @@ export default class ProductController {
     try {
       await this.model.handleDelProduct(id);
       await this.showProduct(this.view.query);
-      this.popup.success({ message: PRODUCT_MESSAGE.removeSuccess });
+      this.popup.success({
+        message: PRODUCT_MESSAGE.removeSuccess
+      });
     } catch {
-      this.popup.error({ message: PRODUCT_MESSAGE.removeFail });
+      this.popup.error({
+        message: PRODUCT_MESSAGE.removeFail
+      });
     }
   };
 }
