@@ -25,4 +25,6 @@ export const PRODUCT_MESSAGE = {
   addFailed: 'Add product fail!',
   removeSuccess: 'Remove successfully!',
   removeFail: 'Remove fail!',
+  editSuccess: 'Edit successfully!',
+  editFail: 'Edit fail!',
 }

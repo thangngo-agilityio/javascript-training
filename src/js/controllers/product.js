@@ -15,13 +15,15 @@ export default class ProductController {
   }
 
   init = async () => {
-    await this.showProduct(this.view.query);
+    await this.showProduct();
     this.view.bindAddProduct(this.addProduct);
     this.view.bindDelProduct(this.delProduct);
+    this.view.bindDetailProduct(this.detailProduct);
+    this.view.bindUpdateUser(this.editProduct);
   };
-  showProduct = async (query) => {
+  showProduct = async () => {
     try {
-      const data = await this.model.getProduct(query);
+      const data = await this.model.getProduct();
 
       this.view.displayProduct(data);
     } catch (error) {
@@ -33,7 +35,7 @@ export default class ProductController {
   addProduct = async (data) => {
     try {
       await this.model.handleAddProduct(data);
-      await this.showProduct(this.view.query);
+      await this.showProduct();
       this.popup.success({
         message: PRODUCT_MESSAGE.addSuccess,
       });
@@ -47,7 +49,7 @@ export default class ProductController {
   delProduct = async (id) => {
     try {
       await this.model.handleDelProduct(id);
-      await this.showProduct(this.view.query);
+      await this.showProduct();
       this.popup.success({
         message: PRODUCT_MESSAGE.removeSuccess
       });
@@ -57,4 +59,27 @@ export default class ProductController {
       });
     }
   };
+
+  detailProduct = async (id) => {
+    try {
+      const data = this.model.getProduct(id)
+      await this.view.bindDetailProduct(data);
+    } catch {
+      this.popup.error({ message: VALIDATE_MESSAGE.getFailed})
+    }
+  }
+
+  editProduct = async (data) => {
+    try {
+      await this.model.handleEditProduct(data, data.id);
+      await this.showProduct();
+      this.popup.success({
+        message: PRODUCT_MESSAGE.editSuccess
+      })
+    } catch {
+      this.popup.error({
+        message: PRODUCT_MESSAGE.editFail
+      });
+    }
+  }
 }
