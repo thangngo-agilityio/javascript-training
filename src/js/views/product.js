@@ -22,13 +22,14 @@ import delIcon from '../../assets/icon/icon_del.svg';
 export default class ProductView {
   constructor() {
     this.listProduct = querySelector('.manage-list');
-    this.addProduct = querySelector('.manage-card');
+    this.addProduct = querySelector('#add-card');
     this.modalMain = querySelector('#modal-main');
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
-    this.btnSave = querySelector('#save-btn');
+    this.btnAdd = querySelector('.btn-add-product');
+    this.btnEdit = querySelector('.btn-edit-product');
     this.btnClose = querySelector('#close-btn');
-    this.nameElement = querySelector('#food');
+    this.nameElement = querySelector('#name');
     this.priceElement = querySelector('#price');
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
@@ -50,12 +51,33 @@ export default class ProductView {
         this.listProduct.append(divProduct);
       });
     }
-
     this.bindManageEvent();
   }
 
-  handleAddProduct = async (e) => {
-    e.preventDefault();
+  renderProductDetail(data) {
+    this.modalMain.classList.remove('hidden');
+    this.modalTitle.textContent = 'Edit';
+    this.btnEdit.classList.remove('hidden');
+    this.btnAdd.classList.add('hidden');
+
+    this.nameElement.value = data.name || '';
+    this.priceElement.value = data.price || '';
+    this.imageElement.value = data.image || '';
+    this.quantityElement.value = data.quantity || '';
+
+    this.btnEdit.setAttribute('id', data.id);
+
+    const btnId = this.btnEdit.getAttribute('id')
+    console.log(btnId);
+    if (btnId) {
+      this.btnEdit.addEventListener('click', () => {
+        this.bindSubmitEditProduct(data.id);
+        console.log('edit', data.id);
+      });
+    }
+  }
+
+  handleAddProduct = async (handler) => {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
@@ -63,19 +85,23 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      this.btnSave.setAttribute('disabled', '');
-      await this.addCard(formValues);
+      console.log('submit add');
+      await handler(formValues);
       this.modalForm.reset();
+      this.btnAdd.classList.add('hidden');
+      this.btnEdit.classList.remove('hidden');
+      this.modalMain.classList.add('hidden');
     }
   };
 
   handlerDelProduct(handler) {
-    const modalContent = this.listProduct
+    const modalContent = this.listProduct;
     modalContent.addEventListener('click', (e) => {
       const target = e.target;
       const btnDel = target.closest('.btn-del');
-      const productId = btnDel.dataset.id;
+
       if (btnDel) {
+        const productId = btnDel.dataset.id;
         const container = querySelector('.container');
 
         const modalOverlay = createElement('div');
@@ -113,34 +139,73 @@ export default class ProductView {
         confirmYes.addEventListener('click', () => {
           if (confirmYes) {
             handler(productId);
-            modalOverlay.remove()
+            modalOverlay.remove();
           }
         });
       }
     });
+  }
+
+  handlerDetailProduct = (handler) => {
+    this.listProduct.addEventListener('click', async (e) => {
+      const target = e.target;
+      const btnEdit = target.closest('.btn-edit');
+      if (btnEdit) {
+        const idProduct = target.dataset.id;
+        await handler(idProduct);
+      }
+    });
+  };
+
+  handlerEditProduct = async (id) => {
+    const formValues = getFormValues(this.modalForm);
+    console.log(formValues);
+
+    const errorMessage = validateForm(formValues);
+
+    if (Object.keys(errorMessage).length !== 0) {
+      showError(errorMessage);
+    } else {
+      console.log('submit edit');
+      await this.updateProduct({
+        ...formValues,
+        id
+      });
+      this.modalForm.reset();
+      this.modalMain.classList.add('hidden');
+    }
   };
 
   bindAddProduct = (handler) => {
-    this.btnSave.addEventListener('click', () => {
-      this.addCard = handler;
-      clearError();
-      this.modalMain.classList.add('hidden');
+    this.btnAdd.addEventListener('click', (e) => {
+      e.preventDefault()
+      this.handleAddProduct(handler)
     });
-
-    this.modalForm.addEventListener('submit', this.handleAddProduct);
   };
 
   bindDelProduct = (handler) => {
     this.handlerDelProduct(handler);
   };
 
+  bindDetailProduct = (handler) => {
+    this.handlerDetailProduct(handler);
+  };
+
+  bindSubmitEditProduct = (id) => {
+    this.handlerEditProduct(id);
+  };
+
   bindManageEvent() {
     this.addProduct.addEventListener('click', () => {
       this.modalTitle.textContent = 'Create a new food';
+      this.btnAdd.classList.remove('hidden');
+      this.btnEdit.classList.add('hidden');
       this.modalMain.classList.remove('hidden');
     });
 
     this.btnClose.addEventListener('click', () => {
+      this.modalForm.reset();
+      clearError()
       this.modalMain.classList.add('hidden');
     });
   }
