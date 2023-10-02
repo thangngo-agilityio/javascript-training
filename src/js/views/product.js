@@ -1,32 +1,20 @@
-import {
-  createElement,
-  querySelector
-} from '../helpers/doms';
-import {
-  productTemplate
-} from '../templates/productCard';
+import { createElement, querySelector } from '../helpers/doms';
+import { productTemplate } from '../templates/productCard';
 // utils
-import {
-  getFormValues
-} from '../utils/formValue';
-import {
-  clearError,
-  showError
-} from '../utils/validators/formError';
-import {
-  validateForm
-} from '../utils/validators/validateForm';
+import { getFormValues } from '../utils/formValue';
+import { clearError, showError } from '../utils/validators/formError';
+import { validateForm } from '../utils/validators/validateForm';
 
 import delIcon from '../../assets/icon/icon_del.svg';
 
 export default class ProductView {
   constructor() {
     this.listProduct = querySelector('.manage-list');
-    this.addProduct = querySelector('.manage-card');
+    this.addProduct = querySelector('#add-card');
     this.modalMain = querySelector('#modal-main');
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
-    this.btnSave = querySelector('#save-btn');
+    this.btnSave = querySelector('.btn-save');
     this.btnClose = querySelector('#close-btn');
     this.nameElement = querySelector('#name');
     this.priceElement = querySelector('#price');
@@ -35,6 +23,12 @@ export default class ProductView {
   }
 
   displayProduct(data) {
+    if (this.listProduct.lastElementChild !== null) {
+      while (this.listProduct.lastElementChild.id !== 'add-card') {
+        this.listProduct.removeChild(this.listProduct.lastElementChild);
+      }
+    }
+
     if (data) {
       data.forEach((product) => {
         const divProduct = createElement('div');
@@ -44,8 +38,38 @@ export default class ProductView {
         this.listProduct.append(divProduct);
       });
     }
-    this.bindDetailProduct(data)
     this.bindManageEvent();
+  }
+
+  renderProductDetail(data) {
+    this.modalMain.classList.remove('hidden');
+    this.nameElement.value = data.name || '';
+    this.priceElement.value = data.price || '';
+    this.imageElement.value = data.image || '';
+    this.quantityElement.value = data.quantity || '';
+
+    this.btnSave.setAttribute('id', data.id);
+
+    const btnId = this.btnSave.getAttribute('id');
+
+    if (btnId) {
+      this.btnSave.addEventListener('click', () => {
+        this.bindSubmitEditProduct(data.id);
+        console.log('edit');
+        this.btnSave.removeAttribute('id');
+      });
+    }
+
+    // const btnEditProduct = querySelector('.btn-edit_product');
+    // // const btnAddProduct = querySelector('.btn-add_product');
+    // btnEditProduct.addEventListener('click', () => {
+    //   // if (!btnAddProduct) {
+    //     this.bindSubmitEditProduct(data.id);
+    //     console.log('edit');
+    //   // } else {
+    //   //   this.btnSave.classList.remove('btn-add_product');
+    //   // }
+    // });
   }
 
   handleAddProduct = async (e) => {
@@ -57,20 +81,25 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
+      // const btnEditProduct = querySelector('.btn-edit_product');
+      // if (!btnEditProduct) {
       await this.addCard(formValues);
       this.modalForm.reset();
-      this.modalMain.classList.add('hidden')
+      this.modalMain.classList.add('hidden');
+      // } else {
+      //   this.btnSave.classList.remove('btn-edit_product');
+      // }
     }
   };
 
   handlerDelProduct(handler) {
-    const modalContent = this.listProduct
+    const modalContent = this.listProduct;
     modalContent.addEventListener('click', (e) => {
       const target = e.target;
       const btnDel = target.closest('.btn-del');
-      const productId = btnDel.dataset.id;
 
-      if (productId) {
+      if (btnDel) {
+        const productId = btnDel.dataset.id;
         const container = querySelector('.container');
 
         const modalOverlay = createElement('div');
@@ -108,34 +137,25 @@ export default class ProductView {
         confirmYes.addEventListener('click', () => {
           if (confirmYes) {
             handler(productId);
-            modalOverlay.remove()
+            modalOverlay.remove();
           }
         });
       }
     });
-  };
-
-  handleDetailProduct(data) {
-    const index = [...data].find(i => i.id)
-    console.log(data);
-    this.nameElement.value = index.name
-    this.priceElement.value = index.price
-    this.imageElement.value = index.image
-    this.quantityElement.value = index.quantity
-
-    this.listProduct.addEventListener('click', (e) => {
-      const target = e.target
-      const btnEdit = target.closest('.btn-edit')
-      const productId = btnEdit.dataset.id
-      if (productId === index.id) {
-        console.log(index.id);
-        this.modalMain.classList.remove('hidden')
-        this.submitEditProduct(data)
-      }
-    })
   }
 
-  async handlerUpdateUser(data) {
+  handlerDetailProduct = (handler) => {
+    this.listProduct.addEventListener('click', async (e) => {
+      const target = e.target;
+      const btnEdit = target.closest('.btn-edit');
+      if (btnEdit) {
+        const idProduct = target.dataset.id;
+        await handler(idProduct);
+      }
+    });
+  };
+
+  handlerEditProduct = async (id) => {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
@@ -143,22 +163,16 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      await this.bindUpdateUser({ ...formValues, data});
+      await this.updateProduct({ ...formValues, id });
       this.modalForm.reset();
-      this.modalMain.classList.add('hidden')
+      this.modalMain.classList.add('hidden');
     }
-  }
-
-  submitEditProduct(data) {
-    this.modalForm.addEventListener('submit', () => {
-      this.handlerUpdateUser(data)
-    })
-  }
+  };
 
   bindAddProduct = (handler) => {
     this.btnSave.addEventListener('click', () => {
+      console.log('add');
       this.addCard = handler;
-      console.log(this.addCard = handler);
       clearError();
     });
 
@@ -169,9 +183,15 @@ export default class ProductView {
     this.handlerDelProduct(handler);
   };
 
-  bindDetailProduct = (data) => {
-    this.handleDetailProduct(data)
-  }
+  bindDetailProduct = (handler) => {
+    this.handlerDetailProduct(handler);
+  };
+
+  bindSubmitEditProduct = (id) => {
+    this.modalForm.addEventListener('submit', () => {
+      this.handlerEditProduct(id);
+    });
+  };
 
   bindManageEvent() {
     this.addProduct.addEventListener('click', () => {
@@ -180,7 +200,7 @@ export default class ProductView {
     });
 
     this.btnClose.addEventListener('click', () => {
-      this.modalForm.reset()
+      this.modalForm.reset();
       this.modalMain.classList.add('hidden');
     });
   }

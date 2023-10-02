@@ -19,7 +19,7 @@ export default class ProductController {
     this.view.bindAddProduct(this.addProduct);
     this.view.bindDelProduct(this.delProduct);
     this.view.bindDetailProduct(this.detailProduct);
-    this.view.bindUpdateUser(this.editProduct);
+    this.view.updateProduct = this.editProduct;
   };
   showProduct = async () => {
     try {
@@ -62,8 +62,8 @@ export default class ProductController {
 
   detailProduct = async (id) => {
     try {
-      const data = this.model.getProduct(id)
-      await this.view.bindDetailProduct(data);
+      const data = await this.model.getProductId(id)
+      await this.view.renderProductDetail(data);
     } catch {
       this.popup.error({ message: VALIDATE_MESSAGE.getFailed})
     }

@@ -19,6 +19,15 @@ export default class ProductModel {
   }
 
   /**
+   * @description get id product from server
+   * @return list product return after make a GET request to server
+   */
+
+  async getProductId(id) {
+    return await this.productService.getById(id)
+  }
+
+  /**
    * @description create new product item and save response to mock api return product item
    */
   handleAddProduct = async (data) => {
