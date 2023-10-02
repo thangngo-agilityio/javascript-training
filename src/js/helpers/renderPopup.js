@@ -35,11 +35,11 @@ export class Popup {
       popup.style.top = `${topPosition}px`;
     });
 
-    // Auto remove popup after 5 seconds
+    // Auto remove popup after 1 seconds
     setTimeout(() => {
       popup.remove();
       this.currentPopupCount--;
-    }, 5000);
+    }, 1000);
 
     popup.onclick = (e) => {
       const target = e.target;

@@ -1,9 +1,21 @@
-import { createElement, querySelector } from '../helpers/doms';
-import { productTemplate } from '../templates/productCard';
+import {
+  createElement,
+  querySelector
+} from '../helpers/doms';
+import {
+  productTemplate
+} from '../templates/productCard';
 // utils
-import { getFormValues } from '../utils/formValue';
-import { clearError, showError } from '../utils/validators/formError';
-import { validateForm } from '../utils/validators/validateForm';
+import {
+  getFormValues
+} from '../utils/formValue';
+import {
+  clearError,
+  showError
+} from '../utils/validators/formError';
+import {
+  validateForm
+} from '../utils/validators/validateForm';
 
 import delIcon from '../../assets/icon/icon_del.svg';
 
@@ -14,7 +26,8 @@ export default class ProductView {
     this.modalMain = querySelector('#modal-main');
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
-    this.btnSave = querySelector('.btn-save');
+    this.btnAdd = querySelector('.btn-add-product');
+    this.btnEdit = querySelector('.btn-edit-product');
     this.btnClose = querySelector('#close-btn');
     this.nameElement = querySelector('#name');
     this.priceElement = querySelector('#price');
@@ -43,37 +56,28 @@ export default class ProductView {
 
   renderProductDetail(data) {
     this.modalMain.classList.remove('hidden');
+    this.modalTitle.textContent = 'Edit';
+    this.btnEdit.classList.remove('hidden');
+    this.btnAdd.classList.add('hidden');
+
     this.nameElement.value = data.name || '';
     this.priceElement.value = data.price || '';
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
 
-    this.btnSave.setAttribute('id', data.id);
+    this.btnEdit.setAttribute('id', data.id);
 
-    const btnId = this.btnSave.getAttribute('id');
-
+    const btnId = this.btnEdit.getAttribute('id')
+    console.log(btnId);
     if (btnId) {
-      this.btnSave.addEventListener('click', () => {
+      this.btnEdit.addEventListener('click', () => {
         this.bindSubmitEditProduct(data.id);
-        console.log('edit');
-        this.btnSave.removeAttribute('id');
+        console.log('edit', data.id);
       });
     }
-
-    // const btnEditProduct = querySelector('.btn-edit_product');
-    // // const btnAddProduct = querySelector('.btn-add_product');
-    // btnEditProduct.addEventListener('click', () => {
-    //   // if (!btnAddProduct) {
-    //     this.bindSubmitEditProduct(data.id);
-    //     console.log('edit');
-    //   // } else {
-    //   //   this.btnSave.classList.remove('btn-add_product');
-    //   // }
-    // });
   }
 
-  handleAddProduct = async (e) => {
-    e.preventDefault();
+  handleAddProduct = async (handler) => {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
@@ -81,14 +85,12 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      // const btnEditProduct = querySelector('.btn-edit_product');
-      // if (!btnEditProduct) {
-      await this.addCard(formValues);
+      console.log('submit add');
+      await handler(formValues);
       this.modalForm.reset();
+      this.btnAdd.classList.add('hidden');
+      this.btnEdit.classList.remove('hidden');
       this.modalMain.classList.add('hidden');
-      // } else {
-      //   this.btnSave.classList.remove('btn-edit_product');
-      // }
     }
   };
 
@@ -157,26 +159,28 @@ export default class ProductView {
 
   handlerEditProduct = async (id) => {
     const formValues = getFormValues(this.modalForm);
+    console.log(formValues);
 
     const errorMessage = validateForm(formValues);
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      await this.updateProduct({ ...formValues, id });
+      console.log('submit edit');
+      await this.updateProduct({
+        ...formValues,
+        id
+      });
       this.modalForm.reset();
       this.modalMain.classList.add('hidden');
     }
   };
 
   bindAddProduct = (handler) => {
-    this.btnSave.addEventListener('click', () => {
-      console.log('add');
-      this.addCard = handler;
-      clearError();
+    this.btnAdd.addEventListener('click', (e) => {
+      e.preventDefault()
+      this.handleAddProduct(handler)
     });
-
-    this.modalForm.addEventListener('submit', this.handleAddProduct);
   };
 
   bindDelProduct = (handler) => {
@@ -188,19 +192,20 @@ export default class ProductView {
   };
 
   bindSubmitEditProduct = (id) => {
-    this.modalForm.addEventListener('submit', () => {
-      this.handlerEditProduct(id);
-    });
+    this.handlerEditProduct(id);
   };
 
   bindManageEvent() {
     this.addProduct.addEventListener('click', () => {
       this.modalTitle.textContent = 'Create a new food';
+      this.btnAdd.classList.remove('hidden');
+      this.btnEdit.classList.add('hidden');
       this.modalMain.classList.remove('hidden');
     });
 
     this.btnClose.addEventListener('click', () => {
       this.modalForm.reset();
+      clearError()
       this.modalMain.classList.add('hidden');
     });
   }

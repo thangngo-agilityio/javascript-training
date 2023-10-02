@@ -21,6 +21,7 @@ export default class ProductController {
     this.view.bindDetailProduct(this.detailProduct);
     this.view.updateProduct = this.editProduct;
   };
+
   showProduct = async () => {
     try {
       const data = await this.model.getProduct();
@@ -32,13 +33,14 @@ export default class ProductController {
       });
     }
   };
+
   addProduct = async (data) => {
     try {
       await this.model.handleAddProduct(data);
-      await this.showProduct();
       this.popup.success({
         message: PRODUCT_MESSAGE.addSuccess,
       });
+      await this.showProduct();
     } catch {
       this.popup.error({
         message: PRODUCT_MESSAGE.addFailed,
