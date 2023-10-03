@@ -6,7 +6,7 @@ import { clearError, showError } from "../utils/validators/formError";
 import { loginValidator } from "../utils/validators/validateLogin";
 
 /**
- * @class UserView
+ * @class LoginView
  *
  * Manages view data user
  */
