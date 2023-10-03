@@ -1,13 +1,33 @@
-import { createElement, querySelector } from '../helpers/doms';
-import { productTemplate } from '../templates/productCard';
+// DOM common
+import {
+  createElement,
+  querySelector
+} from '../helpers/doms';
+import {
+  productTemplate
+} from '../templates/productCard';
 // utils
-import { getFormValues } from '../utils/formValue';
-import { clearError, showError } from '../utils/validators/formError';
-import { validateForm } from '../utils/validators/validateForm';
-
+import {
+  getFormValues
+} from '../utils/formValue';
+import {
+  clearError,
+  showError
+} from '../utils/validators/formError';
+import {
+  validateForm
+} from '../utils/validators/validateForm';
+import {
+  debounce
+} from '../utils/debounce';
+// images
 import delIcon from '../../assets/icon/icon_del.svg';
-import { debounce } from '../utils/debounce';
 
+/**
+ * @class ProductView
+ *
+ * Manages view data user
+ */
 export default class ProductView {
   constructor() {
     this.listProduct = querySelector('.manage-list');
@@ -44,6 +64,9 @@ export default class ProductView {
     this.bindManageEvent();
   }
 
+  /**
+   * @description render product detail for edit card.
+   */
   renderProductDetail(data) {
     this.modalMain.classList.remove('hidden');
     this.modalTitle.textContent = 'Edit';
@@ -54,16 +77,17 @@ export default class ProductView {
     this.priceElement.value = data.price || '';
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
-    console.log('data view:', data);
 
-    this.btnEdit.addEventListener('click', (e) => {
-      e.preventDefault();
-
+    this.btnEdit.addEventListener('click', () => {
       this.handlerEditProduct(data.id);
-      console.log('click btn:', data.id);
+      console.log('click: ', data.id);
     });
+
   }
 
+  /**
+   * @description handler add product
+   */
   handleAddProduct = async (handler) => {
     const formValues = getFormValues(this.modalForm);
 
@@ -80,6 +104,9 @@ export default class ProductView {
     }
   };
 
+  /**
+   * @description handler delete product
+   */
   handlerDelProduct(handler) {
     const modalContent = this.listProduct;
     modalContent.addEventListener('click', (e) => {
@@ -132,36 +159,85 @@ export default class ProductView {
     });
   }
 
+  /**
+   * @description handler detail product
+   */
   handlerDetailProduct = (handler) => {
     this.listProduct.addEventListener('click', async (e) => {
       const target = e.target;
       const btnEdit = target.closest('.btn-edit');
+      const idProduct = target.dataset.id;
+
       if (btnEdit) {
-        const idProduct = target.dataset.id;
-        await handler(idProduct);
+        if (idProduct !== undefined) {
+          await handler(idProduct);
+        }
       }
     });
   };
 
+  /**
+   * @description handler edit product
+   */
   handlerEditProduct = async (id) => {
     const formValues = getFormValues(this.modalForm);
-    console.log('handle edit:', id);
 
     const errorMessage = validateForm(formValues);
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      if (id) {
-        await this.updateProduct({
-          ...formValues,
-          id,
-        });
-        this.modalForm.reset();
-        this.modalMain.classList.add('hidden');
-      }
+      await this.updateProduct({
+        ...formValues,
+        id,
+      });
+      this.modalForm.reset();
+      this.btnEdit.removeEventListener('click', this.handlerEditProduct(id))
+      this.modalMain.classList.add('hidden');
     }
   };
+
+  /**
+   * @description handler sort product
+   */
+  handlerSortProduct = async (data) => {
+    const sortSelect = querySelector('.sort-dropdown')
+
+    sortSelect.addEventListener('change', (e) => {
+      const target = e.target.value
+      if (target == 'name-asc') {
+        data.sort((nameFirst, nameSecond) => {
+          if (nameFirst.name < nameSecond.name) return -1;
+          if (nameFirst.name > nameSecond.name) return 1;
+          return 0;
+        })
+      } else if (target == 'name-dec') {
+        data.sort((nameFirst, nameSecond) => {
+          if (nameFirst.name > nameSecond.name) return -1;
+          if (nameFirst.name < nameSecond.name) return 1;
+          return 0;
+        })
+      } else if (target == 'price-asc') {
+        data.sort((priceFirst, priceSecond) => {
+          if (priceFirst.price < priceSecond.price) return -1;
+          if (priceFirst.price > priceSecond.price) return 1;
+          return 0;
+        })
+      } else if (target == 'price-dec') {
+        data.sort((priceFirst, priceSecond) => {
+          if (priceFirst.price > priceSecond.price) return -1;
+          if (priceFirst.price < priceSecond.price) return 1;
+          return 0;
+        })
+      }
+
+      this.displayProduct(data)
+    })
+  }
+
+  handlerRemoveEdit = async (handler) => {
+
+  }
 
   bindAddProduct = (handler) => {
     this.btnAdd.addEventListener('click', (e) => {
@@ -189,10 +265,17 @@ export default class ProductView {
     searchProduct.addEventListener('input', searchName);
   };
 
+  bindSortProduct = async (data) => {
+    this.handlerSortProduct(data)
+  }
+
   bindProductList(handler) {
     this.bindSearchProduct(handler)
   }
 
+  /**
+   * @description manage add event listener for page
+   */
   bindManageEvent() {
     this.addProduct.addEventListener('click', () => {
       this.modalTitle.textContent = 'Create a new food';

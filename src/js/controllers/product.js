@@ -1,7 +1,20 @@
-import { PRODUCT_MESSAGE, VALIDATE_MESSAGE } from '../constants/message';
-import { Popup } from '../helpers/renderPopup';
-import { buildQuery } from '../utils/buildQuery';
+import {
+  PRODUCT_MESSAGE,
+  VALIDATE_MESSAGE
+} from '../constants/message';
+import {
+  Popup
+} from '../helpers/renderPopup';
+import {
+  buildQuery
+} from '../utils/buildQuery';
 
+/**
+ * @class UserController
+ * Link the user input and the view output for add edit delete data
+ * @param model
+ * @param view
+ */
 export default class ProductController {
   popup = new Popup();
   constructor(model, view) {
@@ -10,6 +23,9 @@ export default class ProductController {
     this.init();
   }
 
+  /**
+   * @description function init to
+   */
   init = async () => {
     await this.showProduct();
     this.view.bindAddProduct(this.addProduct);
@@ -21,14 +37,12 @@ export default class ProductController {
 
   showProduct = async (query) => {
     try {
-      console.log(query);
       const queryString = buildQuery(query)
-      console.log(queryString);
       const data = await this.model.getProduct(queryString);
 
+      this.view.bindSortProduct(data);
       this.view.displayProduct(data);
     } catch (error) {
-      console.log(error);
       this.popup.error({
         message: VALIDATE_MESSAGE.getFailed,
       });
@@ -66,15 +80,16 @@ export default class ProductController {
   detailProduct = async (id) => {
     try {
       const data = await this.model.getProductId(id);
-      await this.view.renderProductDetail(data);
+      this.view.renderProductDetail(data);
     } catch {
-      this.popup.error({ message: VALIDATE_MESSAGE.getFailed });
+      this.popup.error({
+        message: VALIDATE_MESSAGE.getFailed
+      });
     }
   };
 
   editProduct = async (data) => {
     try {
-      console.log('data:', data.id);
       await this.model.handleEditProduct(data, data.id);
       await this.showProduct();
       this.popup.success({
