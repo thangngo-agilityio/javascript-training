@@ -7,7 +7,6 @@ import HttpsService from "../service/httpsService";
 export default class ProductModel {
   constructor() {
     this.productService = new HttpsService('products')
-    this.dataProduct = [];
   }
 
   /**
