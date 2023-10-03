@@ -1,29 +1,18 @@
-import {
-  createElement,
-  querySelector
-} from '../helpers/doms';
-import {
-  productTemplate
-} from '../templates/productCard';
+import { createElement, querySelector } from '../helpers/doms';
+import { productTemplate } from '../templates/productCard';
 // utils
-import {
-  getFormValues
-} from '../utils/formValue';
-import {
-  clearError,
-  showError
-} from '../utils/validators/formError';
-import {
-  validateForm
-} from '../utils/validators/validateForm';
+import { getFormValues } from '../utils/formValue';
+import { clearError, showError } from '../utils/validators/formError';
+import { validateForm } from '../utils/validators/validateForm';
 
 import delIcon from '../../assets/icon/icon_del.svg';
+import { debounce } from '../utils/debounce';
 
 export default class ProductView {
   constructor() {
     this.listProduct = querySelector('.manage-list');
     this.addProduct = querySelector('#add-card');
-    this.modalMain = querySelector('#modal-main');
+    this.modalMain = querySelector('.modal-overlay');
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
     this.btnAdd = querySelector('.btn-add-product');
@@ -33,6 +22,7 @@ export default class ProductView {
     this.priceElement = querySelector('#price');
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
+    this.query = {};
   }
 
   displayProduct(data) {
@@ -64,17 +54,14 @@ export default class ProductView {
     this.priceElement.value = data.price || '';
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
+    console.log('data view:', data);
 
-    this.btnEdit.setAttribute('id', data.id);
+    this.btnEdit.addEventListener('click', (e) => {
+      e.preventDefault();
 
-    const btnId = this.btnEdit.getAttribute('id')
-    console.log(btnId);
-    if (btnId) {
-      this.btnEdit.addEventListener('click', () => {
-        this.bindSubmitEditProduct(data.id);
-        console.log('edit', data.id);
-      });
-    }
+      this.handlerEditProduct(data.id);
+      console.log('click btn:', data.id);
+    });
   }
 
   handleAddProduct = async (handler) => {
@@ -85,7 +72,6 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      console.log('submit add');
       await handler(formValues);
       this.modalForm.reset();
       this.btnAdd.classList.add('hidden');
@@ -159,27 +145,28 @@ export default class ProductView {
 
   handlerEditProduct = async (id) => {
     const formValues = getFormValues(this.modalForm);
-    console.log(formValues);
+    console.log('handle edit:', id);
 
     const errorMessage = validateForm(formValues);
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      console.log('submit edit');
-      await this.updateProduct({
-        ...formValues,
-        id
-      });
-      this.modalForm.reset();
-      this.modalMain.classList.add('hidden');
+      if (id) {
+        await this.updateProduct({
+          ...formValues,
+          id,
+        });
+        this.modalForm.reset();
+        this.modalMain.classList.add('hidden');
+      }
     }
   };
 
   bindAddProduct = (handler) => {
     this.btnAdd.addEventListener('click', (e) => {
-      e.preventDefault()
-      this.handleAddProduct(handler)
+      e.preventDefault();
+      this.handleAddProduct(handler);
     });
   };
 
@@ -191,9 +178,20 @@ export default class ProductView {
     this.handlerDetailProduct(handler);
   };
 
-  bindSubmitEditProduct = (id) => {
-    this.handlerEditProduct(id);
+  bindSearchProduct = async (handler) => {
+    const searchProduct = querySelector('.input-search');
+
+    const searchName = debounce(async (e) => {
+      this.query.filter = e.target.value;
+      await handler(this.query);
+    }, 500);
+
+    searchProduct.addEventListener('input', searchName);
   };
+
+  bindProductList(handler) {
+    this.bindSearchProduct(handler)
+  }
 
   bindManageEvent() {
     this.addProduct.addEventListener('click', () => {
@@ -205,7 +203,7 @@ export default class ProductView {
 
     this.btnClose.addEventListener('click', () => {
       this.modalForm.reset();
-      clearError()
+      clearError();
       this.modalMain.classList.add('hidden');
     });
   }
