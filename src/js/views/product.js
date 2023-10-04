@@ -1,25 +1,11 @@
 // DOM common
-import {
-  createElement,
-  querySelector
-} from '../helpers/doms';
-import {
-  productTemplate
-} from '../templates/productCard';
+import { createElement, querySelector } from '../helpers/doms';
+import { productTemplate } from '../templates/productCard';
 // utils
-import {
-  getFormValues
-} from '../utils/formValue';
-import {
-  clearError,
-  showError
-} from '../utils/validators/formError';
-import {
-  validateForm
-} from '../utils/validators/validateForm';
-import {
-  debounce
-} from '../utils/debounce';
+import { getFormValues } from '../utils/formValue';
+import { clearError, showError } from '../utils/validators/formError';
+import { validateForm } from '../utils/validators/validateForm';
+import { debounce } from '../utils/debounce';
 // images
 import delIcon from '../../assets/icon/icon_del.svg';
 
@@ -61,6 +47,7 @@ export default class ProductView {
         this.listProduct.append(divProduct);
       });
     }
+
     this.bindManageEvent();
   }
 
@@ -68,6 +55,7 @@ export default class ProductView {
    * @description render product detail for edit card.
    */
   renderProductDetail(data) {
+    this.btnEdit.removeEventListener('click', () => {data.id});
     this.modalMain.classList.remove('hidden');
     this.modalTitle.textContent = 'Edit';
     this.btnEdit.classList.remove('hidden');
@@ -78,11 +66,19 @@ export default class ProductView {
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
 
-    this.btnEdit.addEventListener('click', () => {
-      this.handlerEditProduct(data.id);
-      console.log('click: ', data.id);
-    });
+    this.btnEdit.setAttribute('id', data.id);
 
+    const editId = this.btnEdit.getAttribute('id');
+    console.log(editId);
+
+    this.btnEdit.addEventListener('click', () => {
+      if (editId == data.id) {
+        console.log('click: ', data);
+        console.log('click: ', data.id);
+        this.handlerEditProduct(data.id);
+        this.btnEdit.removeAttribute('id');
+      }
+    });
   }
 
   /**
@@ -192,7 +188,6 @@ export default class ProductView {
         id,
       });
       this.modalForm.reset();
-      this.btnEdit.removeEventListener('click', this.handlerEditProduct(id))
       this.modalMain.classList.add('hidden');
     }
   };
@@ -201,43 +196,39 @@ export default class ProductView {
    * @description handler sort product
    */
   handlerSortProduct = async (data) => {
-    const sortSelect = querySelector('.sort-dropdown')
+    const sortSelect = querySelector('.sort-dropdown');
 
     sortSelect.addEventListener('change', (e) => {
-      const target = e.target.value
+      const target = e.target.value;
       if (target == 'name-asc') {
         data.sort((nameFirst, nameSecond) => {
           if (nameFirst.name < nameSecond.name) return -1;
           if (nameFirst.name > nameSecond.name) return 1;
           return 0;
-        })
+        });
       } else if (target == 'name-dec') {
         data.sort((nameFirst, nameSecond) => {
           if (nameFirst.name > nameSecond.name) return -1;
           if (nameFirst.name < nameSecond.name) return 1;
           return 0;
-        })
+        });
       } else if (target == 'price-asc') {
         data.sort((priceFirst, priceSecond) => {
           if (priceFirst.price < priceSecond.price) return -1;
           if (priceFirst.price > priceSecond.price) return 1;
           return 0;
-        })
+        });
       } else if (target == 'price-dec') {
         data.sort((priceFirst, priceSecond) => {
           if (priceFirst.price > priceSecond.price) return -1;
           if (priceFirst.price < priceSecond.price) return 1;
           return 0;
-        })
+        });
       }
 
-      this.displayProduct(data)
-    })
-  }
-
-  handlerRemoveEdit = async (handler) => {
-
-  }
+      this.displayProduct(data);
+    });
+  };
 
   bindAddProduct = (handler) => {
     this.btnAdd.addEventListener('click', (e) => {
@@ -266,11 +257,11 @@ export default class ProductView {
   };
 
   bindSortProduct = async (data) => {
-    this.handlerSortProduct(data)
-  }
+    this.handlerSortProduct(data);
+  };
 
   bindProductList(handler) {
-    this.bindSearchProduct(handler)
+    this.bindSearchProduct(handler);
   }
 
   /**
