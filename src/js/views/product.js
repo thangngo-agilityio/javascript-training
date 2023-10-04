@@ -22,6 +22,14 @@ import {
 } from '../utils/debounce';
 // images
 import delIcon from '../../assets/icon/icon_del.svg';
+import {
+  sortAsc,
+  sortNameAsc,
+  sortNameDec,
+  sortPriceAsc,
+  sortPriceDec,
+  sortValue
+} from '../utils/sortValue';
 
 /**
  * @class ProductView
@@ -60,7 +68,6 @@ export default class ProductView {
         this.listProduct.append(divProduct);
       });
     }
-
     this.bindManageEvent();
   }
 
@@ -212,29 +219,13 @@ export default class ProductView {
     sortSelect.addEventListener('change', (e) => {
       const target = e.target.value;
       if (target == 'name-asc') {
-        data.sort((nameFirst, nameSecond) => {
-          if (nameFirst.name < nameSecond.name) return -1;
-          if (nameFirst.name > nameSecond.name) return 1;
-          return 0;
-        });
+        sortNameAsc(data)
       } else if (target == 'name-dec') {
-        data.sort((nameFirst, nameSecond) => {
-          if (nameFirst.name > nameSecond.name) return -1;
-          if (nameFirst.name < nameSecond.name) return 1;
-          return 0;
-        });
+        sortNameDec(data)
       } else if (target == 'price-asc') {
-        data.sort((priceFirst, priceSecond) => {
-          if (priceFirst.price < priceSecond.price) return -1;
-          if (priceFirst.price > priceSecond.price) return 1;
-          return 0;
-        });
+        sortPriceAsc(data)
       } else if (target == 'price-dec') {
-        data.sort((priceFirst, priceSecond) => {
-          if (priceFirst.price > priceSecond.price) return -1;
-          if (priceFirst.price < priceSecond.price) return 1;
-          return 0;
-        });
+        sortPriceDec(data)
       }
 
       this.displayProduct(data);

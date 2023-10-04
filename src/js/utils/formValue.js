@@ -1,4 +1,4 @@
-export function getFormValues(form) {
+export const getFormValues = (form) => {
   const formValues = {};
   const data = new FormData(form);
 
