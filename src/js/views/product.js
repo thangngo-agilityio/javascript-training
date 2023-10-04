@@ -1,11 +1,25 @@
 // DOM common
-import { createElement, querySelector } from '../helpers/doms';
-import { productTemplate } from '../templates/productCard';
+import {
+  createElement,
+  querySelector
+} from '../helpers/doms';
+import {
+  productTemplate
+} from '../templates/productCard';
 // utils
-import { getFormValues } from '../utils/formValue';
-import { clearError, showError } from '../utils/validators/formError';
-import { validateForm } from '../utils/validators/validateForm';
-import { debounce } from '../utils/debounce';
+import {
+  getFormValues
+} from '../utils/formValue';
+import {
+  clearError,
+  showError
+} from '../utils/validators/formError';
+import {
+  validateForm
+} from '../utils/validators/validateForm';
+import {
+  debounce
+} from '../utils/debounce';
 // images
 import delIcon from '../../assets/icon/icon_del.svg';
 
@@ -22,7 +36,6 @@ export default class ProductView {
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
     this.btnAdd = querySelector('.btn-add-product');
-    this.btnEdit = querySelector('.btn-edit-product');
     this.btnClose = querySelector('#close-btn');
     this.nameElement = querySelector('#name');
     this.priceElement = querySelector('#price');
@@ -55,29 +68,29 @@ export default class ProductView {
    * @description render product detail for edit card.
    */
   renderProductDetail(data) {
-    this.btnEdit.removeEventListener('click', () => {data.id});
     this.modalMain.classList.remove('hidden');
     this.modalTitle.textContent = 'Edit';
-    this.btnEdit.classList.remove('hidden');
     this.btnAdd.classList.add('hidden');
+    const formBtn = querySelector('.form-btn')
+    const btnEdit = createElement('button')
+    btnEdit.setAttribute('type', 'button');
+    btnEdit.setAttribute('class', 'btn btn-edit-product');
+    btnEdit.textContent = 'Edit';
+
+    formBtn.appendChild(btnEdit)
 
     this.nameElement.value = data.name || '';
     this.priceElement.value = data.price || '';
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
 
-    this.btnEdit.setAttribute('id', data.id);
 
-    const editId = this.btnEdit.getAttribute('id');
-    console.log(editId);
-
-    this.btnEdit.addEventListener('click', () => {
-      if (editId == data.id) {
-        console.log('click: ', data);
-        console.log('click: ', data.id);
-        this.handlerEditProduct(data.id);
-        this.btnEdit.removeAttribute('id');
-      }
+    btnEdit.addEventListener('click', () => {
+      console.log(123);
+      console.log('btn: ', this.btnEdit);
+      console.log('click: ', data);
+      console.log('click: ', data.id);
+      this.handlerEditProduct(data.id);
     });
   }
 
@@ -179,6 +192,7 @@ export default class ProductView {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
+    const btnEdit = querySelector('.btn-edit-product')
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
@@ -187,6 +201,7 @@ export default class ProductView {
         ...formValues,
         id,
       });
+      btnEdit.remove()
       this.modalForm.reset();
       this.modalMain.classList.add('hidden');
     }
@@ -229,6 +244,10 @@ export default class ProductView {
       this.displayProduct(data);
     });
   };
+
+  removeBtnEdit() {
+    window.removeEventListener('click', this.btnEdit.bind(this))
+  }
 
   bindAddProduct = (handler) => {
     this.btnAdd.addEventListener('click', (e) => {
