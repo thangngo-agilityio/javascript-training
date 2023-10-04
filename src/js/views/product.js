@@ -86,10 +86,6 @@ export default class ProductView {
 
 
     btnEdit.addEventListener('click', () => {
-      console.log(123);
-      console.log('btn: ', this.btnEdit);
-      console.log('click: ', data);
-      console.log('click: ', data.id);
       this.handlerEditProduct(data.id);
     });
   }
