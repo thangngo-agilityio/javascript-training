@@ -36,7 +36,6 @@ export default class ProductView {
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
     this.btnAdd = querySelector('.btn-add-product');
-    this.btnEdit = querySelector('.btn-edit-product');
     this.btnClose = querySelector('#close-btn');
     this.nameElement = querySelector('#name');
     this.priceElement = querySelector('#price');
@@ -61,6 +60,7 @@ export default class ProductView {
         this.listProduct.append(divProduct);
       });
     }
+
     this.bindManageEvent();
   }
 
@@ -70,19 +70,24 @@ export default class ProductView {
   renderProductDetail(data) {
     this.modalMain.classList.remove('hidden');
     this.modalTitle.textContent = 'Edit';
-    this.btnEdit.classList.remove('hidden');
     this.btnAdd.classList.add('hidden');
+    const formBtn = querySelector('.form-btn')
+    const btnEdit = createElement('button')
+    btnEdit.setAttribute('type', 'button');
+    btnEdit.setAttribute('class', 'btn btn-edit-product');
+    btnEdit.textContent = 'Edit';
+
+    formBtn.appendChild(btnEdit)
 
     this.nameElement.value = data.name || '';
     this.priceElement.value = data.price || '';
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
 
-    this.btnEdit.addEventListener('click', () => {
-      this.handlerEditProduct(data.id);
-      console.log('click: ', data.id);
-    });
 
+    btnEdit.addEventListener('click', () => {
+      this.handlerEditProduct(data.id);
+    });
   }
 
   /**
@@ -183,6 +188,7 @@ export default class ProductView {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
+    const btnEdit = querySelector('.btn-edit-product')
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
@@ -191,8 +197,8 @@ export default class ProductView {
         ...formValues,
         id,
       });
+      btnEdit.remove()
       this.modalForm.reset();
-      this.btnEdit.removeEventListener('click', this.handlerEditProduct(id))
       this.modalMain.classList.add('hidden');
     }
   };
@@ -201,42 +207,42 @@ export default class ProductView {
    * @description handler sort product
    */
   handlerSortProduct = async (data) => {
-    const sortSelect = querySelector('.sort-dropdown')
+    const sortSelect = querySelector('.sort-dropdown');
 
     sortSelect.addEventListener('change', (e) => {
-      const target = e.target.value
+      const target = e.target.value;
       if (target == 'name-asc') {
         data.sort((nameFirst, nameSecond) => {
           if (nameFirst.name < nameSecond.name) return -1;
           if (nameFirst.name > nameSecond.name) return 1;
           return 0;
-        })
+        });
       } else if (target == 'name-dec') {
         data.sort((nameFirst, nameSecond) => {
           if (nameFirst.name > nameSecond.name) return -1;
           if (nameFirst.name < nameSecond.name) return 1;
           return 0;
-        })
+        });
       } else if (target == 'price-asc') {
         data.sort((priceFirst, priceSecond) => {
           if (priceFirst.price < priceSecond.price) return -1;
           if (priceFirst.price > priceSecond.price) return 1;
           return 0;
-        })
+        });
       } else if (target == 'price-dec') {
         data.sort((priceFirst, priceSecond) => {
           if (priceFirst.price > priceSecond.price) return -1;
           if (priceFirst.price < priceSecond.price) return 1;
           return 0;
-        })
+        });
       }
 
-      this.displayProduct(data)
-    })
-  }
+      this.displayProduct(data);
+    });
+  };
 
-  handlerRemoveEdit = async (handler) => {
-
+  removeBtnEdit() {
+    window.removeEventListener('click', this.btnEdit.bind(this))
   }
 
   bindAddProduct = (handler) => {
@@ -266,11 +272,11 @@ export default class ProductView {
   };
 
   bindSortProduct = async (data) => {
-    this.handlerSortProduct(data)
-  }
+    this.handlerSortProduct(data);
+  };
 
   bindProductList(handler) {
-    this.bindSearchProduct(handler)
+    this.bindSearchProduct(handler);
   }
 
   /**
