@@ -1,3 +1,4 @@
+import { TOGGLE_STATUS } from '../constants/common';
 import {
   PRODUCT_MESSAGE,
   VALIDATE_MESSAGE
@@ -5,6 +6,7 @@ import {
 import {
   Popup
 } from '../helpers/renderPopup';
+import { handleToggleLoading } from '../helpers/toggle';
 import {
   buildQuery
 } from '../utils/buildQuery';
@@ -50,6 +52,7 @@ export default class ProductController {
   };
 
   addProduct = async (data) => {
+    handleToggleLoading(TOGGLE_STATUS.OPEN)
     try {
       await this.model.handleAddProduct(data);
       this.popup.success({
@@ -61,9 +64,11 @@ export default class ProductController {
         message: PRODUCT_MESSAGE.addFailed,
       });
     }
+    handleToggleLoading(TOGGLE_STATUS.CLOSE)
   };
 
   delProduct = async (id) => {
+    handleToggleLoading(TOGGLE_STATUS.OPEN)
     try {
       await this.model.handleDelProduct(id);
       await this.showProduct();
@@ -75,6 +80,7 @@ export default class ProductController {
         message: PRODUCT_MESSAGE.removeFail,
       });
     }
+    handleToggleLoading(TOGGLE_STATUS.CLOSE)
   };
 
   detailProduct = async (id) => {
@@ -89,6 +95,7 @@ export default class ProductController {
   };
 
   editProduct = async (data) => {
+    handleToggleLoading(TOGGLE_STATUS.OPEN)
     try {
       await this.model.handleEditProduct(data, data.id);
       await this.showProduct();
@@ -100,5 +107,6 @@ export default class ProductController {
         message: PRODUCT_MESSAGE.editFail,
       });
     }
+    handleToggleLoading(TOGGLE_STATUS.CLOSE)
   };
 }
