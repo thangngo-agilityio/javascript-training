@@ -11,6 +11,7 @@ export const VALIDATE_MESSAGE = {
   charactersPassWordError: 'Please enter at least 8 characters for password',
   upperCasePassWordError: 'Please enter at least 1 uppercase letter',
   lowercasePassWordError: 'Please enter at least 1 lowercase letter',
+  specialPassWordError: 'Please enter at least 1 special letter',
   ANumberCharacterPassWordError: 'Please enter at least 1 number character',
   confirmPasswordError: 'Password confirmation do not match password',
   nameValid: 'Please enter at least 3 to 13 characters for name',
