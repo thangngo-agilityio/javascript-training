@@ -16,7 +16,7 @@
   padding: 32px;
   border-radius: var(--radius-primary);
   backdrop-filter: blur(10px);
-  background-color: var(--color-secondary);
+  background-color: var(--color-dark-grey);
 }
 
 .header-title-auth {
@@ -27,7 +27,7 @@
 
 .header-action-auth {
   padding: 8px;
-  background-color: var(--color-light);
+  background-color: var(--color-default);
   border-radius: var(--radius-primary);
   margin-top: 40px;
   margin-bottom: 120px;
@@ -37,14 +37,16 @@
 .header-action-signIn {
   width: 100%;
   padding: 16px;
+  color: var(--color-secondary);
   font-size: var(--font-size-default);
   background-color: transparent;
   border-radius: var(--radius-primary);
   cursor: pointer;
+  transition: .4s;
 }
 
 .header-action-auth .active {
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
   box-shadow: var(--shadow-secondary);
 }
 
@@ -64,17 +66,26 @@
 
 .form-control {
   border: none;
-  border-bottom: 1px solid var(--color-dark-grey);
+  border-bottom: 1px solid var(--color-primary);
   display: block;
   width: 100%;
   height: 38px;
   background: 0 0;
   padding: 0 4px;
   font-size: var(--font-size-default);
+  color: var(--color-secondary);
+}
+
+.form-control::placeholder {
+  color: var(--color-secondary);
 }
 
 .input-group {
   margin: 0px auto 56px;
+}
+
+.form-login .btn {
+  width: 100%;
 }
 
 .btn-submit {

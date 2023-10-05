@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   width: 162px;
-  padding: 14px;
+  padding: 14px 4px;
   align-items: center;
   background: none;
   color: var(--color-secondary);
