@@ -1,19 +1,16 @@
+// constants
 import {
   TOGGLE_STATUS
-} from '../constants/common';
+} from '../constants';
+// helpers
 import {
-  PRODUCT_MESSAGE,
-  VALIDATE_MESSAGE
-} from '../constants/message';
-import {
-  Popup
-} from '../helpers/renderPopup';
-import {
+  Popup,
   handleToggleLoading
-} from '../helpers/toggle';
+} from '../helpers';
+// utils
 import {
   buildQuery
-} from '../utils/buildQuery';
+} from '../utils';
 
 /**
  * @class UserController

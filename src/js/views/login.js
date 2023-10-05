@@ -1,9 +1,14 @@
+// helpers
 import {
   querySelector,
   getElementById
-} from "../helpers/doms";
-import { clearError, showError } from "../utils/validators/formError";
-import { loginValidator } from "../utils/validators/validateLogin";
+} from "../helpers";
+// utils
+import {
+  clearError,
+  showError,
+  loginValidator
+} from "../utils";
 
 /**
  * @class LoginView
@@ -39,7 +44,7 @@ export default class LoginView {
       return Object.keys(object).length === 0;
     }
 
-    if(!isEmpty(isError)) {
+    if (!isEmpty(isError)) {
       showError(isError);
     } else {
       if (this.signInEvent) {
@@ -64,7 +69,7 @@ export default class LoginView {
       return Object.keys(object).length === 0;
     }
 
-    if(!isEmpty(isError)) {
+    if (!isEmpty(isError)) {
       showError(isError);
     } else {
       if (this.signUpEvent) {
@@ -106,7 +111,7 @@ export default class LoginView {
       this.inputGroupElement.classList.toggle('hidden')
 
       // If submit button has element
-      if(this.btnSubmitElement) {
+      if (this.btnSubmitElement) {
         this.btnSubmitElement.innerHTML = 'Sign In';
       }
 
@@ -120,7 +125,7 @@ export default class LoginView {
       this.inputGroupElement.classList.toggle('hidden')
 
       // If submit button has element
-      if(this.btnSubmitElement) {
+      if (this.btnSubmitElement) {
         this.btnSubmitElement.innerHTML = 'Sign Up';
       }
 

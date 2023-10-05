@@ -1,4 +1,8 @@
-// Filter parameters and concatenate all queries to String
+/**
+ * @description Filter parameters and concatenate all queries to String
+ * @param params
+ * @returns queryString
+ */
 export const buildQuery = (params) => {
   const queryString = Object.keys(params || {})
     .filter((key) => !!params[key])
