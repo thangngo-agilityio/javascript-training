@@ -111,7 +111,6 @@ export default class ProductView {
       await handler(formValues);
       this.modalForm.reset();
       this.btnAdd.classList.add('hidden');
-      this.btnEdit.classList.remove('hidden');
       this.modalMain.classList.add('hidden');
     }
   };
@@ -277,7 +276,6 @@ export default class ProductView {
     this.addProduct.addEventListener('click', () => {
       this.modalTitle.textContent = 'Create a new food';
       this.btnAdd.classList.remove('hidden');
-      this.btnEdit.classList.add('hidden');
       this.modalMain.classList.remove('hidden');
     });
 
