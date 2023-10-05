@@ -16,6 +16,10 @@ const validateRequired = (value = '', field) => {
   return value ? undefined : VALIDATE_MESSAGE.requiredError.replace('{field}', field);
 };
 
+/**
+ * @description handle validate email
+ * @param email
+ */
 export const validateEmail = (email = '') => {
   if (!email) {
     return validateRequired(email, 'Email');
@@ -28,6 +32,10 @@ export const validateEmail = (email = '') => {
   return;
 };
 
+/**
+ * @description handle validate password
+ * @param password
+ */
 export const validatePassword = (password = '') => {
   if (!password) {
     return validateRequired(password, 'Password')
@@ -48,6 +56,10 @@ export const validatePassword = (password = '') => {
   return
 }
 
+/**
+ * @description handle validate password
+ * @param password
+ */
 export const validateConfirmPassword = (password = '', passwordConfirm = '') => {
   if (!passwordConfirm) {
     return validateRequired(passwordConfirm, 'Password confirmation');
@@ -60,6 +72,10 @@ export const validateConfirmPassword = (password = '', passwordConfirm = '') => 
   return;
 }
 
+/**
+ * @description handle validate name
+ * @param name
+ */
 export const validateName = (name = '') => {
   if (!name) {
     return validateRequired(name, 'Name');
@@ -70,9 +86,12 @@ export const validateName = (name = '') => {
   }
 
   return;
-
 }
 
+/**
+ * @description handle validate price
+ * @param price
+ */
 export const validatePrice = (price = '') => {
   if (!price) {
     return validateRequired(price, 'Price');
@@ -85,6 +104,10 @@ export const validatePrice = (price = '') => {
   return;
 }
 
+/**
+ * @description handle validate image
+ * @param image
+ */
 export const validateImage = (image = '') => {
   if (!image) {
     return validateRequired(image, 'Image');
@@ -97,6 +120,10 @@ export const validateImage = (image = '') => {
   return;
 }
 
+/**
+ * @description handle validate quantity
+ * @param quantity
+ */
 export const validateQuantity = (quantity = '') => {
   if (!quantity) {
     return validateRequired(quantity, 'Quantity');

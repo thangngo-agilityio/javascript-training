@@ -1,41 +1,31 @@
-// DOM common
+// helpers
 import {
   createElement,
-  querySelector
-} from '../helpers/doms';
+  querySelector,
+  handleToggleLoading
+} from '../helpers';
+// Constants
+import {
+  TOGGLE_STATUS
+} from '../constants';
+// Templates
 import {
   productTemplate
 } from '../templates/productCard';
 // utils
 import {
-  getFormValues
-} from '../utils/formValue';
-import {
+  getFormValues,
   clearError,
-  showError
-} from '../utils/validators/formError';
-import {
-  validateForm
-} from '../utils/validators/validateForm';
-import {
-  debounce
-} from '../utils/debounce';
-// images
-import delIcon from '../../assets/icon/icon_del.svg';
-import {
-  sortAsc,
+  showError,
+  validateForm,
+  debounce,
   sortNameAsc,
   sortNameDec,
   sortPriceAsc,
   sortPriceDec,
-  sortValue
-} from '../utils/sortValue';
-import {
-  handleToggleLoading
-} from '../helpers/toggle';
-import {
-  TOGGLE_STATUS
-} from '../constants/common';
+} from '../utils';
+// images
+import delIcon from '../../assets/icon/icon_del.svg';
 
 /**
  * @class ProductView

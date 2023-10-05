@@ -1,5 +1,9 @@
 import { validateImage, validateName, validatePrice, validateQuantity } from "./validateInput"
 
+/**
+ * @description handle validate form product
+ * @param product
+ */
 export const validateForm = (product) => {
   const error = {
     ...(validateName(product.name) && {

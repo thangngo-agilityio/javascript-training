@@ -1,4 +1,4 @@
-import { TOGGLE_STYLE } from "../constants/common";
+import { TOGGLE_STYLE } from "../constants";
 import { querySelector } from "./doms"
 
 export const  handleToggleLoading = (status) => {
