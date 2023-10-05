@@ -1,13 +1,11 @@
 // import dotenv from 'dotenv';
 import {
   HTTP_METHOD,
-  API_HEADERS
-} from '../constants/common';
-import {
+  API_HEADERS,
   MOCK_API
 } from '../constants';
 
-// dotenv.config();
+
 
 /**
  * @class HttpsService
@@ -15,9 +13,6 @@ import {
  */
 export default class HttpsService {
   constructor(path) {
-    // this.fullPath = process.env.Mo + path;
-    // console.log(process.env.MOCK_API);
-
     this.fullPath = MOCK_API + path
   }
 
@@ -43,9 +38,9 @@ export default class HttpsService {
   };
 
   /**
-   * @description get data detail by id from server
+   * @description get data detail from server
    * @param {String} path request path
-   * @query {filter, page, limit, sortBy, order}
+   * @query {filter, page, sortBy}
    * @returns data after request
    */
   get = async (query) => {

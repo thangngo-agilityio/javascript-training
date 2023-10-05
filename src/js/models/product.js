@@ -1,10 +1,13 @@
+// constants
 import {
   PRODUCT_MESSAGE,
   VALIDATE_MESSAGE
-} from "../constants/message";
+} from "../constants";
+// helpers
 import {
   Popup
-} from "../helpers/renderPopup";
+} from "../helpers";
+// service
 import HttpsService from "../service/httpsService";
 
 /**

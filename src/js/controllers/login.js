@@ -1,8 +1,14 @@
-import { TOGGLE_STATUS } from '../constants/common';
-import { AUTHEN_MESSAGE } from '../constants/message';
-import { redirect } from '../helpers/redirect';
-import { Popup } from '../helpers/renderPopup';
-import { handleToggleLoading } from '../helpers/toggle';
+// constants
+import {
+  TOGGLE_STATUS,
+  AUTHEN_MESSAGE
+} from '../constants';
+// helpers
+import {
+  redirect,
+  Popup,
+  handleToggleLoading
+} from '../helpers';
 
 /**
  * @class UserController
@@ -30,9 +36,13 @@ export default class LoginController {
     if (foundUser) {
       localStorage.setItem('LOGIN', foundUser.id.toString());
       redirect('/');
-      this.popup.success({ message: AUTHEN_MESSAGE.loginSuccess });
+      this.popup.success({
+        message: AUTHEN_MESSAGE.loginSuccess
+      });
     } else {
-      this.popup.error({ message: AUTHEN_MESSAGE.loginError });
+      this.popup.error({
+        message: AUTHEN_MESSAGE.loginError
+      });
     }
     handleToggleLoading(TOGGLE_STATUS.CLOSE);
   };
@@ -44,11 +54,15 @@ export default class LoginController {
     const foundUser = this.findEmail(dataUser, user.email);
 
     if (foundUser) {
-      this.popup.error({ message: AUTHEN_MESSAGE.registerError });
+      this.popup.error({
+        message: AUTHEN_MESSAGE.registerError
+      });
     } else {
       const dataUserSignup = await this.model.handleSignUp(user);
 
-      this.popup.success({ message: AUTHEN_MESSAGE.registerSuccess });
+      this.popup.success({
+        message: AUTHEN_MESSAGE.registerSuccess
+      });
       localStorage.setItem('LOGIN', dataUserSignup.id);
       setTimeout(() => {
         redirect('/login');
