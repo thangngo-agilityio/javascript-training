@@ -45,9 +45,6 @@
   - `git checkout feature/big_practice`
 - Step 3: Install package
   - Install the package `npm i` or `yarn i`
-- Step 4: Create .env file
-  - Create .env file at your root folder, add a env var API_ENDPOINT by MockAPI
-    - API_ENDPOINT = update late
-- Step 5:
+- Step 4:
   - Run the practice `npm start` or `yarn start`.
   - Ctrl + click `http://localhost:1234`
