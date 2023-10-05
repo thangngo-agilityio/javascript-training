@@ -9,6 +9,7 @@ import {
   NAME_CHARACTERS_REGEX,
   PRICE_REGEX,
   QUANTITY_REGEX,
+  SPECIAL_REGEX,
   UPPERCASE_REGEX
 } from "../../constants/regex";
 
@@ -51,6 +52,10 @@ export const validatePassword = (password = '') => {
 
   if (!password.match(A_CHARACTER_REGEX)) {
     return VALIDATE_MESSAGE.ANumberCharacterPassWordError;
+  }
+
+  if (!password.match(SPECIAL_REGEX)) {
+    return VALIDATE_MESSAGE.specialPassWordError;
   }
 
   return

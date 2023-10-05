@@ -65,7 +65,7 @@ export default class LoginController {
       });
       localStorage.setItem('LOGIN', dataUserSignup.id);
       setTimeout(() => {
-        redirect('/login');
+        redirect('/login.html');
       }, 1000);
     }
     handleToggleLoading(TOGGLE_STATUS.CLOSE);
