@@ -30,6 +30,12 @@ import {
   sortPriceDec,
   sortValue
 } from '../utils/sortValue';
+import {
+  handleToggleLoading
+} from '../helpers/toggle';
+import {
+  TOGGLE_STATUS
+} from '../constants/common';
 
 /**
  * @class ProductView
@@ -93,7 +99,8 @@ export default class ProductView {
 
 
     btnEdit.addEventListener('click', () => {
-      this.handlerEditProduct(data.id);
+      this.handlerUpdateProduct(data.id);
+      this.modalMain.classList.add('hidden');
     });
   }
 
@@ -190,7 +197,7 @@ export default class ProductView {
   /**
    * @description handler edit product
    */
-  handlerEditProduct = async (id) => {
+  handlerUpdateProduct = async (id) => {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
@@ -205,9 +212,19 @@ export default class ProductView {
       });
       btnEdit.remove()
       this.modalForm.reset();
-      this.modalMain.classList.add('hidden');
     }
   };
+
+  handlerSearchProduct = (handler) => {
+    const searchProduct = querySelector('.input-search');
+
+    const searchName = debounce(async (e) => {
+      this.query.filter = e.target.value;
+      await handler(this.query);
+    }, 500);
+
+    searchProduct.addEventListener('input', searchName);
+  }
 
   /**
    * @description handler sort product
@@ -216,18 +233,29 @@ export default class ProductView {
     const sortSelect = querySelector('.sort-dropdown');
 
     sortSelect.addEventListener('change', (e) => {
+      e.preventDefault()
+      handleToggleLoading(TOGGLE_STATUS.OPEN)
       const target = e.target.value;
-      if (target == 'name-asc') {
-        sortNameAsc(data)
-      } else if (target == 'name-dec') {
-        sortNameDec(data)
-      } else if (target == 'price-asc') {
-        sortPriceAsc(data)
-      } else if (target == 'price-dec') {
-        sortPriceDec(data)
-      }
-
-      this.displayProduct(data);
+      setTimeout(() => {
+        switch (target) {
+          case 'name-asc':
+            sortNameAsc(data)
+            break;
+          case 'name-dec':
+            sortNameDec(data)
+            break;
+          case 'price-asc':
+            sortPriceAsc(data)
+            break
+          case 'price-dec':
+            sortPriceDec(data)
+            break;
+          default:
+            break
+        }
+        this.displayProduct(data);
+        handleToggleLoading(TOGGLE_STATUS.CLOSE)
+      }, 500);
     });
   };
 
@@ -251,14 +279,7 @@ export default class ProductView {
   };
 
   bindSearchProduct = async (handler) => {
-    const searchProduct = querySelector('.input-search');
-
-    const searchName = debounce(async (e) => {
-      this.query.filter = e.target.value;
-      await handler(this.query);
-    }, 500);
-
-    searchProduct.addEventListener('input', searchName);
+    this.handlerSearchProduct(handler)
   };
 
   bindSortProduct = async (data) => {
