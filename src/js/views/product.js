@@ -2,7 +2,8 @@
 import {
   createElement,
   querySelector,
-  handleToggleLoading
+  handleToggleLoading,
+  querySelectorAll
 } from '../helpers';
 // Constants
 import {
@@ -23,6 +24,7 @@ import {
   sortNameDec,
   sortPriceAsc,
   sortPriceDec,
+  removeErrorMessage,
 } from '../utils';
 // images
 import delIcon from '../../assets/icon/icon_del.svg';
@@ -45,6 +47,7 @@ export default class ProductView {
     this.priceElement = querySelector('#price');
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
+    this.inputAll = querySelectorAll('.form-input');
     this.query = {};
   }
 
@@ -89,6 +92,7 @@ export default class ProductView {
 
 
     btnEdit.addEventListener('click', () => {
+      removeErrorMessage()
       this.handlerUpdateProduct(data.id);
     });
   }
@@ -256,6 +260,7 @@ export default class ProductView {
   bindAddProduct = (handler) => {
     this.btnAdd.addEventListener('click', (e) => {
       e.preventDefault();
+      removeErrorMessage()
       this.handleAddProduct(handler);
     });
   };
