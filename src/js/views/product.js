@@ -31,6 +31,7 @@ import {
 } from '../utils';
 // images
 import delIcon from '../../assets/icon/icon_del.svg';
+import logoutIcon from '../../assets/icon/icon_logout.svg';
 
 /**
  * @class ProductView
@@ -254,8 +255,8 @@ export default class ProductView {
   bindButtonLogout = (handler) => {
     const btnAccount = querySelector('.nav-login');
     console.log(this.isAuth);
-    if(this.isAuth) {
-      btnAccount.innerHTML = `<img class='btn-logout' src="../assets/icon/icon_logout.svg" alt="logout" />`
+    if (this.isAuth) {
+      btnAccount.innerHTML = `<img class='btn-logout' src="${logoutIcon}" alt="logout" />`
     }
     const btnLogout = querySelector('.btn-logout');
 
