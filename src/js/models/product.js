@@ -15,9 +15,9 @@ import HttpsService from "../service/httpsService";
  * Manages the products data
  */
 export default class ProductModel {
-  popup = new Popup()
   constructor() {
     this.productService = new HttpsService('products')
+    this.popup = new Popup()
   }
 
   /**
