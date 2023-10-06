@@ -53,6 +53,7 @@ export default class ProductView {
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
     this.inputAll = querySelectorAll('.form-input');
+    this.isAuth = localStorage.getItem('LOGIN')
     this.query = {};
     this.popup = new Popup()
   }
@@ -79,6 +80,7 @@ export default class ProductView {
         })
       }
     }
+    this.bindButtonLogout()
     this.bindManageEvent();
   }
 
@@ -249,8 +251,17 @@ export default class ProductView {
     });
   };
 
-  removeBtnEdit() {
-    window.removeEventListener('click', this.btnEdit.bind(this))
+  bindButtonLogout = (handler) => {
+    const btnAccount = querySelector('.nav-login');
+    console.log(this.isAuth);
+    if(this.isAuth) {
+      btnAccount.innerHTML = `<img class='btn-logout' src="../assets/icon/icon_logout.svg" alt="logout" />`
+    }
+    const btnLogout = querySelector('.btn-logout');
+
+    if (btnLogout) {
+      btnLogout.addEventListener('click', handler)
+    }
   }
 
   bindAddProduct = (handler) => {
