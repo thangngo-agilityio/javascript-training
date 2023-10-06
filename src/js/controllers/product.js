@@ -4,7 +4,6 @@ import {
 } from '../constants';
 // helpers
 import {
-  Popup,
   handleToggleLoading
 } from '../helpers';
 // utils
@@ -19,7 +18,6 @@ import {
  * @param view
  */
 export default class ProductController {
-  popup = new Popup();
   constructor(model, view) {
     this.model = model;
     this.view = view;

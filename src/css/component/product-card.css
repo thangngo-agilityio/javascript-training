@@ -69,6 +69,7 @@
   font-size: var(--font-size-small);
   font-weight: 500;
   margin-bottom: 8px;
+  text-transform: capitalize;
 }
 
 .product-detail {
