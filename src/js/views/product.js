@@ -254,7 +254,6 @@ export default class ProductView {
 
   bindButtonLogout = (handler) => {
     const btnAccount = querySelector('.nav-login');
-    console.log(this.isAuth);
     if (this.isAuth) {
       btnAccount.innerHTML = `<img class='btn-logout' src="${logoutIcon}" alt="logout" />`
     }
