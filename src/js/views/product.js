@@ -78,7 +78,7 @@ export default class ProductView {
     const btnEdit = createElement('button')
     btnEdit.setAttribute('type', 'button');
     btnEdit.setAttribute('class', 'btn btn-edit-product');
-    btnEdit.textContent = 'Edit';
+    btnEdit.textContent = 'Save';
 
     formBtn.appendChild(btnEdit)
 
@@ -90,7 +90,6 @@ export default class ProductView {
 
     btnEdit.addEventListener('click', () => {
       this.handlerUpdateProduct(data.id);
-      this.modalMain.classList.add('hidden');
     });
   }
 
@@ -202,6 +201,7 @@ export default class ProductView {
       });
       btnEdit.remove()
       this.modalForm.reset();
+      this.modalMain.classList.add('hidden');
     }
   };
 
@@ -294,6 +294,7 @@ export default class ProductView {
       this.modalForm.reset();
       clearError();
       this.modalMain.classList.add('hidden');
+      querySelector('.btn-edit-product').remove()
     });
   }
 }
