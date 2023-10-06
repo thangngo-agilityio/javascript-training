@@ -175,9 +175,7 @@ export default class ProductView {
       const idProduct = target.dataset.id;
 
       if (btnEdit) {
-        if (idProduct !== undefined) {
-          await handler(idProduct);
-        }
+        await handler(idProduct);
       }
     });
   };
