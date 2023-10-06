@@ -22,7 +22,6 @@ export default class ProductModel {
    * @description get id product from server
    * @return list product return after make a GET request to server
    */
-
   async getProductById(id) {
     return await this.productService.getById(id)
   }
