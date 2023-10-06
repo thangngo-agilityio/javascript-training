@@ -36,6 +36,7 @@ export default class ProductController {
     this.view.bindProductList(this.showProduct);
     this.view.bindDetailProduct(this.detailProduct);
     this.view.updateProduct = this.editProduct;
+    this.isAuth = localStorage.getItem('LOGIN')
   };
 
   showProduct = async (query) => {
@@ -43,6 +44,11 @@ export default class ProductController {
     const queryString = buildQuery(query)
     const data = await this.model.getProduct(queryString);
     this.view.bindSortProduct(data);
+    if(this.isAuth) {
+      this.view.bindButtonLogout(() => {
+        localStorage.removeItem("LOGIN")
+      })
+    }
     this.view.displayProduct(data);
     handleToggleLoading(TOGGLE_STATUS.CLOSE)
   };
