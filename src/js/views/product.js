@@ -3,11 +3,14 @@ import {
   createElement,
   querySelector,
   handleToggleLoading,
-  querySelectorAll
+  querySelectorAll,
+  Popup
 } from '../helpers';
 // Constants
 import {
-  TOGGLE_STATUS
+  PRODUCT_MESSAGE,
+  TOGGLE_STATUS,
+  VALIDATE_MESSAGE
 } from '../constants';
 // Templates
 import {
@@ -51,6 +54,7 @@ export default class ProductView {
     this.quantityElement = querySelector('#quantity');
     this.inputAll = querySelectorAll('.form-input');
     this.query = {};
+    this.popup = new Popup()
   }
 
   displayProduct(data) {
@@ -61,13 +65,19 @@ export default class ProductView {
     }
 
     if (data) {
-      data.forEach((product) => {
-        const divProduct = createElement('div');
-        divProduct.setAttribute('class', 'product-card');
-        divProduct.innerHTML = productTemplate(delIcon, product);
+      try {
+        data.forEach((product) => {
+          const divProduct = createElement('div');
+          divProduct.setAttribute('class', 'product-card');
+          divProduct.innerHTML = productTemplate(delIcon, product);
 
-        this.listProduct.append(divProduct);
-      });
+          this.listProduct.append(divProduct);
+        });
+      } catch (error) {
+        this.popup.error({
+          message: VALIDATE_MESSAGE.getFailed
+        })
+      }
     }
     this.bindManageEvent();
   }
@@ -109,11 +119,17 @@ export default class ProductView {
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
+      this.popup.error({
+        message: PRODUCT_MESSAGE.addFailed,
+      });
     } else {
       await handler(formValues);
       this.modalForm.reset();
       this.btnAdd.classList.add('hidden');
       this.modalMain.classList.add('hidden');
+      this.popup.success({
+        message: PRODUCT_MESSAGE.addSuccess
+      })
     }
   };
 
@@ -140,6 +156,9 @@ export default class ProductView {
             handler(productId);
             this.modalDel.style.display = 'none'
             confirmYes.remove()
+            this.popup.success({
+              message: PRODUCT_MESSAGE.removeSuccess,
+            });
           }
         });
       }
@@ -182,6 +201,9 @@ export default class ProductView {
       btnEdit.remove()
       this.modalForm.reset();
       this.modalMain.classList.add('hidden');
+      this.popup.success({
+        message: PRODUCT_MESSAGE.editSuccess,
+      });
     }
   };
 
