@@ -1,12 +1,10 @@
 // constants
 import {
   TOGGLE_STATUS,
-  AUTHEN_MESSAGE
 } from '../constants';
 // helpers
 import {
   redirect,
-  Popup,
   handleToggleLoading
 } from '../helpers';
 
@@ -20,7 +18,6 @@ export default class LoginController {
   constructor(model, view) {
     this.model = model;
     this.view = view;
-    this.popup = new Popup();
     this.init();
   }
 
@@ -32,37 +29,21 @@ export default class LoginController {
     handleToggleLoading(TOGGLE_STATUS.OPEN);
     const dataUser = await this.model.getAllUser();
     const foundUser = this.findUser(dataUser, user.email, user.password);
-
-    if (foundUser) {
-      localStorage.setItem('LOGIN', foundUser.id.toString());
-      redirect('/');
-      this.popup.success({
-        message: AUTHEN_MESSAGE.loginSuccess
-      });
-    } else {
-      this.popup.error({
-        message: AUTHEN_MESSAGE.loginError
-      });
-    }
+    localStorage.setItem('LOGIN', foundUser.id.toString());
+    redirect('/');
     handleToggleLoading(TOGGLE_STATUS.CLOSE);
   };
 
   signUp = async (user) => {
     handleToggleLoading(TOGGLE_STATUS.OPEN);
     const dataUser = await this.model.getAllUser();
-
     const foundUser = this.findEmail(dataUser, user.email);
 
     if (foundUser) {
-      this.popup.error({
-        message: AUTHEN_MESSAGE.registerError
-      });
+      this.view.popupSignupError(foundUser)
     } else {
       const dataUserSignup = await this.model.handleSignUp(user);
-
-      this.popup.success({
-        message: AUTHEN_MESSAGE.registerSuccess
-      });
+      this.view.popupSignupSuccess()
       localStorage.setItem('LOGIN', dataUserSignup.id);
       setTimeout(() => {
         redirect('/login.html');
