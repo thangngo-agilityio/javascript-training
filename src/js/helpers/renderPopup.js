@@ -12,7 +12,7 @@ export class Popup {
   maxPopupCount = MAX_POPUP;
   verticalOffset = VERTICAL_OFFSET
 
-  createPopup(type, title, message) {
+  createPopup(type, message) {
     const mainElement = querySelector('.main-content');
     const popup = createElement('div');
 

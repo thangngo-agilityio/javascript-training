@@ -33,7 +33,6 @@ export default class HttpsService {
       });
       return response.json()
     } catch (error) {
-      console.log(typeof error);
       throw new Error(error);
     }
   };

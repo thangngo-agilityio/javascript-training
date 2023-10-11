@@ -1,7 +1,8 @@
-// helpers
+// constants
 import {
   AUTHEN_MESSAGE
 } from "../constants";
+// helpers
 import {
   querySelector,
   getElementById,
