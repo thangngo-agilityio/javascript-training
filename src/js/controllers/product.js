@@ -42,7 +42,7 @@ export default class ProductController {
     const queryString = buildQuery(query)
     const data = await this.model.getProduct(queryString);
     this.view.bindSortProduct(data);
-    if(this.isAuth) {
+    if (this.isAuth) {
       this.view.bindButtonLogout(() => {
         localStorage.removeItem("LOGIN")
       })

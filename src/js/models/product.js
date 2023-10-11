@@ -13,6 +13,7 @@ export default class ProductModel {
   /**
    * @description get all product from server
    * @return list product return after make a GET request to server
+   * @param products Products[]
    */
   async getProduct(query) {
     return await this.productService.get(query)
@@ -21,13 +22,16 @@ export default class ProductModel {
   /**
    * @description get id product from server
    * @return list product return after make a GET request to server
+   * @param id id product
    */
   async getProductById(id) {
     return await this.productService.getById(id)
   }
 
   /**
-   * @description create new product item and save response to mock api return product item
+   * @description create new product item and save response to mock api
+   * return product item
+   * @return product
    */
   handleAddProduct = async (data) => {
     const newProduct = {
@@ -40,11 +44,20 @@ export default class ProductModel {
     return await this.productService.post(newProduct)
   }
 
+  /**
+   * @description Delete product by id
+   * return data product remove
+   * @param id
+   */
   handleDelProduct = async (id) => {
-    await this.productService.delete(id);
+    return await this.productService.delete(id);
   }
 
+  /**
+   * @description Edit product item by id and save response to json server
+   * return product item
+   */
   handleEditProduct = async (data, id) => {
-    await this.productService.put(data, id);
+    return await this.productService.put(data, id);
   }
 }

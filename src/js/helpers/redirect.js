@@ -5,7 +5,7 @@
  */
 
 export const redirect = (path, replace) => {
-  if(replace) {
+  if (replace) {
     window.location.replace(path);
   }
 

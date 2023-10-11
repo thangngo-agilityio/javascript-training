@@ -1,4 +1,8 @@
-import { getElementById, querySelector, querySelectorAll } from "../../helpers/doms"
+import {
+  getElementById,
+  querySelector,
+  querySelectorAll
+} from "../../helpers/doms"
 
 /**
  * @description handle show error
@@ -9,7 +13,7 @@ export const showError = (error) => {
   Object.entries(error).forEach(([key, value]) => {
     const target = getElementById(`${key}-error`);
 
-    if(target) {
+    if (target) {
       target.innerHTML = value
     }
   })
@@ -21,7 +25,9 @@ export const showError = (error) => {
  */
 export const clearError = () => {
   const errorField = querySelectorAll('.error-message');
-  errorField.forEach((field) => {field.innerHTML = ''});
+  errorField.forEach((field) => {
+    field.innerHTML = ''
+  });
 }
 
 export const removeErrorMessage = () => {

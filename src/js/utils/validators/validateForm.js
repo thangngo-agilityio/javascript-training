@@ -1,4 +1,9 @@
-import { validateImage, validateName, validatePrice, validateQuantity } from "./validateInput"
+import {
+  validateImage,
+  validateName,
+  validatePrice,
+  validateQuantity
+} from "./validateInput"
 
 /**
  * @description handle validate form product
