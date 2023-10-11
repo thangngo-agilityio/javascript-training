@@ -39,7 +39,7 @@ export class Popup {
     setTimeout(() => {
       popup.remove();
       this.currentPopupCount--;
-    }, 1000);
+    }, 1500);
 
     popup.onclick = (e) => {
       const target = e.target;

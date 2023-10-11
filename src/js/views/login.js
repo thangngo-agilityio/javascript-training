@@ -1,7 +1,11 @@
 // helpers
 import {
+  AUTHEN_MESSAGE
+} from "../constants";
+import {
   querySelector,
-  getElementById
+  getElementById,
+  Popup
 } from "../helpers";
 // utils
 import {
@@ -27,6 +31,7 @@ export default class LoginView {
     this.btnSubmitElement = querySelector("[type='submit']");
     this.signInEvent = null;
     this.signUpEvent = null;
+    this.popup = new Popup();
   }
 
   /**
@@ -46,10 +51,16 @@ export default class LoginView {
 
     if (!isEmpty(isError)) {
       showError(isError);
+      this.popup.error({
+        message: AUTHEN_MESSAGE.loginError
+      })
     } else {
       if (this.signInEvent) {
         clearError()
         await this.signInEvent(user)
+        this.popup.success({
+          message: AUTHEN_MESSAGE.loginSuccess
+        })
       }
     }
   }
@@ -78,6 +89,19 @@ export default class LoginView {
       }
     }
   };
+
+  popupSignupSuccess = () => {
+    this.popup.success({
+      message: AUTHEN_MESSAGE.registerSuccess
+    });
+  }
+  popupSignupError = (user) => {
+    if (user) {
+      this.popup.error({
+        message: AUTHEN_MESSAGE.registerError
+      });
+    }
+  }
 
   bindUserSignIn() {
     this.loginForm.removeEventListener('submit', this.formSignUpEventHandler);
