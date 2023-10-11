@@ -69,7 +69,11 @@
   font-size: var(--font-size-small);
   font-weight: 500;
   margin-bottom: 8px;
+}
+
+.product-name::first-letter {
   text-transform: capitalize;
+
 }
 
 .product-detail {
