@@ -36,7 +36,7 @@ export default class LoginView {
     e.preventDefault();
 
     const user = {
-      email: this.emailElement.value.trim() || '',
+      email: this.emailElement.value.trim() && this.emailElement.value.toLowerCase() || '',
       password: this.passwordElement.value.trim() || '',
     };
     const isError = loginValidator(user, 'SIGNIN');
@@ -60,7 +60,7 @@ export default class LoginView {
   formSignUpEventHandler = async (e) => {
     e.preventDefault();
     const user = {
-      email: this.emailElement.value.trim() || '',
+      email: this.emailElement.value.trim() && this.emailElement.value.toLowerCase() || '',
       password: this.passwordElement.value.trim() || '',
       confirmPassword: this.confirmPasswordElement.value.trim() || '',
     }
