@@ -1,4 +1,8 @@
-import { validateConfirmPassword, validateEmail, validatePassword } from "./validateInput"
+import {
+  validateConfirmPassword,
+  validateEmail,
+  validatePassword
+} from "./validateInput"
 
 /**
  * @description handle validate form sign in
@@ -7,7 +11,9 @@ import { validateConfirmPassword, validateEmail, validatePassword } from "./vali
  */
 export const validateFormSignIn = (user) => {
   const error = {
-    ...(validateEmail(user.email) && {email: validateEmail(user.email)}),
+    ...(validateEmail(user.email) && {
+      email: validateEmail(user.email)
+    }),
     ...(validatePassword(user.password) && {
       password: validatePassword(user.password),
     }),
@@ -23,7 +29,9 @@ export const validateFormSignIn = (user) => {
  */
 export const validateFormSignUp = (user) => {
   const error = {
-    ...(validateEmail(user.email) && { email: validateEmail(user.email)}),
+    ...(validateEmail(user.email) && {
+      email: validateEmail(user.email)
+    }),
     ...(validatePassword(user.password) && {
       password: validatePassword(user.password),
     }),
@@ -35,7 +43,7 @@ export const validateFormSignUp = (user) => {
 }
 
 export const loginValidator = (user, type) => {
-  switch(type) {
+  switch (type) {
     case 'SIGNUP':
       return validateFormSignUp(user);
     case 'SIGNIN':

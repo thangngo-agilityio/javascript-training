@@ -208,6 +208,9 @@ export default class ProductView {
     }
   };
 
+  /**
+   * @description handler search product
+   */
   handlerSearchProduct = (handler) => {
     const searchProduct = querySelector('.input-search');
 

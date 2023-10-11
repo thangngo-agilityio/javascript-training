@@ -11,8 +11,8 @@ import {
 /**
  * @class UserController
  * Link the user input and the view output for add edit delete data
- * @param userModel
- * @param userView
+ * @param model
+ * @param view
  */
 export default class LoginController {
   constructor(model, view) {
