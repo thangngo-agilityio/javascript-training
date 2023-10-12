@@ -1,12 +1,14 @@
 import {
   TOGGLE_STYLE
-} from "../constants";
+} from "../constants/index.js";
 import {
   querySelector
-} from "./doms"
+} from "./doms.js"
 
 export const handleToggleLoading = (status) => {
   const toggle = querySelector('.toggle');
 
-  toggle.style.display = status ? TOGGLE_STYLE.FLEX : TOGGLE_STYLE.NONE
+  if (toggle) {
+    toggle.style.display = status ? TOGGLE_STYLE.FLEX : TOGGLE_STYLE.NONE
+  }
 }

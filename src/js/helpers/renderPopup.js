@@ -1,11 +1,11 @@
 import {
   MAX_POPUP,
   VERTICAL_OFFSET
-} from "../constants";
+} from "../constants/index.js";
 import {
   createElement,
   querySelector
-} from "./doms";
+} from "./doms.js";
 
 export class Popup {
   currentPopupCount = 0;
@@ -16,55 +16,48 @@ export class Popup {
     const mainElement = querySelector('.main-content');
     const popup = createElement('div');
 
+    if (popup) {
+      popup.classList.add('popup', `popup-${type}`, 'open');
 
-    popup.classList.add('popup', `popup-${type}`, 'open');
+      this.currentPopupCount++;
 
-    if (this.currentPopupCount >= this.maxPopupCount) {
-      return;
-    }
-
-    this.currentPopupCount++;
-
-    popup.innerHTML = `<div class="popup-body">
+      popup.innerHTML = `<div class="popup-body">
                         <p class="popup-message">${message}</p>
                       </div>`;
 
-    requestAnimationFrame(() => {
-      const topPosition = this.currentPopupCount * (popup.offsetHeight + this.verticalOffset);
+      popup.onclick = (e) => {
+        const target = e.target;
 
-      popup.style.top = `${topPosition}px`;
-    });
+        if (target.closest('.popup-close')) {
+          popup.remove();
+          this.currentPopupCount--;
+        }
+      };
 
-    // Auto remove popup after 1 seconds
-    setTimeout(() => {
-      popup.remove();
-      this.currentPopupCount--;
-    }, 1500);
+      if (this.currentPopupCount >= this.maxPopupCount) {
+        return;
+      }
 
-    popup.onclick = (e) => {
-      const target = e.target;
-
-      if (target.closest('.popup-close')) {
+      // Auto remove popup after 1 seconds
+      setTimeout(() => {
         popup.remove();
         this.currentPopupCount--;
-      }
-    };
+      }, 1500);
 
-    // Add popupElement to mainElement
-    mainElement.appendChild(popup);
+      // Add popupElement to mainElement
+      mainElement.appendChild(popup);
+    }
   }
 
   success({
     message,
-    title = 'success'
   }) {
-    this.createPopup('success', title, message);
+    this.createPopup('success', message);
   }
 
   error({
     message,
-    title = 'error'
   }) {
-    this.createPopup('error', title, message);
+    this.createPopup('error', message);
   }
 }

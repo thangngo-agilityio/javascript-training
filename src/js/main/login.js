@@ -1,6 +1,6 @@
-import LoginController from '../controllers/login';
-import LoginModel from '../models/login';
-import LoginView from '../views/login';
+import LoginController from '../controllers/login.js';
+import LoginModel from '../models/login.js';
+import LoginView from '../views/login.js';
 
 const appLogin = () => {
   new LoginController(new LoginModel(), new LoginView(LoginModel));

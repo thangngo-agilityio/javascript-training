@@ -2,7 +2,7 @@ import {
   validateConfirmPassword,
   validateEmail,
   validatePassword
-} from "./validateInput"
+} from "./validateInput.js"
 
 /**
  * @description handle validate form sign in

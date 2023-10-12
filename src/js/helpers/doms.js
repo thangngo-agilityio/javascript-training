@@ -4,8 +4,10 @@
  * @param {HTMLElement} parent
  * @returns html element
  */
-export const querySelector = (selector, parent = document) => {
-  return parent.querySelector(selector);
+export const querySelector = (selector) => {
+  if (typeof document !== 'undefined') {
+    return document.querySelector(selector);
+  }
 };
 
 /**
@@ -14,8 +16,10 @@ export const querySelector = (selector, parent = document) => {
  * @param {HTMLElement} parent
  * @returns list html elements
  */
-export const querySelectorAll = (selector, parent = document) => {
-  return parent.querySelectorAll(selector);
+export const querySelectorAll = (selector) => {
+  if (typeof document !== 'undefined') {
+    return document.querySelectorAll(selector);
+  }
 };
 
 /**
@@ -24,8 +28,10 @@ export const querySelectorAll = (selector, parent = document) => {
  * @param {HTMLElement} parent
  * @returns html element
  */
-export function getElementById(selector, parent = document) {
-  return parent.getElementById(selector);
+export function getElementById(selector) {
+  if (typeof document !== 'undefined') {
+    return document.getElementById(selector);
+  }
 }
 
 /**
@@ -34,6 +40,8 @@ export function getElementById(selector, parent = document) {
  * @param {HTMLElement} parent
  * @returns create elements
  */
-export const createElement = (element, parent = document) => {
-  return parent.createElement(element);
+export const createElement = (element) => {
+  if (typeof document !== 'undefined') {
+    return document.createElement(element);
+  }
 };
