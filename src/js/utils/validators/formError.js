@@ -2,7 +2,7 @@ import {
   getElementById,
   querySelector,
   querySelectorAll
-} from "../../helpers/doms"
+} from "../../helpers/doms.js"
 
 /**
  * @description handle show error

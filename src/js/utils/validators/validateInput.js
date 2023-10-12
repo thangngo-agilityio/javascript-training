@@ -1,7 +1,4 @@
 import {
-  VALIDATE_MESSAGE
-} from "../../constants/message"
-import {
   A_CHARACTER_REGEX,
   CHARACTERS_REGEX,
   EMAIL_REGEX,
@@ -10,8 +7,9 @@ import {
   PRICE_REGEX,
   QUANTITY_REGEX,
   SPECIAL_REGEX,
-  UPPERCASE_REGEX
-} from "../../constants/regex";
+  UPPERCASE_REGEX,
+  VALIDATE_MESSAGE
+} from "../../constants/index.js";
 
 const validateRequired = (value = '', field) => {
   return value ? undefined : VALIDATE_MESSAGE.requiredError.replace('{field}', field);

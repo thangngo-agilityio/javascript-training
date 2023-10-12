@@ -5,17 +5,17 @@ import {
   handleToggleLoading,
   querySelectorAll,
   Popup
-} from '../helpers';
+} from '../helpers/index.js';
 // Constants
 import {
   PRODUCT_MESSAGE,
   TOGGLE_STATUS,
   VALIDATE_MESSAGE
-} from '../constants';
+} from '../constants/index.js';
 // Templates
 import {
   productTemplate
-} from '../templates/productCard';
+} from '../templates/productCard.js';
 // utils
 import {
   getFormValues,
@@ -28,11 +28,7 @@ import {
   sortPriceAsc,
   sortPriceDec,
   removeErrorMessage,
-} from '../utils';
-// images
-import delIcon from '../../assets/icon/icon_del.svg';
-import logoutIcon from '../../assets/icon/icon_logout.svg';
-
+} from '../utils/index.js';
 /**
  * @class ProductView
  *
@@ -54,13 +50,12 @@ export default class ProductView {
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
     this.inputAll = querySelectorAll('.form-input');
-    this.isAuth = localStorage.getItem('LOGIN')
     this.query = {};
     this.popup = new Popup()
   }
 
   displayProduct(data) {
-    if (this.listProduct.lastElementChild !== null) {
+    if (this.listProduct && this.listProduct.lastElementChild !== null) {
       while (this.listProduct.lastElementChild.id !== 'add-card') {
         this.listProduct.removeChild(this.listProduct.lastElementChild);
       }
@@ -71,7 +66,7 @@ export default class ProductView {
         data.forEach((product) => {
           const divProduct = createElement('div');
           divProduct.setAttribute('class', 'product-card');
-          divProduct.innerHTML = productTemplate(delIcon, product);
+          divProduct.innerHTML = productTemplate(product);
 
           this.listProduct.append(divProduct);
         });
@@ -141,46 +136,50 @@ export default class ProductView {
    */
   handlerDelProduct(handler) {
     const modalContent = this.listProduct;
-    modalContent.addEventListener('click', (e) => {
-      const target = e.target;
-      const btnDel = target.closest('.btn-del');
+    if (modalContent) {
+      modalContent.addEventListener('click', (e) => {
+        const target = e.target;
+        const btnDel = target.closest('.btn-del');
 
-      if (btnDel) {
-        const productId = btnDel.dataset.id
-        this.modalDel.style.display = 'flex';
-        const confirmBtn = querySelector('.confirm-btn')
-        const confirmYes = createElement('button')
-        confirmYes.setAttribute('class', 'btn btn-yes')
-        confirmYes.textContent = 'Yes'
-        confirmBtn.appendChild(confirmYes)
+        if (btnDel) {
+          const productId = btnDel.dataset.id
+          this.modalDel.style.display = 'flex';
+          const confirmBtn = querySelector('.confirm-btn')
+          const confirmYes = createElement('button')
+          confirmYes.setAttribute('class', 'btn btn-yes')
+          confirmYes.textContent = 'Yes'
+          confirmBtn.appendChild(confirmYes)
 
-        confirmYes.addEventListener('click', () => {
-          if (confirmYes) {
-            handler(productId);
-            this.modalDel.style.display = 'none'
-            confirmYes.remove()
-            this.popup.success({
-              message: PRODUCT_MESSAGE.removeSuccess,
-            });
-          }
-        });
-      }
-    });
+          confirmYes.addEventListener('click', () => {
+            if (confirmYes) {
+              handler(productId);
+              this.modalDel.style.display = 'none'
+              confirmYes.remove()
+              this.popup.success({
+                message: PRODUCT_MESSAGE.removeSuccess,
+              });
+            }
+          });
+        }
+      });
+    }
   }
 
   /**
    * @description handler detail product
    */
   handlerDetailProduct = (handler) => {
-    this.listProduct.addEventListener('click', async (e) => {
-      const target = e.target;
-      const btnEdit = target.closest('.btn-edit');
-      const idProduct = target.dataset.id;
+    if (this.listProduct) {
+      this.listProduct.addEventListener('click', async (e) => {
+        const target = e.target;
+        const btnEdit = target.closest('.btn-edit');
+        const idProduct = target.dataset.id;
 
-      if (btnEdit) {
-        await handler(idProduct);
-      }
-    });
+        if (btnEdit) {
+          await handler(idProduct);
+        }
+      });
+    }
   };
 
   /**
@@ -219,7 +218,9 @@ export default class ProductView {
       await handler(this.query);
     }, 500);
 
-    searchProduct.addEventListener('input', searchName);
+    if (searchProduct) {
+      searchProduct.addEventListener('input', searchName);
+    }
   }
 
   /**
@@ -228,37 +229,42 @@ export default class ProductView {
   handlerSortProduct = async (data) => {
     const sortSelect = querySelector('.sort-dropdown');
 
-    sortSelect.addEventListener('change', (e) => {
-      e.preventDefault()
-      handleToggleLoading(TOGGLE_STATUS.OPEN)
-      const target = e.target.value;
-      setTimeout(() => {
-        switch (target) {
-          case 'name-asc':
-            sortNameAsc(data)
-            break;
-          case 'name-dec':
-            sortNameDec(data)
-            break;
-          case 'price-asc':
-            sortPriceAsc(data)
-            break
-          case 'price-dec':
-            sortPriceDec(data)
-            break;
-          default:
-            break
-        }
-        this.displayProduct(data);
-        handleToggleLoading(TOGGLE_STATUS.CLOSE)
-      }, 500);
-    });
+    if (sortSelect) {
+      sortSelect.addEventListener('change', (e) => {
+        e.preventDefault()
+        handleToggleLoading(TOGGLE_STATUS.OPEN)
+        const target = e.target.value;
+        setTimeout(() => {
+          switch (target) {
+            case 'name-asc':
+              sortNameAsc(data)
+              break;
+            case 'name-dec':
+              sortNameDec(data)
+              break;
+            case 'price-asc':
+              sortPriceAsc(data)
+              break
+            case 'price-dec':
+              sortPriceDec(data)
+              break;
+            default:
+              break
+          }
+          this.displayProduct(data);
+          handleToggleLoading(TOGGLE_STATUS.CLOSE)
+        }, 500);
+      });
+    }
   };
 
   bindButtonLogout = (handler) => {
     const btnAccount = querySelector('.nav-login');
-    if (this.isAuth) {
-      btnAccount.innerHTML = `<img class='btn-logout' src="${logoutIcon}" alt="logout" />`
+    if (typeof window !== 'undefined') {
+      const isAuth = localStorage.getItem('LOGIN')
+      if (isAuth) {
+        btnAccount.innerHTML = `<img class='btn-logout' src="/svgs/icon_logout.svg" alt="logout" />`
+      }
     }
     const btnLogout = querySelector('.btn-logout');
 
@@ -268,11 +274,13 @@ export default class ProductView {
   }
 
   bindAddProduct = (handler) => {
-    this.btnAdd.addEventListener('click', (e) => {
-      e.preventDefault();
-      removeErrorMessage()
-      this.handleAddProduct(handler);
-    });
+    if (this.btnAdd) {
+      this.btnAdd.addEventListener('click', (e) => {
+        e.preventDefault();
+        removeErrorMessage()
+        this.handleAddProduct(handler);
+      });
+    }
   };
 
   bindDelProduct = (handler) => {
@@ -299,22 +307,28 @@ export default class ProductView {
    * @description manage add event listener for page
    */
   bindManageEvent() {
-    this.addProduct.addEventListener('click', () => {
-      this.modalTitle.textContent = 'Create a new food';
-      this.btnAdd.classList.remove('hidden');
-      this.modalMain.classList.remove('hidden');
-    });
+    if (this.addProduct) {
+      this.addProduct.addEventListener('click', () => {
+        this.modalTitle.textContent = 'Create a new food';
+        this.btnAdd.classList.remove('hidden');
+        this.modalMain.classList.remove('hidden');
+      });
+    }
 
-    this.confirmCancel.addEventListener('click', () => {
-      this.modalDel.style.display = 'none'
-      querySelector('.btn-yes').remove()
-    })
+    if (this.confirmCancel) {
+      this.confirmCancel.addEventListener('click', () => {
+        this.modalDel.style.display = 'none'
+        querySelector('.btn-yes').remove()
+      })
+    }
 
-    this.btnClose.addEventListener('click', () => {
-      this.modalForm.reset();
-      clearError();
-      this.modalMain.classList.add('hidden');
-      querySelector('.btn-edit-product').remove()
-    });
+    if (this.btnClose) {
+      this.btnClose.addEventListener('click', () => {
+        this.modalForm.reset();
+        clearError();
+        this.modalMain.classList.add('hidden');
+        querySelector('.btn-edit-product').remove()
+      });
+    }
   }
 }

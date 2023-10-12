@@ -1,5 +1,5 @@
-export const productTemplate = (delIcon, data) => {
-  return `<button class="btn-del" data-id=${data.id}><img src="${delIcon}" alt="Cross Icon" class="icon-del"/></button>
+export const productTemplate = (data) => {
+  return `<button class="btn-del" data-id=${data.id}><img src="/svgs/icon_del.svg" alt="Cross Icon" class="icon-del"/></button>
   <div class="product-wrapper">
     <div class="product-img">
       <img src="${data.image}" alt="${data.name}" class="img-item" />
