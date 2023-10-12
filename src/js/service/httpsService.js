@@ -3,7 +3,7 @@ import {
   HTTP_METHOD,
   API_HEADERS,
   MOCK_API
-} from '../constants';
+} from '../constants/index.js';
 
 
 

@@ -1,19 +1,19 @@
 // constants
 import {
   AUTHEN_MESSAGE
-} from "../constants";
+} from "../constants/index.js";
 // helpers
 import {
   querySelector,
   getElementById,
   Popup
-} from "../helpers";
+} from "../helpers/index.js";
 // utils
 import {
   clearError,
   showError,
   loginValidator
-} from "../utils";
+} from "../utils/index.js";
 
 /**
  * @class LoginView

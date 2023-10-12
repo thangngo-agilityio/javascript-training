@@ -1,15 +1,15 @@
 // constants
 import {
   TOGGLE_STATUS
-} from '../constants';
+} from '../constants/index.js';
 // helpers
 import {
   handleToggleLoading
-} from '../helpers';
+} from '../helpers/index.js';
 // utils
 import {
   buildQuery
-} from '../utils';
+} from '../utils/index.js';
 
 /**
  * @class UserController
@@ -34,7 +34,6 @@ export default class ProductController {
     this.view.bindProductList(this.showProduct);
     this.view.bindDetailProduct(this.detailProduct);
     this.view.updateProduct = this.editProduct;
-    this.isAuth = localStorage.getItem('LOGIN')
   };
 
   showProduct = async (query) => {
@@ -42,10 +41,13 @@ export default class ProductController {
     const queryString = buildQuery(query)
     const data = await this.model.getProduct(queryString);
     this.view.bindSortProduct(data);
-    if (this.isAuth) {
-      this.view.bindButtonLogout(() => {
-        localStorage.removeItem("LOGIN")
-      })
+    if (typeof window !== 'undefined') {
+      const isAuth = localStorage.getItem('LOGIN')
+      if (isAuth) {
+        this.view.bindButtonLogout(() => {
+          localStorage.removeItem("LOGIN")
+        })
+      }
     }
     this.view.displayProduct(data);
     handleToggleLoading(TOGGLE_STATUS.CLOSE)

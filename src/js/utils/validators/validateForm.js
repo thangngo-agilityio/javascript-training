@@ -3,7 +3,7 @@ import {
   validateName,
   validatePrice,
   validateQuantity
-} from "./validateInput"
+} from "./validateInput.js"
 
 /**
  * @description handle validate form product

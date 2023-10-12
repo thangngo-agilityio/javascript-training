@@ -1,12 +1,12 @@
 // constants
 import {
   TOGGLE_STATUS,
-} from '../constants';
+} from '../constants/index.js';
 // helpers
 import {
   redirect,
   handleToggleLoading
-} from '../helpers';
+} from '../helpers/index.js';
 
 /**
  * @class UserController
