@@ -8,6 +8,7 @@ import HttpsService from "../service/httpsService.js";
 export default class ProductModel {
   constructor() {
     this.productService = new HttpsService('products')
+    this.productList = []
   }
 
   /**
@@ -16,7 +17,22 @@ export default class ProductModel {
    * @param products Products[]
    */
   async getProduct(query) {
-    return await this.productService.get(query)
+    const data = await this.productService.get(query)
+    console.log('model', data);
+    if (data) {
+      for (const item of data) {
+        const response = await this.getProductById(item.id);
+        console.log(response);
+        this.productList.push({
+          ...response,
+          name: item.name,
+          price: item.price,
+          image: item.image,
+          quantity: item.quantity
+        })
+      }
+    }
+    return this.productList;
   }
 
   /**
@@ -34,14 +50,22 @@ export default class ProductModel {
    * @return product
    */
   handleAddProduct = async (data) => {
-    const newProduct = {
-      name: data.name,
-      price: Number(data.price),
-      image: data.image,
-      quantity: Number(data.quantity),
-    };
+    try {
+      const addProduct = await this.productService.post(data)
 
-    return await this.productService.post(newProduct)
+      if (addProduct) {
+        this.productList.push({
+          name: addProduct.name,
+          price: addProduct.price,
+          image: addProduct.image,
+          quantity: addProduct.quantity
+        });
+      }
+    } catch (error) {
+      Error(error)
+    }
+
+    return this.productList
   }
 
   /**
@@ -50,7 +74,13 @@ export default class ProductModel {
    * @param id
    */
   handleDelProduct = async (id) => {
-    return await this.productService.delete(id);
+    const delProduct = await this.productService.delete(id);
+
+    if (delProduct) {
+      this.productList.filter(i => i.id !== id)
+    }
+
+    return this.productList
   }
 
   /**

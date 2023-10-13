@@ -62,21 +62,19 @@ export default class ProductView {
     }
 
     if (data) {
-      try {
-        data.forEach((product) => {
-          const divProduct = createElement('div');
-          divProduct.setAttribute('class', 'product-card');
-          divProduct.innerHTML = productTemplate(product);
+      data.forEach((product) => {
+        const divProduct = createElement('div');
+        divProduct.setAttribute('class', 'product-card');
+        divProduct.innerHTML = productTemplate(product);
 
-          this.listProduct.append(divProduct);
-        });
-      } catch (error) {
-        this.popup.error({
-          message: VALIDATE_MESSAGE.getFailed
-        })
-      }
+        this.listProduct.append(divProduct);
+      });
+    } else {
+      this.popup.error({
+        message: VALIDATE_MESSAGE.getFailed
+      })
     }
-    this.bindButtonLogout()
+    this.bindButtonLogout();
     this.bindManageEvent();
   }
 
@@ -327,7 +325,10 @@ export default class ProductView {
         this.modalForm.reset();
         clearError();
         this.modalMain.classList.add('hidden');
-        querySelector('.btn-edit-product').remove()
+        const btnEdit = querySelector('.btn-edit-product')
+        if (btnEdit) {
+          btnEdit.remove()
+        }
       });
     }
   }

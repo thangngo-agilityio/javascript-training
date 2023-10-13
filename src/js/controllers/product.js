@@ -39,28 +39,24 @@ export default class ProductController {
   showProduct = async (query) => {
     handleToggleLoading(TOGGLE_STATUS.OPEN)
     const queryString = buildQuery(query)
-    const data = await this.model.getProduct(queryString);
+    const data = await this.model.getProduct('', queryString);
+    console.log('controller:', data);
     this.view.bindSortProduct(data);
-    if (typeof window !== 'undefined') {
-      const isAuth = localStorage.getItem('LOGIN')
-      if (isAuth) {
-        this.view.bindButtonLogout(() => {
-          localStorage.removeItem("LOGIN")
-        })
-      }
-    }
     this.view.displayProduct(data);
     handleToggleLoading(TOGGLE_STATUS.CLOSE)
   };
 
   addProduct = async (data) => {
-    await this.model.handleAddProduct(data);
-    await this.showProduct();
+    handleToggleLoading(TOGGLE_STATUS.OPEN)
+    const addData = await this.model.handleAddProduct(data);
+    console.log(addData);
+    this.view.displayProduct(addData)
+    handleToggleLoading(TOGGLE_STATUS.CLOSE)
   };
 
   delProduct = async (id) => {
-    await this.model.handleDelProduct(id);
-    await this.showProduct();
+    const delData = await this.model.handleDelProduct(id);
+    this.showProduct(delData)
   }
 
   detailProduct = async (id) => {
@@ -70,6 +66,6 @@ export default class ProductController {
 
   editProduct = async (data) => {
     await this.model.handleEditProduct(data, data.id);
-    await this.showProduct();
+    this.showProduct()
   };
 }

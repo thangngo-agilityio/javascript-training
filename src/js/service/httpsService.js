@@ -33,7 +33,7 @@ export default class HttpsService {
       });
       return response.json()
     } catch (error) {
-      throw new Error(error);
+      return error;
     }
   };
 
@@ -49,7 +49,7 @@ export default class HttpsService {
       const response = await fetch(url);
       return response.json();
     } catch (error) {
-      throw new Error(error);
+      return error;
     }
   };
 
@@ -66,7 +66,7 @@ export default class HttpsService {
 
       return response.json();
     } catch (error) {
-      throw new Error(error)
+      Error(error)
     }
   }
 
@@ -81,7 +81,7 @@ export default class HttpsService {
         method: HTTP_METHOD.DELETE,
       });
     } catch (error) {
-      throw new Error(error);
+      return error;
     }
   };
 
@@ -99,7 +99,7 @@ export default class HttpsService {
       });
       return response.json()
     } catch (error) {
-      throw new Error(error)
+      Error(error)
     }
   }
 }
