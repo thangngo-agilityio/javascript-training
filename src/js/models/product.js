@@ -1,5 +1,5 @@
 // service
-import HttpsService from "../service/httpsService.js";
+import HttpsService from '../service/httpsService.js';
 
 /**
  * @class UserModel
@@ -7,8 +7,8 @@ import HttpsService from "../service/httpsService.js";
  */
 export default class ProductModel {
   constructor() {
-    this.productService = new HttpsService('products')
-    this.productList = []
+    this.productService = new HttpsService('products');
+    this.productList = [];
   }
 
   /**
@@ -17,22 +17,17 @@ export default class ProductModel {
    * @param products Products[]
    */
   async getProduct(query) {
-    const data = await this.productService.get(query)
-    console.log('model', data);
-    if (data) {
-      for (const item of data) {
-        const response = await this.getProductById(item.id);
-        console.log(response);
-        this.productList.push({
-          ...response,
-          name: item.name,
-          price: item.price,
-          image: item.image,
-          quantity: item.quantity
-        })
+    try {
+      const data = await this.productService.get(query);
+      if (data.length) {
+        this.productList = data.map((item) => ({
+          ...item
+        }))
       }
+      return this.productList.reverse();
+    } catch (error) {
+      return error;
     }
-    return this.productList;
   }
 
   /**
@@ -41,7 +36,7 @@ export default class ProductModel {
    * @param id id product
    */
   async getProductById(id) {
-    return await this.productService.getById(id)
+    return await this.productService.getById(id);
   }
 
   /**
@@ -51,22 +46,18 @@ export default class ProductModel {
    */
   handleAddProduct = async (data) => {
     try {
-      const addProduct = await this.productService.post(data)
+      const addProduct = await this.productService.post(data);
 
       if (addProduct) {
         this.productList.push({
-          name: addProduct.name,
-          price: addProduct.price,
-          image: addProduct.image,
-          quantity: addProduct.quantity
+          ...addProduct
         });
       }
+      return this.productList;
     } catch (error) {
-      Error(error)
+      return error;
     }
-
-    return this.productList
-  }
+  };
 
   /**
    * @description Delete product by id
@@ -74,20 +65,40 @@ export default class ProductModel {
    * @param id
    */
   handleDelProduct = async (id) => {
-    const delProduct = await this.productService.delete(id);
+    try {
+      const delId = await this.productService.delete(id);
 
-    if (delProduct) {
-      this.productList.filter(i => i.id !== id)
+      if (delId) {
+        this.productList.filter(i => i.id !== id)
+      }
+      return this.productList
+    } catch (error) {
+      return error;
     }
-
-    return this.productList
-  }
+  };
 
   /**
    * @description Edit product item by id and save response to json server
    * return product item
    */
   handleEditProduct = async (data, id) => {
-    return await this.productService.put(data, id);
-  }
+    try {
+      const updateProduct = await this.productService.put(data, id);
+
+      if (updateProduct) {
+        this.productList = data.map(item => {
+          item.id === id ? {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            quantity: item.quantity
+          } : item
+        })
+      }
+      return this.productList
+    } catch (error) {
+      return  error
+    }
+  };
 }

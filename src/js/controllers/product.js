@@ -28,35 +28,36 @@ export default class ProductController {
    * @description function init to
    */
   init = async () => {
-    await this.showProduct();
+    await this.showProduct(this.view.query);
     this.view.bindAddProduct(this.addProduct);
     this.view.bindDelProduct(this.delProduct);
-    this.view.bindProductList(this.showProduct);
+    this.view.bindSearchProduct(this.searchProduct);
     this.view.bindDetailProduct(this.detailProduct);
+
     this.view.updateProduct = this.editProduct;
   };
 
   showProduct = async (query) => {
-    handleToggleLoading(TOGGLE_STATUS.OPEN)
-    const queryString = buildQuery(query)
-    const data = await this.model.getProduct('', queryString);
-    console.log('controller:', data);
+    handleToggleLoading(TOGGLE_STATUS.isShown);
+    const data = await this.model.getProduct(query);
+    this.view.bindButtonLogout();
+    this.view.bindManageEvent();
     this.view.bindSortProduct(data);
     this.view.displayProduct(data);
-    handleToggleLoading(TOGGLE_STATUS.CLOSE)
+    handleToggleLoading(TOGGLE_STATUS.isHidden);
   };
 
   addProduct = async (data) => {
-    handleToggleLoading(TOGGLE_STATUS.OPEN)
+    handleToggleLoading(TOGGLE_STATUS.isShown);
     const addData = await this.model.handleAddProduct(data);
     console.log(addData);
-    this.view.displayProduct(addData)
-    handleToggleLoading(TOGGLE_STATUS.CLOSE)
+    this.showProduct(addData);
+    handleToggleLoading(TOGGLE_STATUS.isHidden);
   };
 
   delProduct = async (id) => {
-    const delData = await this.model.handleDelProduct(id);
-    this.showProduct(delData)
+    const delProduct = await this.model.handleDelProduct(id);
+    this.showProduct(delProduct);
   }
 
   detailProduct = async (id) => {
@@ -65,7 +66,15 @@ export default class ProductController {
   };
 
   editProduct = async (data) => {
-    await this.model.handleEditProduct(data, data.id);
-    this.showProduct()
+    const editProduct = await this.model.handleEditProduct(data, data.id);
+    this.showProduct(editProduct);
   };
+
+  searchProduct = async (data) => {
+    handleToggleLoading(TOGGLE_STATUS.isShown);
+    const queryString = buildQuery(data);
+    const searchData = await this.model.getProduct(queryString);
+    this.view.displayProduct(searchData);
+    handleToggleLoading(TOGGLE_STATUS.isHidden);
+  }
 }
