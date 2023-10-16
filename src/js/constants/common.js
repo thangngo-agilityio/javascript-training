@@ -12,13 +12,13 @@ export const API_HEADERS = {
 export const PRODUCT_LIST = ['Name', 'Price', 'Image', 'Quantity'];
 
 export const TOGGLE_STATUS = {
-  OPEN: true,
-  CLOSE: false,
+  isShown: true,
+  isHidden: false,
 };
 
 export const TOGGLE_STYLE = {
-  FLEX: 'flex',
-  NONE: 'none',
+  SHOW: 'flex',
+  HIDE: 'none',
 };
 
 // Max message popup

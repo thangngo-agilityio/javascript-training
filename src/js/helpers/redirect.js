@@ -4,7 +4,7 @@
  * @param callback function
  */
 
-export const redirect = (path, replace) => {
+export const isRedirect = (path, replace) => {
   if (replace) {
     window.location.replace(path);
   }

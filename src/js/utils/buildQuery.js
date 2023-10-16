@@ -5,7 +5,7 @@
  */
 export const buildQuery = (params) => {
   const queryString = Object.keys(params || {})
-    .filter((key) => !!params[key])
+    .filter((key) => params[key])
     .map(
       (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
     )

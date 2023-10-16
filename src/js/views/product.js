@@ -4,18 +4,16 @@ import {
   querySelector,
   handleToggleLoading,
   querySelectorAll,
-  Popup
+  Popup,
 } from '../helpers/index.js';
 // Constants
 import {
   PRODUCT_MESSAGE,
   TOGGLE_STATUS,
-  VALIDATE_MESSAGE
+  VALIDATE_MESSAGE,
 } from '../constants/index.js';
 // Templates
-import {
-  productTemplate
-} from '../templates/productCard.js';
+import { productTemplate } from '../templates/productCard.js';
 // utils
 import {
   getFormValues,
@@ -36,22 +34,22 @@ import {
  */
 export default class ProductView {
   constructor() {
-    this.listProduct = querySelector('.manage-list');
+    this.listProduct = querySelector('#manage-list');
     this.addProduct = querySelector('#add-card');
-    this.modalMain = querySelector('.modal-overlay');
+    this.modalMain = querySelector('#modal-overlay');
     this.modalForm = querySelector('#modal-form');
     this.modalTitle = querySelector('#modal-title');
-    this.modalDel = querySelector('.modal-del')
-    this.btnAdd = querySelector('.btn-add-product');
+    this.modalDel = querySelector('#modal-del');
+    this.btnAdd = querySelector('#btn-add');
     this.btnClose = querySelector('#close-btn');
-    this.confirmCancel = querySelector('#btn-cancel')
+    this.confirmCancel = querySelector('#btn-cancel');
     this.nameElement = querySelector('#name');
     this.priceElement = querySelector('#price');
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
     this.inputAll = querySelectorAll('.form-input');
     this.query = {};
-    this.popup = new Popup()
+    this.popup = new Popup();
   }
 
   displayProduct(data) {
@@ -61,23 +59,18 @@ export default class ProductView {
       }
     }
 
-    if (data) {
-      try {
-        data.forEach((product) => {
-          const divProduct = createElement('div');
-          divProduct.setAttribute('class', 'product-card');
-          divProduct.innerHTML = productTemplate(product);
-
-          this.listProduct.append(divProduct);
-        });
-      } catch (error) {
-        this.popup.error({
-          message: VALIDATE_MESSAGE.getFailed
-        })
-      }
+    if (data.length > 0) {
+      data.forEach((product) => {
+        const divProduct = createElement('div');
+        divProduct.setAttribute('class', 'product-card');
+        divProduct.innerHTML = productTemplate(product);
+        this.listProduct.append(divProduct);
+      });
+    } else {
+      this.popup.error({
+        message: VALIDATE_MESSAGE.GET_FAILED,
+      });
     }
-    this.bindButtonLogout()
-    this.bindManageEvent();
   }
 
   /**
@@ -87,23 +80,22 @@ export default class ProductView {
     this.modalMain.classList.remove('hidden');
     this.modalTitle.textContent = 'Edit';
     this.btnAdd.classList.add('hidden');
-    const formBtn = querySelector('.form-btn')
-    const btnEdit = createElement('button')
+    const formBtn = querySelector('.form-btn');
+    const btnEdit = createElement('button');
     btnEdit.setAttribute('type', 'button');
     btnEdit.setAttribute('class', 'btn btn-edit-product');
     btnEdit.textContent = 'Save';
 
-    formBtn.appendChild(btnEdit)
+    formBtn.appendChild(btnEdit);
 
     this.nameElement.value = data.name || '';
     this.priceElement.value = data.price || '';
     this.imageElement.value = data.image || '';
     this.quantityElement.value = data.quantity || '';
 
-
     btnEdit.addEventListener('click', () => {
-      removeErrorMessage()
-      this.handlerUpdateProduct(data.id);
+      removeErrorMessage();
+      this.handleUpdateProduct(data.id);
     });
   }
 
@@ -118,45 +110,48 @@ export default class ProductView {
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
       this.popup.error({
-        message: PRODUCT_MESSAGE.addFailed,
+        message: PRODUCT_MESSAGE.ADD_FAILED,
       });
     } else {
-      await handler(formValues);
-      this.modalForm.reset();
-      this.btnAdd.classList.add('hidden');
-      this.modalMain.classList.add('hidden');
-      this.popup.success({
-        message: PRODUCT_MESSAGE.addSuccess
-      })
+      try {
+        await handler(formValues);
+        this.modalForm.reset();
+        this.btnAdd.classList.add('hidden');
+        this.modalMain.classList.add('hidden');
+        this.popup.success({
+          message: PRODUCT_MESSAGE.ADD_SUCCESS,
+        });
+      } catch (error) {
+        Error(error);
+      }
     }
   };
 
   /**
    * @description handler delete product
    */
-  handlerDelProduct(handler) {
-    const modalContent = this.listProduct;
-    if (modalContent) {
-      modalContent.addEventListener('click', (e) => {
+  handleDelProduct(handler) {
+    if (this.listProduct) {
+      this.listProduct.addEventListener('click', (e) => {
         const target = e.target;
         const btnDel = target.closest('.btn-del');
 
         if (btnDel) {
-          const productId = btnDel.dataset.id
+          const productId = btnDel.dataset.id;
           this.modalDel.style.display = 'flex';
-          const confirmBtn = querySelector('.confirm-btn')
-          const confirmYes = createElement('button')
-          confirmYes.setAttribute('class', 'btn btn-yes')
-          confirmYes.textContent = 'Yes'
-          confirmBtn.appendChild(confirmYes)
+          const confirmBtn = querySelector('.confirm-btn');
+          const confirmYes = createElement('button');
+          confirmYes.setAttribute('class', 'btn btn-yes');
+          confirmYes.textContent = 'Yes';
+          confirmBtn.appendChild(confirmYes);
 
           confirmYes.addEventListener('click', () => {
             if (confirmYes) {
               handler(productId);
-              this.modalDel.style.display = 'none'
-              confirmYes.remove()
+              this.modalDel.style.display = 'none';
+              confirmYes.remove();
               this.popup.success({
-                message: PRODUCT_MESSAGE.removeSuccess,
+                message: PRODUCT_MESSAGE.REMOVE_SUCCESS,
               });
             }
           });
@@ -168,7 +163,7 @@ export default class ProductView {
   /**
    * @description handler detail product
    */
-  handlerDetailProduct = (handler) => {
+  handleDetailProduct = (handler) => {
     if (this.listProduct) {
       this.listProduct.addEventListener('click', async (e) => {
         const target = e.target;
@@ -185,74 +180,82 @@ export default class ProductView {
   /**
    * @description handler edit product
    */
-  handlerUpdateProduct = async (id) => {
+  handleUpdateProduct = async (id) => {
     const formValues = getFormValues(this.modalForm);
 
     const errorMessage = validateForm(formValues);
-    const btnEdit = querySelector('.btn-edit-product')
+    const btnEdit = querySelector('.btn-edit-product');
 
     if (Object.keys(errorMessage).length !== 0) {
       showError(errorMessage);
     } else {
-      await this.updateProduct({
-        ...formValues,
-        id,
-      });
-      btnEdit.remove()
-      this.modalForm.reset();
-      this.modalMain.classList.add('hidden');
-      this.popup.success({
-        message: PRODUCT_MESSAGE.editSuccess,
-      });
+      try {
+        await this.updateProduct({
+          ...formValues,
+          id,
+        });
+        btnEdit.remove();
+        this.modalForm.reset();
+        this.modalMain.classList.add('hidden');
+        this.popup.success({
+          message: PRODUCT_MESSAGE.EDIT_SUCCESS,
+        });
+      } catch (error) {
+        Error(error);
+      }
     }
   };
 
   /**
    * @description handler search product
    */
-  handlerSearchProduct = (handler) => {
+  handleSearchProduct = (handler) => {
     const searchProduct = querySelector('.input-search');
 
     const searchName = debounce(async (e) => {
-      this.query.filter = e.target.value;
-      await handler(this.query);
+      try {
+        this.query.filter = e.target.value;
+        await handler(this.query);
+      } catch (error) {
+        Error(error);
+      }
     }, 500);
 
     if (searchProduct) {
       searchProduct.addEventListener('input', searchName);
     }
-  }
+  };
 
   /**
    * @description handler sort product
    */
-  handlerSortProduct = async (data) => {
+  handleSortProduct = (data) => {
     const sortSelect = querySelector('.sort-dropdown');
 
     if (sortSelect) {
       sortSelect.addEventListener('change', (e) => {
-        e.preventDefault()
-        handleToggleLoading(TOGGLE_STATUS.OPEN)
+        e.preventDefault();
+        handleToggleLoading(TOGGLE_STATUS.isShown);
         const target = e.target.value;
         setTimeout(() => {
           switch (target) {
             case 'name-asc':
-              sortNameAsc(data)
+              sortNameAsc(data);
               break;
             case 'name-dec':
-              sortNameDec(data)
+              sortNameDec(data);
               break;
             case 'price-asc':
-              sortPriceAsc(data)
-              break
+              sortPriceAsc(data);
+              break;
             case 'price-dec':
-              sortPriceDec(data)
+              sortPriceDec(data);
               break;
             default:
-              break
+              break;
           }
           this.displayProduct(data);
-          handleToggleLoading(TOGGLE_STATUS.CLOSE)
+          handleToggleLoading(TOGGLE_STATUS.isHidden);
         }, 500);
       });
     }
@@ -260,48 +263,43 @@ export default class ProductView {
 
   bindButtonLogout = (handler) => {
     const btnAccount = querySelector('.nav-login');
-    if (typeof window !== 'undefined') {
-      const isAuth = localStorage.getItem('LOGIN')
-      if (isAuth) {
-        btnAccount.innerHTML = `<img class='btn-logout' src="/svgs/icon_logout.svg" alt="logout" />`
-      }
+    const isAuth = localStorage?.getItem('LOGIN');
+    if (isAuth) {
+      btnAccount.innerHTML = `<img class='btn-logout' src="/svgs/icon_logout.svg" alt="logout" />`;
     }
+
     const btnLogout = querySelector('.btn-logout');
 
     if (btnLogout) {
-      btnLogout.addEventListener('click', handler)
+      btnLogout.addEventListener('click', handler);
     }
-  }
+  };
 
   bindAddProduct = (handler) => {
     if (this.btnAdd) {
       this.btnAdd.addEventListener('click', (e) => {
         e.preventDefault();
-        removeErrorMessage()
+        removeErrorMessage();
         this.handleAddProduct(handler);
       });
     }
   };
 
   bindDelProduct = (handler) => {
-    this.handlerDelProduct(handler);
+    this.handleDelProduct(handler);
   };
 
   bindDetailProduct = (handler) => {
-    this.handlerDetailProduct(handler);
+    this.handleDetailProduct(handler);
   };
 
   bindSearchProduct = async (handler) => {
-    this.handlerSearchProduct(handler)
+    this.handleSearchProduct(handler);
   };
 
   bindSortProduct = async (data) => {
-    this.handlerSortProduct(data);
+    this.handleSortProduct(data);
   };
-
-  bindProductList(handler) {
-    this.bindSearchProduct(handler);
-  }
 
   /**
    * @description manage add event listener for page
@@ -317,9 +315,9 @@ export default class ProductView {
 
     if (this.confirmCancel) {
       this.confirmCancel.addEventListener('click', () => {
-        this.modalDel.style.display = 'none'
-        querySelector('.btn-yes').remove()
-      })
+        this.modalDel.style.display = 'none';
+        querySelector('.btn-yes').remove();
+      });
     }
 
     if (this.btnClose) {
@@ -327,7 +325,10 @@ export default class ProductView {
         this.modalForm.reset();
         clearError();
         this.modalMain.classList.add('hidden');
-        querySelector('.btn-edit-product').remove()
+        const btnEdit = querySelector('.btn-edit-product');
+        if (btnEdit) {
+          btnEdit.remove();
+        }
       });
     }
   }

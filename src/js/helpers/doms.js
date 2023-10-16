@@ -5,9 +5,7 @@
  * @returns html element
  */
 export const querySelector = (selector) => {
-  if (typeof document !== 'undefined') {
-    return document.querySelector(selector);
-  }
+  return document?.querySelector(selector);
 };
 
 /**
@@ -17,9 +15,7 @@ export const querySelector = (selector) => {
  * @returns list html elements
  */
 export const querySelectorAll = (selector) => {
-  if (typeof document !== 'undefined') {
-    return document.querySelectorAll(selector);
-  }
+  return document?.querySelectorAll(selector);
 };
 
 /**
@@ -29,9 +25,7 @@ export const querySelectorAll = (selector) => {
  * @returns html element
  */
 export function getElementById(selector) {
-  if (typeof document !== 'undefined') {
-    return document.getElementById(selector);
-  }
+  return document?.getElementById(selector);
 }
 
 /**
@@ -41,7 +35,5 @@ export function getElementById(selector) {
  * @returns create elements
  */
 export const createElement = (element) => {
-  if (typeof document !== 'undefined') {
-    return document.createElement(element);
-  }
+  return document?.createElement(element);
 };
