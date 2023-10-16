@@ -1,5 +1,5 @@
 // service
-import HttpsService from "../service/httpsService.js";
+import HttpsService from '../service/httpsService.js';
 
 /**
  * @class UserModel
@@ -7,7 +7,8 @@ import HttpsService from "../service/httpsService.js";
  */
 export default class ProductModel {
   constructor() {
-    this.productService = new HttpsService('products')
+    this.productService = new HttpsService('products');
+    this.productList = [];
   }
 
   /**
@@ -16,7 +17,17 @@ export default class ProductModel {
    * @param products Products[]
    */
   async getProduct(query) {
-    return await this.productService.get(query)
+    try {
+      const data = await this.productService.get(query);
+      if (data.length) {
+        this.productList = data.map((item) => ({
+          ...item
+        }))
+      }
+      return this.productList.reverse();
+    } catch (error) {
+      return error;
+    }
   }
 
   /**
@@ -25,7 +36,7 @@ export default class ProductModel {
    * @param id id product
    */
   async getProductById(id) {
-    return await this.productService.getById(id)
+    return await this.productService.getById(id);
   }
 
   /**
@@ -34,15 +45,19 @@ export default class ProductModel {
    * @return product
    */
   handleAddProduct = async (data) => {
-    const newProduct = {
-      name: data.name,
-      price: Number(data.price),
-      image: data.image,
-      quantity: Number(data.quantity),
-    };
+    try {
+      const addProduct = await this.productService.post(data);
 
-    return await this.productService.post(newProduct)
-  }
+      if (addProduct) {
+        this.productList.push({
+          ...addProduct
+        });
+      }
+      return this.productList;
+    } catch (error) {
+      return error;
+    }
+  };
 
   /**
    * @description Delete product by id
@@ -50,14 +65,40 @@ export default class ProductModel {
    * @param id
    */
   handleDelProduct = async (id) => {
-    return await this.productService.delete(id);
-  }
+    try {
+      const delId = await this.productService.delete(id);
+
+      if (delId) {
+        this.productList.filter(i => i.id !== id)
+      }
+      return this.productList
+    } catch (error) {
+      return error;
+    }
+  };
 
   /**
    * @description Edit product item by id and save response to json server
    * return product item
    */
   handleEditProduct = async (data, id) => {
-    return await this.productService.put(data, id);
-  }
+    try {
+      const updateProduct = await this.productService.put(data, id);
+
+      if (updateProduct) {
+        this.productList = data.map(item => {
+          item.id === id ? {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            quantity: item.quantity
+          } : item
+        })
+      }
+      return this.productList
+    } catch (error) {
+      return  error
+    }
+  };
 }

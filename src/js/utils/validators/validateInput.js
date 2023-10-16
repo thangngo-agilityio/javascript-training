@@ -12,7 +12,7 @@ import {
 } from "../../constants/index.js";
 
 const validateRequired = (value = '', field) => {
-  return value ? undefined : VALIDATE_MESSAGE.requiredError.replace('{field}', field);
+  return value ? undefined : VALIDATE_MESSAGE.REQUIRED_ERROR.replace('{field}', field);
 };
 
 /**
@@ -25,7 +25,7 @@ export const validateEmail = (email = '') => {
   }
 
   if (!email.match(EMAIL_REGEX)) {
-    return VALIDATE_MESSAGE.notValidEmail;
+    return VALIDATE_MESSAGE.NOT_VALID_EMAIL;
   }
 
   return;
@@ -41,19 +41,19 @@ export const validatePassword = (password = '') => {
   }
 
   if (!password.match(CHARACTERS_REGEX)) {
-    return VALIDATE_MESSAGE.charactersPassWordError;
+    return VALIDATE_MESSAGE.CHARACTERS_PASSWORD_ERROR;
   }
 
   if (!password.match(UPPERCASE_REGEX)) {
-    return VALIDATE_MESSAGE.upperCasePassWordError;
+    return VALIDATE_MESSAGE.UPPERCASE_PASSWORD_ERROR;
   }
 
   if (!password.match(A_CHARACTER_REGEX)) {
-    return VALIDATE_MESSAGE.ANumberCharacterPassWordError;
+    return VALIDATE_MESSAGE.NUMBER_CHARACTER_PASSWORD_ERROR;
   }
 
   if (!password.match(SPECIAL_REGEX)) {
-    return VALIDATE_MESSAGE.specialPassWordError;
+    return VALIDATE_MESSAGE.SPECIAL_PASSWORD_ERROR;
   }
 
   return
@@ -69,7 +69,7 @@ export const validateConfirmPassword = (password = '', passwordConfirm = '') => 
   }
 
   if (passwordConfirm !== password) {
-    return VALIDATE_MESSAGE.confirmPasswordError;
+    return VALIDATE_MESSAGE.CONFIRM_PASSWORD_ERROR;
   }
 
   return;
@@ -85,7 +85,7 @@ export const validateName = (name = '') => {
   }
 
   if (!name.match(NAME_CHARACTERS_REGEX)) {
-    return VALIDATE_MESSAGE.nameValid;
+    return VALIDATE_MESSAGE.NAME_VALID;
   }
 
   return;
@@ -101,7 +101,7 @@ export const validatePrice = (price = '') => {
   }
 
   if (!price.match(PRICE_REGEX)) {
-    return VALIDATE_MESSAGE.priceValid;
+    return VALIDATE_MESSAGE.PRICE_VALID;
   }
 
   return;
@@ -117,7 +117,7 @@ export const validateImage = (image = '') => {
   }
 
   if (!image.match(IMAGE_REGEX)) {
-    return VALIDATE_MESSAGE.imageValid;
+    return VALIDATE_MESSAGE.IMAGE_VALID;
   }
 
   return;
@@ -133,7 +133,7 @@ export const validateQuantity = (quantity = '') => {
   }
 
   if (!quantity.match(QUANTITY_REGEX)) {
-    return VALIDATE_MESSAGE.quantityValid;
+    return VALIDATE_MESSAGE.QUANTITY_VALID;
   }
 
   return;

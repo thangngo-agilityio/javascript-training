@@ -9,6 +9,6 @@ export const handleToggleLoading = (status) => {
   const toggle = querySelector('.toggle');
 
   if (toggle) {
-    toggle.style.display = status ? TOGGLE_STYLE.FLEX : TOGGLE_STYLE.NONE
+    toggle.style.display = status ? TOGGLE_STYLE.SHOW : TOGGLE_STYLE.HIDE
   }
 }

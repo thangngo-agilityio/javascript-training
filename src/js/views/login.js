@@ -2,6 +2,7 @@
 import {
   AUTHEN_MESSAGE
 } from "../constants/index.js";
+import { isEmpty } from "../helpers/empty.js";
 // helpers
 import {
   querySelector,
@@ -46,21 +47,18 @@ export default class LoginView {
       password: this.passwordElement.value.trim() || '',
     };
     const isError = loginValidator(user, 'SIGNIN');
-    const isEmpty = (object) => {
-      return Object.keys(object).length === 0;
-    }
 
     if (!isEmpty(isError)) {
       showError(isError);
       this.popup.error({
-        message: AUTHEN_MESSAGE.loginError
+        message: AUTHEN_MESSAGE.LOGIN_ERROR
       })
     } else {
       if (this.signInEvent) {
         clearError()
         await this.signInEvent(user)
         this.popup.success({
-          message: AUTHEN_MESSAGE.loginSuccess
+          message: AUTHEN_MESSAGE.LOGIN_SUCCESS
         })
       }
     }
@@ -77,9 +75,7 @@ export default class LoginView {
       confirmPassword: this.confirmPasswordElement.value.trim() || '',
     }
     const isError = loginValidator(user, 'SIGNUP');
-    const isEmpty = (object) => {
-      return Object.keys(object).length === 0;
-    }
+
 
     if (!isEmpty(isError)) {
       showError(isError);
@@ -93,13 +89,13 @@ export default class LoginView {
 
   popupSignupSuccess = () => {
     this.popup.success({
-      message: AUTHEN_MESSAGE.registerSuccess
+      message: AUTHEN_MESSAGE.REGISTER_SUCCESS
     });
   }
   popupSignupError = (user) => {
     if (user) {
       this.popup.error({
-        message: AUTHEN_MESSAGE.registerError
+        message: AUTHEN_MESSAGE.REGISTER_ERROR
       });
     }
   }

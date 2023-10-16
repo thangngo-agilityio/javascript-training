@@ -48,7 +48,7 @@
       </header>
       <main class="main-content">
         <section class="section-manage">
-          <div class="manage-list">
+          <div id="manage-list" class="manage-list">
             <div id="add-card" class="manage-card">
               <div class="card-wrapper">
                 <p class="manage-title">Add new dish</p>
@@ -58,7 +58,7 @@
         </section>
       </main>
     </div>
-    <div class="modal-overlay hidden">
+    <div id="modal-overlay" class="modal-overlay hidden">
       <div class="manage-modal">
         <h2 id="modal-title" class="modal-title">Edit</h2>
         <form id="modal-form" class="modal-form">
@@ -86,13 +86,13 @@
             <button id="close-btn" type="button" class="btn btn-cancel">
               Cancel
             </button>
-            <button type="button" class="btn btn-add-product">Add</button>
+            <button type="button" id="btn-add" class="btn btn-add-product">Add</button>
             <!-- <button type="button" class="btn btn-edit-product">Edit</button> -->
           </div>
         </form>
       </div>
     </div>
-    <div class="modal-del">
+    <div id="modal-del" class="modal-del">
       <div class="modal-confirm">
         <h2 class="confirm-title">Are you sure you want to delete this food?</h2>
         <div class="confirm-btn">

@@ -1,12 +1,7 @@
 // constants
-import {
-  TOGGLE_STATUS,
-} from '../constants/index.js';
+import { TOGGLE_STATUS } from '../constants/index.js';
 // helpers
-import {
-  redirect,
-  handleToggleLoading
-} from '../helpers/index.js';
+import { isRedirect, handleToggleLoading } from '../helpers/index.js';
 
 /**
  * @class UserController
@@ -26,30 +21,30 @@ export default class LoginController {
   };
 
   signIn = async (user) => {
-    handleToggleLoading(TOGGLE_STATUS.OPEN);
+    handleToggleLoading(TOGGLE_STATUS.isShown);
     const dataUser = await this.model.getAllUser();
     const foundUser = this.findUser(dataUser, user.email, user.password);
     localStorage.setItem('LOGIN', foundUser.id.toString());
-    redirect('/');
-    handleToggleLoading(TOGGLE_STATUS.CLOSE);
+    isRedirect('/');
+    handleToggleLoading(TOGGLE_STATUS.isHidden);
   };
 
   signUp = async (user) => {
-    handleToggleLoading(TOGGLE_STATUS.OPEN);
     const dataUser = await this.model.getAllUser();
-    const foundUser = this.findEmail(dataUser, user.email);
+    const foundUser = this.findUser(dataUser, user.email);
 
     if (foundUser) {
-      this.view.popupSignupError(foundUser)
+      this.view.popupSignupError(foundUser);
     } else {
+      handleToggleLoading(TOGGLE_STATUS.isShown);
       const dataUserSignup = await this.model.handleSignUp(user);
-      this.view.popupSignupSuccess()
+      this.view.popupSignupSuccess();
       localStorage.setItem('LOGIN', dataUserSignup.id);
       setTimeout(() => {
-        redirect('/login.html');
+        isRedirect('/login.html');
       }, 1000);
+      handleToggleLoading(TOGGLE_STATUS.isHidden);
     }
-    handleToggleLoading(TOGGLE_STATUS.CLOSE);
   };
 
   findUser = (dataUser, email, password) => {
@@ -60,8 +55,5 @@ export default class LoginController {
     } else {
       return dataUser.find((data) => data.email === email);
     }
-  };
-  findEmail = (dataUser, email) => {
-    return dataUser.find((data) => data.email === email);
   };
 }
