@@ -76,11 +76,7 @@ export default class ProductModel {
     if (updateProduct) {
       this.productList = getData.map(item => {
         item.id === id ? {
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          image: item.image,
-          quantity: item.quantity
+          ...item
         } : item
       })
     }

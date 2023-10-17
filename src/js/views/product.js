@@ -13,7 +13,9 @@ import {
   VALIDATE_MESSAGE,
 } from '../constants/index.js';
 // Templates
-import { productTemplate } from '../templates/productCard.js';
+import {
+  productTemplate
+} from '../templates/productCard.js';
 // utils
 import {
   getFormValues,
@@ -59,7 +61,7 @@ export default class ProductView {
       }
     }
 
-    if (data.length > 0) {
+    if (data) {
       data.forEach((product) => {
         const divProduct = createElement('div');
         divProduct.setAttribute('class', 'product-card');
@@ -94,8 +96,15 @@ export default class ProductView {
     this.quantityElement.value = data.quantity || '';
 
     btnEdit.addEventListener('click', () => {
-      removeErrorMessage();
-      this.handleUpdateProduct(data.id);
+      if (data.name != this.nameElement.value || data.price != this.priceElement.value || data.image != this.imageElement.value || data.quantity != this.quantityElement.value) {
+        removeErrorMessage();
+        btnEdit.setAttribute('disabled', false)
+        this.handleUpdateProduct(data.id);
+      } else {
+        btnEdit.setAttribute('disabled', true)
+        this.modalMain.classList.add('hidden');
+        btnEdit.remove();
+      }
     });
   }
 
@@ -195,8 +204,8 @@ export default class ProductView {
           id,
         });
         btnEdit.remove();
-        this.modalForm.reset();
         this.modalMain.classList.add('hidden');
+        this.modalForm.reset();
         this.popup.success({
           message: PRODUCT_MESSAGE.EDIT_SUCCESS,
         });
@@ -213,12 +222,8 @@ export default class ProductView {
     const searchProduct = querySelector('.input-search');
 
     const searchName = debounce(async (e) => {
-      try {
-        this.query.filter = e.target.value;
-        await handler(this.query);
-      } catch (error) {
-        return error;
-      }
+      this.query.filter = e.target.value;
+      await handler(this.query);
     }, 500);
 
     if (searchProduct) {
