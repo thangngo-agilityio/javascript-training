@@ -218,12 +218,15 @@ export default class ProductView {
   /**
    * @description handler search product
    */
-  handleSearchProduct = (handler) => {
+  handleSearchProduct = (data) => {
     const searchProduct = querySelector('.input-search');
 
     const searchName = debounce(async (e) => {
-      this.query.filter = e.target.value;
-      await handler(this.query);
+      this.value = e.target.value.toLowerCase();
+      console.log(data.name);
+      // data.forEach(i => {
+      //   i.name.toLowerCase().includes(this.value)
+      // })
     }, 500);
 
     if (searchProduct) {
@@ -298,8 +301,8 @@ export default class ProductView {
     this.handleDetailProduct(handler);
   };
 
-  bindSearchProduct = async (handler) => {
-    this.handleSearchProduct(handler);
+  bindSearchProduct = async (data) => {
+    this.handleSearchProduct(data);
   };
 
   bindSortProduct = async (data) => {
