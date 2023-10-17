@@ -17,17 +17,13 @@ export default class ProductModel {
    * @param products Products[]
    */
   async getProduct(query) {
-    try {
-      const data = await this.productService.get(query);
-      if (data.length) {
-        this.productList = data.map((item) => ({
-          ...item
-        }))
-      }
-      return this.productList.reverse();
-    } catch (error) {
-      return error;
+    const data = await this.productService.get(query);
+    if (data.length) {
+      this.productList = data.map((item) => ({
+        ...item
+      }))
     }
+    return this.productList.reverse();
   }
 
   /**
@@ -45,18 +41,14 @@ export default class ProductModel {
    * @return product
    */
   handleAddProduct = async (data) => {
-    try {
-      const addProduct = await this.productService.post(data);
+    const addProduct = await this.productService.post(data);
 
-      if (addProduct) {
-        this.productList.push({
-          ...addProduct
-        });
-      }
-      return this.productList;
-    } catch (error) {
-      return error;
+    if (addProduct) {
+      this.productList.push({
+        ...addProduct
+      });
     }
+    return this.productList;
   };
 
   /**
@@ -65,16 +57,12 @@ export default class ProductModel {
    * @param id
    */
   handleDelProduct = async (id) => {
-    try {
-      const delId = await this.productService.delete(id);
+    const delId = await this.productService.delete(id);
 
-      if (delId) {
-        this.productList.filter(i => i.id !== id)
-      }
-      return this.productList
-    } catch (error) {
-      return error;
+    if (delId) {
+      this.productList.filter(i => i.id !== id)
     }
+    return this.productList
   };
 
   /**
@@ -82,23 +70,20 @@ export default class ProductModel {
    * return product item
    */
   handleEditProduct = async (data, id) => {
-    try {
-      const updateProduct = await this.productService.put(data, id);
+    const updateProduct = await this.productService.put(data, id);
+    const getData = await this.productService.get(data)
 
-      if (updateProduct) {
-        this.productList = data.map(item => {
-          item.id === id ? {
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            image: item.image,
-            quantity: item.quantity
-          } : item
-        })
-      }
-      return this.productList
-    } catch (error) {
-      return  error
+    if (updateProduct) {
+      this.productList = getData.map(item => {
+        item.id === id ? {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          image: item.image,
+          quantity: item.quantity
+        } : item
+      })
     }
+    return this.productList
   };
 }

@@ -122,7 +122,7 @@ export default class ProductView {
           message: PRODUCT_MESSAGE.ADD_SUCCESS,
         });
       } catch (error) {
-        Error(error);
+        return error;
       }
     }
   };
@@ -201,7 +201,7 @@ export default class ProductView {
           message: PRODUCT_MESSAGE.EDIT_SUCCESS,
         });
       } catch (error) {
-        Error(error);
+        return error;
       }
     }
   };
@@ -217,7 +217,7 @@ export default class ProductView {
         this.query.filter = e.target.value;
         await handler(this.query);
       } catch (error) {
-        Error(error);
+        return error;
       }
     }, 500);
 
