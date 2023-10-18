@@ -118,18 +118,15 @@ export default class LoginView {
 
 
   bindFormEvent() {
-    const toggleAction = () => {
-      this.btnRegisterElement.classList.toggle('active');
-      this.btnLoginElement.classList.toggle('active');
-    }
     this.bindUserSignIn();
 
     this.btnLoginElement.addEventListener('click', e => {
       e.preventDefault();
       clearError();
-      toggleAction();
+      this.btnLoginElement.classList.add('active');
+      this.btnRegisterElement.classList.remove('active');
       this.loginForm.reset();
-      this.inputGroupElement.classList.toggle('hidden')
+      this.inputGroupElement.classList.add('hidden')
 
       // If submit button has element
       if (this.btnSubmitElement) {
@@ -141,9 +138,10 @@ export default class LoginView {
     this.btnRegisterElement.addEventListener('click', e => {
       e.preventDefault();
       clearError();
-      toggleAction();
+      this.btnRegisterElement.classList.add('active');
+      this.btnLoginElement.classList.remove('active');
       this.loginForm.reset();
-      this.inputGroupElement.classList.toggle('hidden')
+      this.inputGroupElement.classList.remove('hidden')
 
       // If submit button has element
       if (this.btnSubmitElement) {
