@@ -31,7 +31,6 @@ export default class ProductController {
     await this.showProduct(this.view.query);
     this.view.bindAddProduct(this.addProduct);
     this.view.bindDelProduct(this.delProduct);
-    this.view.bindSearchProduct(this.searchProduct);
     this.view.bindDetailProduct(this.detailProduct);
 
     this.view.updateProduct = this.editProduct;
@@ -43,6 +42,7 @@ export default class ProductController {
     this.view.bindButtonLogout();
     this.view.bindManageEvent();
     this.view.bindSortProduct(data);
+    this.view.bindSearchProduct(data)
     this.view.displayProduct(data);
     handleToggleLoading(TOGGLE_STATUS.isHidden);
   };
@@ -70,12 +70,4 @@ export default class ProductController {
     this.showProduct(editProduct);
   };
 
-  searchProduct = async (data) => {
-    handleToggleLoading(TOGGLE_STATUS.isShown);
-    const queryString = buildQuery(data);
-    const searchData = await this.model.getProduct(queryString);
-    console.log(searchData);
-    this.view.displayProduct(searchData);
-    handleToggleLoading(TOGGLE_STATUS.isHidden);
-  }
 }

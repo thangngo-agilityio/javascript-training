@@ -11,6 +11,7 @@
 .icon-search {
   width: 20px;
   height: 20px;
+
 }
 
 .input-search {
@@ -19,6 +20,7 @@
   align-self: flex-end;
   color: var(--color-secondary);
   font-size: var(--font-size-default);
+  border: none;
 }
 
 .input-search::placeholder {
@@ -28,5 +30,3 @@
   margin-left: 42px;
 }
 
-.input-search:focus {
-}
