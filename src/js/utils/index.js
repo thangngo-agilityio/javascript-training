@@ -1,5 +1,4 @@
 export * from './buildQuery.js'
-export * from './debounce.js'
 export * from './formValue.js'
 export * from './sortValue.js'
 export * from './validators/formError.js'

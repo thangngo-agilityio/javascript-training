@@ -22,7 +22,6 @@ import {
   clearError,
   showError,
   validateForm,
-  debounce,
   sortNameAsc,
   sortNameDec,
   sortPriceAsc,
@@ -61,7 +60,7 @@ export default class ProductView {
       }
     }
 
-    if (data) {
+    if (data.length > 0) {
       data.forEach((product) => {
         const divProduct = createElement('div');
         divProduct.setAttribute('class', 'product-card');
@@ -69,9 +68,10 @@ export default class ProductView {
         this.listProduct.append(divProduct);
       });
     } else {
-      this.popup.error({
-        message: VALIDATE_MESSAGE.GET_FAILED,
-      });
+      const emptyMessage = createElement('p');
+      emptyMessage.setAttribute('class', 'empty-message')
+      emptyMessage.innerHTML = `No food items available!!`
+      this.listProduct.append(emptyMessage)
     }
   }
 
@@ -221,16 +221,16 @@ export default class ProductView {
   handleSearchProduct = (data) => {
     const searchProduct = querySelector('.input-search');
 
-    const searchName = debounce(async (e) => {
-      this.value = e.target.value.toLowerCase();
-      console.log(data.name);
-      // data.forEach(i => {
-      //   i.name.toLowerCase().includes(this.value)
-      // })
-    }, 500);
-
     if (searchProduct) {
-      searchProduct.addEventListener('input', searchName);
+      searchProduct.addEventListener('input', (e) => {
+        handleToggleLoading(TOGGLE_STATUS.isShown)
+        this.value = e.target.value.toLowerCase();
+        setTimeout(() => {
+          const searchValue = data.filter(i => i.name.toLowerCase().includes(this.value))
+          this.displayProduct(searchValue);
+          handleToggleLoading(TOGGLE_STATUS.isHidden)
+        }, 1000);
+      });
     }
   };
 
