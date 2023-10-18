@@ -8,11 +8,8 @@ import {
 } from '../helpers/index.js';
 // Constants
 import {
-  ORDER_DESC,
   PRODUCT_MESSAGE,
-  SORT_DEFAULT,
   TOGGLE_STATUS,
-  VALIDATE_MESSAGE,
 } from '../constants/index.js';
 // Templates
 import {
@@ -51,10 +48,7 @@ export default class ProductView {
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
     this.inputAll = querySelectorAll('.form-input');
-    this.query = {
-      sortBy: SORT_DEFAULT,
-      order: ORDER_DESC
-    };
+    this.query = {};
     this.popup = new Popup();
   }
 
