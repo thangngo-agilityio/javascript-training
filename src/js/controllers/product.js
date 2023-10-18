@@ -70,4 +70,12 @@ export default class ProductController {
     this.showProduct(editProduct);
   };
 
+  // searchProduct = async (data) => {
+  //   handleToggleLoading(TOGGLE_STATUS.isShown);
+  //   const queryString = buildQuery(data);
+  //   const searchData = await this.model.getProduct(queryString);
+  //   console.log(searchData);
+  //   this.view.displayProduct(searchData);
+  //   handleToggleLoading(TOGGLE_STATUS.isHidden);
+  // }
 }
