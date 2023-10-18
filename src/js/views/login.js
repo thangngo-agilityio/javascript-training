@@ -2,7 +2,9 @@
 import {
   AUTHEN_MESSAGE
 } from "../constants/index.js";
-import { isEmpty } from "../helpers/empty.js";
+import {
+  isEmpty
+} from "../helpers/empty.js";
 // helpers
 import {
   querySelector,
@@ -13,7 +15,8 @@ import {
 import {
   clearError,
   showError,
-  loginValidator
+  loginValidator,
+  removeErrorMessage
 } from "../utils/index.js";
 
 /**
@@ -41,6 +44,8 @@ export default class LoginView {
    */
   formSignInEventHandler = async (e) => {
     e.preventDefault();
+    removeErrorMessage();
+
 
     const user = {
       email: this.emailElement.value.trim() && this.emailElement.value.toLowerCase() || '',
@@ -69,6 +74,7 @@ export default class LoginView {
    */
   formSignUpEventHandler = async (e) => {
     e.preventDefault();
+    removeErrorMessage();
     const user = {
       email: this.emailElement.value.trim() && this.emailElement.value.toLowerCase() || '',
       password: this.passwordElement.value.trim() || '',
