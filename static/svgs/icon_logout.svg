@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <title>Logout</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
     <g id="Page-2-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="74" stroke="#979797" fill-rule="nonzero">
             <path d="M24.2565689,11.1135605 C23.8660446,10.7230362 23.8660446,10.0898712 24.2565689,9.69934692 C24.6470932,9.30882263 25.2802582,9.30882263 25.6707825,9.69934692 L31.3276367,15.3562012 C31.718161,15.7467255 31.718161,16.3798904 31.3276367,16.7704147 L25.6707825,22.427269 C25.2802582,22.8177933 24.6470932,22.8177933 24.2565689,22.427269 C23.8660446,22.0367447 23.8660446,21.4035797 24.2565689,21.0130554 L28.2773842,16.9922401 L6.03804313,16.9922401 C5.48602219,16.9922401 5.0347435,16.5445249 5.0347435,15.9922401 C5.0347435,15.436105 5.48393605,14.9922401 6.03804313,14.9922401 L28.1352486,14.9922401 L24.2565689,11.1135605 Z" id="Rectangle-359" stroke="none" fill="#ffffff"></path>
