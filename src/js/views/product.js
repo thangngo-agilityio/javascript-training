@@ -103,6 +103,7 @@ export default class ProductView {
         btnEdit.setAttribute('disabled', true)
         this.modalMain.classList.add('hidden');
         btnEdit.remove();
+        this.popup.error({message: PRODUCT_MESSAGE.EDIT_FAILED})
       }
     });
   }
