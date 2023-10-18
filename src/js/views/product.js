@@ -8,7 +8,9 @@ import {
 } from '../helpers/index.js';
 // Constants
 import {
+  ORDER_DESC,
   PRODUCT_MESSAGE,
+  SORT_DEFAULT,
   TOGGLE_STATUS,
   VALIDATE_MESSAGE,
 } from '../constants/index.js';
@@ -49,7 +51,10 @@ export default class ProductView {
     this.imageElement = querySelector('#image');
     this.quantityElement = querySelector('#quantity');
     this.inputAll = querySelectorAll('.form-input');
-    this.query = {};
+    this.query = {
+      sortBy: SORT_DEFAULT,
+      order: ORDER_DESC
+    };
     this.popup = new Popup();
   }
 
@@ -241,10 +246,11 @@ export default class ProductView {
     const sortSelect = querySelector('.sort-dropdown');
 
     if (sortSelect) {
-      sortSelect.addEventListener('change', (e) => {
+      sortSelect.addEventListener('change', async (e) => {
         e.preventDefault();
+        const target = e.target.value
         handleToggleLoading(TOGGLE_STATUS.isShown);
-        const target = e.target.value;
+
         setTimeout(() => {
           switch (target) {
             case 'name-asc':
