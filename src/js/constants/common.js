@@ -29,7 +29,3 @@ export const VERTICAL_OFFSET = 10;
 
 // url api
 export const MOCK_API = `https://65090e4ff6553137159ae935.mockapi.io/api/`
-
-// sort
-export const ORDER_DESC = 'desc';
-export const SORT_DEFAULT = 'price'
