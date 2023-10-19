@@ -97,7 +97,6 @@ export default class ProductView {
     btnEdit.addEventListener('click', () => {
       if (data.name != this.nameElement.value || data.price != this.priceElement.value || data.image != this.imageElement.value || data.quantity != this.quantityElement.value) {
         removeErrorMessage();
-        btnEdit.setAttribute('disabled', false)
         this.handleUpdateProduct(data.id);
       } else {
         btnEdit.setAttribute('disabled', true)

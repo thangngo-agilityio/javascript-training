@@ -15,9 +15,9 @@ export const VALIDATE_MESSAGE = {
   NUMBER_CHARACTER_PASSWORD_ERROR: 'Please enter at least 1 number character',
   CONFIRM_PASSWORD_ERROR: 'Password confirmation do not match password',
   NAME_VALID: 'Please enter at least 3 to 13 characters for name',
-  PRICE_VALID: 'The food price cannot be empty and greater than 0',
+  PRICE_VALID: 'Please enter up to 8 whole numbers and up to 4 decimal numbers for the price',
   IMAGE_VALID: 'The food image URL cannot be empty and must be in the right format',
-  QUANTITY_VALID: 'The food quantity cannot be empty and must be an integer that greater than 0',
+  QUANTITY_VALID: 'The food quantity must be an integer that greater than 0',
   GET_FAILED: 'Get user failed',
 };
 
@@ -26,5 +26,5 @@ export const PRODUCT_MESSAGE = {
   ADD_FAILED: 'Add product fail!',
   REMOVE_SUCCESS: 'Remove successfully!',
   EDIT_SUCCESS: 'Edit successfully!',
-  EDIT_FAILED: 'Edit failed, You need to change the value',
+  EDIT_FAILED: 'You need to change the value',
 }
