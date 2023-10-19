@@ -5,6 +5,6 @@ export const LOWERCASE_REGEX = /^(?=.*[a-z]).*$/;
 export const A_CHARACTER_REGEX = /^(?=.*\d).*$/;
 export const SPECIAL_REGEX = /^(?=.*?[!@#\$%\^\&*\)\(+=._-]).*$/;
 export const NAME_CHARACTERS_REGEX = /^[a-z ,.'-]{3,20}$/i;
-export const PRICE_REGEX = /^[1-9][0-9]{1,8}(\.[1-9]{1,4})?$/;
+export const PRICE_REGEX = /^[1-9][0-9]{0,8}(\.[1-9]{1,4})?$/;
 export const IMAGE_REGEX = /(http[s]*:\/\/)([a-z\-_0-9\/.]+)\.([a-z.]{2,3})\/([a-z0-9\-_\/._~:?#\[\]@!$&'()*+,;=%]*)([a-z0-9]+\.)(jpg|jpeg|png)/i;
 export const QUANTITY_REGEX = /^[1-9][0-9]*$/;

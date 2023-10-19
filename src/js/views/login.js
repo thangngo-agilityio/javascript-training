@@ -34,6 +34,7 @@ export default class LoginView {
     this.btnLoginElement = querySelector('.header-action-signIn');
     this.btnRegisterElement = querySelector('.header-action-register');
     this.btnSubmitElement = querySelector("[type='submit']");
+    this.titleAuthen = querySelector('#title-auth');
     this.signInEvent = null;
     this.signUpEvent = null;
     this.popup = new Popup();
@@ -129,6 +130,9 @@ export default class LoginView {
     this.btnLoginElement.addEventListener('click', e => {
       e.preventDefault();
       clearError();
+      const titlePage = querySelector('title')
+      titlePage.textContent = 'Sign in'
+      this.titleAuthen.textContent = "Sign In"
       this.btnLoginElement.classList.add('active');
       this.btnRegisterElement.classList.remove('active');
       this.loginForm.reset();
@@ -144,6 +148,9 @@ export default class LoginView {
     this.btnRegisterElement.addEventListener('click', e => {
       e.preventDefault();
       clearError();
+      const titlePage = querySelector('title')
+      titlePage.textContent = 'Register'
+      this.titleAuthen.textContent = "Create New Account"
       this.btnRegisterElement.classList.add('active');
       this.btnLoginElement.classList.remove('active');
       this.loginForm.reset();

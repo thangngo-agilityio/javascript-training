@@ -57,12 +57,11 @@ export default class ProductModel {
    * @param id
    */
   handleDelProduct = async (id) => {
-    const delId = await this.productService.delete(id);
+    const delProduct = await this.productService.delete(id);
     const getData = await this.getProduct()
-    console.log(getData);
 
-    if (delId) {
-      this.productList = getData.filter(i => i.id !== id)
+    if (delProduct.id = id) {
+      this.productList = getData
     }
     return this.productList
   };
