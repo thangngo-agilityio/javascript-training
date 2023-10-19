@@ -41,7 +41,7 @@ export default class LoginController {
       this.view.popupSignupSuccess();
       localStorage.setItem('LOGIN', dataUserSignup.id);
       setTimeout(() => {
-        isRedirect('/login.html');
+        isRedirect('/authen.html');
       }, 1000);
       handleToggleLoading(TOGGLE_STATUS.isHidden);
     }
